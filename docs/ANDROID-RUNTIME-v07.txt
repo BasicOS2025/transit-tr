@@ -1,0 +1,91 @@
+[  1%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[  2%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[  3%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[  4%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[  6%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[  7%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[  8%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[  9%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 11%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 12%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 13%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 14%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 16%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 17%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 18%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 19%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 21%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 22%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 23%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 24%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 26%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 27%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 28%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 29%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 31%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 32%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 33%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 34%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 36%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 37%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 38%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 39%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 41%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 42%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 43%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 44%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 46%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 47%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 48%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 49%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 51%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 52%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 53%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 54%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 56%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 57%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 58%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 59%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 61%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 62%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 63%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 64%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 65%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 67%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 68%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 69%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 70%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 72%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 73%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 74%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 75%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 77%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 78%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 79%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 80%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 82%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 83%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 84%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 85%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 87%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 88%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 89%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 90%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 92%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 93%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 94%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 95%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 97%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 98%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[ 99%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+[100%] /data/local/tmp/transit-tr-v0.7-legacy.apk
+	pkg: /data/local/tmp/transit-tr-v0.7-legacy.apk
+Success
+rm failed for -f, Read-only file system
+[100%] /data/local/tmp/smoke.apk
+	pkg: /data/local/tmp/smoke.apk
+Success
+rm failed for -f, Read-only file system
+PEAK_SAMPLED_PSS_KIB=10029; 200 MB assertion PASS. Samples cover launch, offline screens and 100 local parser calls, not live EGO HTTPS or modern Android.
+PASS Android 2.2: activity launch, database copy/open, exact M2 search, offline nearby, native timetable SQL, Konya catalog
+

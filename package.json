@@ -1,0 +1,14 @@
+{
+  "name": "transit-tr",
+  "private": true,
+  "version": "0.9.0",
+  "license": "Apache-2.0",
+  "scripts": {
+    "test": "node tests/core.test.cjs",
+    "test:web": "node tests/web.test.cjs",
+    "ego:browser": "node browser-worker/server.mjs"
+  },
+  "dependencies": {
+    "playwright": "1.62.1"
+  }
+}

@@ -1,0 +1,8 @@
+[100%] /data/local/tmp/smoke.apk
+	pkg: /data/local/tmp/smoke.apk
+Success
+rm failed for -f, Read-only file system
+OFFLINE_PEAK_PSS_KIB=10042; EGO_REQUEST_SAMPLED_PEAK_PSS_KIB=10343; EGO_REQUEST_MS=20172; EGO_STATUS=UNVERIFIED: java.net.UnknownHostException Host is unresolved: www.ego.gov.tr:443
+PEAK_SAMPLED_PSS_KIB=10343; 200 MB assertion PASS. Samples cover launch, offline screens, 100 local parser calls and one real EGO HTTPS attempt. Successful live data and modern Android remain unverified.
+PASS Android 2.2: activity launch, database copy/open, exact M2 search, offline nearby, native timetable SQL, Konya catalog
+

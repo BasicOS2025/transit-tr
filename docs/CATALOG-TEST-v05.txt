@@ -1,0 +1,11 @@
+test_bounds (__main__.CatalogTest.test_bounds) ... ok
+test_encoding (__main__.CatalogTest.test_encoding) ... ok
+test_expired_izban (__main__.CatalogTest.test_expired_izban) ... ok
+test_integrity (__main__.CatalogTest.test_integrity) ... ok
+test_no_empty_routes (__main__.CatalogTest.test_no_empty_routes) ... ok
+test_web_matches_native (__main__.CatalogTest.test_web_matches_native) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.111s
+
+OK

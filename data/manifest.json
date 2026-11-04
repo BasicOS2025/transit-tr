@@ -1,0 +1,135 @@
+{
+  "date": "2026-11-04",
+  "cities": [
+    {
+      "id": 0,
+      "name": "Ankara",
+      "official": "https://www.ego.gov.tr/",
+      "routes": 665,
+      "stops": 2813
+    },
+    {
+      "id": 1,
+      "name": "İstanbul",
+      "official": "https://iett.istanbul/",
+      "routes": 5413,
+      "stops": 15631
+    },
+    {
+      "id": 2,
+      "name": "İzmir",
+      "official": "https://www.eshot.gov.tr/",
+      "routes": 15,
+      "stops": 118
+    },
+    {
+      "id": 3,
+      "name": "Kocaeli",
+      "official": "https://www.e-komobil.com/",
+      "routes": 0,
+      "stops": 0
+    },
+    {
+      "id": 4,
+      "name": "Muğla",
+      "official": "https://www.mugla.bel.tr/",
+      "routes": 0,
+      "stops": 0
+    },
+    {
+      "id": 5,
+      "name": "Eskişehir",
+      "official": "https://www.estram.com.tr/",
+      "routes": 0,
+      "stops": 0
+    },
+    {
+      "id": 6,
+      "name": "Konya",
+      "official": "https://atus.konya.bel.tr/",
+      "routes": 165,
+      "stops": 4463
+    }
+  ],
+  "sources": [
+    {
+      "id": 1,
+      "name": "İBB / İETT",
+      "url": "https://data.ibb.gov.tr/dataset/iett-gtfs-verisi",
+      "license": "İBB Açık Veri Lisansı https://data.ibb.gov.tr/license",
+      "downloaded": "2026-11-04",
+      "end": ""
+    },
+    {
+      "id": 2,
+      "name": "İBB / Metro İstanbul",
+      "url": "https://api.ibb.gov.tr/MetroIstanbul/api/MetroMobile/V2/GetStations",
+      "license": "İBB Açık Veri Lisansı https://data.ibb.gov.tr/license",
+      "downloaded": "2026-11-04",
+      "end": ""
+    },
+    {
+      "id": 3,
+      "name": "İzmir Büyükşehir Belediyesi / Metro",
+      "url": "https://www.izmirmetro.com.tr/gtfs/rail-metro-gtfs.zip",
+      "license": "CC BY 4.0 https://creativecommons.org/licenses/by/4.0/",
+      "downloaded": "2026-11-04",
+      "end": "20270709"
+    },
+    {
+      "id": 4,
+      "name": "İzmir Büyükşehir Belediyesi / Tramvay",
+      "url": "https://www.tramizmir.com/gtfs/rail-tramizmir-gtfs.zip",
+      "license": "CC BY 4.0 https://creativecommons.org/licenses/by/4.0/",
+      "downloaded": "2026-11-04",
+      "end": "20270716"
+    },
+    {
+      "id": 5,
+      "name": "İzmir Büyükşehir Belediyesi / İZBAN (eski katalog)",
+      "url": "https://www.izban.com.tr/gtfs/rail-izban-gtfs.zip",
+      "license": "CC BY 4.0 https://creativecommons.org/licenses/by/4.0/",
+      "downloaded": "2026-11-04",
+      "end": "20250101"
+    },
+    {
+      "id": 6,
+      "name": "Konya Büyükşehir Belediyesi (GTFS 11/2025)",
+      "url": "https://acikveri.konya.bel.tr/dataset/toplu-tasima-gtfs-verileri",
+      "license": "CC BY 4.0 https://creativecommons.org/licenses/by/4.0/",
+      "downloaded": "2026-11-04",
+      "end": "20301231"
+    },
+    {
+      "id": 7,
+      "name": "EGO resmî hat kataloğu",
+      "url": "https://www.ego.gov.tr/hareketsaatleri",
+      "license": "Resmî hizmet; veri lisansı belirtilmemiş",
+      "downloaded": "2026-11-04",
+      "end": ""
+    },
+    {
+      "id": 8,
+      "name": "OpenStreetMap Ankara / egomac, 2026-05-02",
+      "url": "https://github.com/byigitt/egomac",
+      "license": "© OpenStreetMap contributors, ODbL; egomac MIT",
+      "downloaded": "2026-11-04",
+      "end": ""
+    }
+  ],
+  "raw_sha256": {
+    "ankara-lines.json": "12402c7aea874049b508b913ba975622082e53e88d5f844264a93bdab958325d",
+    "ankara-stops-osm.json": "8387364f6c01b4b93737fc5c664be5ec0e9017c182ed3d9b40f49961c73165e2",
+    "iett-metadata.json": "5e2ae911a8f93511140ce1402a4ffa979011c10073693bae06382f99d9e8c34a",
+    "iett-routes.csv": "830aa6fec981a699d8164bd5569a1c90e7154b95f713be3fc1327a9ac71cbc3a",
+    "iett-stops.csv": "fe68b255378db380aee114ab8f93002c7a23aaf32850c5cd35db419d611382bc",
+    "istanbul-lines.json": "6bdfcdd5f7c4c59625929c7c235c7e7efd27968909e4035e1c3f24e87466e803",
+    "istanbul-stations.json": "95b946d8436ca251951d2502aaeacb681c8d8377ee486cbf7e3a414e3f73fa2a",
+    "izmir-izban.zip": "cb2424f4a61b7bfbee78d3ff764a1b6d8e752cc787b04cc724b1ce2b0b3682aa",
+    "izmir-metro.zip": "c1a86738dac8de3749aff96f0ce92f432be6a4e9ce67769c2854a530f92ce5fd",
+    "izmir-tram.zip": "9af3877eb5d567ebe54a634f2f7188e66c8192fcbea96a89ca0496bf11a214fe",
+    "konya-gtfs-meta.json": "f6c867f4d9ff7168d2c73c919616e420e6a30200474b2db8eeca4860a0c90875",
+    "konya-gtfs.zip": "73ba19c284fe76896bb33fb6898919104e922e14c029a622e455e835ce998a3d",
+    "metro-meta.json": "2d87ffb58f6d56c1fa12156e3e38e6b3faf387d9af609b1ffe1f2bf8a808cd51"
+  }
+}

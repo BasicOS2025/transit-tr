@@ -1,0 +1,10 @@
+=== RUN   TestCoordinates
+--- PASS: TestCoordinates (0.00s)
+=== RUN   TestDistance
+--- PASS: TestDistance (0.00s)
+=== RUN   TestNearbyUpstreamAndCache
+--- PASS: TestNearbyUpstreamAndCache (0.00s)
+=== RUN   TestUpstreamFailure
+--- PASS: TestUpstreamFailure (0.00s)
+PASS
+ok  	transittr	0.005s

@@ -1,0 +1,180 @@
+{
+  "city": "İzmir",
+  "live": false,
+  "source": "https://www.izmirmetro.com.tr/gtfs/rail-metro-gtfs.zip",
+  "license": "CC BY 4.0",
+  "retrieved_at": "2026-11-04",
+  "sha256": "c1a86738dac8de3749aff96f0ce92f432be6a4e9ce67769c2854a530f92ce5fd",
+  "feed_info": [
+    {
+      "feed_publisher_name": "METRO İZMİR",
+      "feed_publisher_url": "https://www.izmirmetro.com.tr/",
+      "feed_lang": "tr",
+      "feed_start_date": "20260709",
+      "feed_end_date": "20270709",
+      "feed_version": "2026-07-09",
+      "feed_contact_email": "info@izmirmetro.com.tr",
+      "feed_contact_url": "https://www.izmirmetro.com.tr/"
+    }
+  ],
+  "routes": [
+    [
+      "M1",
+      "Evka 3 – Narlıdere Kaymakamlık",
+      "1"
+    ],
+    [
+      "M1",
+      "Narlıdere Kaymakamlık – Evka 3",
+      "1"
+    ]
+  ],
+  "stops": [
+    [
+      "Evka - 3",
+      "12",
+      "38.465600",
+      "27.228900"
+    ],
+    [
+      "Ege Üniversitesi",
+      "11",
+      "38.460000",
+      "27.228300"
+    ],
+    [
+      "Bornova",
+      "10",
+      "38.458600",
+      "27.212800"
+    ],
+    [
+      "Bölge",
+      "9",
+      "38.454700",
+      "27.200800"
+    ],
+    [
+      "Sanayi",
+      "8",
+      "38.448100",
+      "27.190000"
+    ],
+    [
+      "Stadyum",
+      "7",
+      "38.442500",
+      "27.180800"
+    ],
+    [
+      "Halkapınar",
+      "6",
+      "38.435000",
+      "27.168600"
+    ],
+    [
+      "Hilal",
+      "5",
+      "38.427500",
+      "27.156400"
+    ],
+    [
+      "Basmane",
+      "4",
+      "38.422700",
+      "27.144100"
+    ],
+    [
+      "Çankaya",
+      "3",
+      "38.422500",
+      "27.136900"
+    ],
+    [
+      "Konak",
+      "2",
+      "38.417500",
+      "27.128300"
+    ],
+    [
+      "Üçyol",
+      "1",
+      "38.406182",
+      "27.120883"
+    ],
+    [
+      "İzmirspor",
+      "13",
+      "38.401700",
+      "27.110300"
+    ],
+    [
+      "Hatay",
+      "14",
+      "38.401500",
+      "27.103100"
+    ],
+    [
+      "Göztepe",
+      "15",
+      "38.396500",
+      "27.094300"
+    ],
+    [
+      "Poligon",
+      "16",
+      "38.391600",
+      "27.084100"
+    ],
+    [
+      "Fahrettin Altay",
+      "17",
+      "38.395300",
+      "27.069800"
+    ],
+    [
+      "Balçova",
+      "18",
+      "38.395700",
+      "27.057000"
+    ],
+    [
+      "Çağdaş",
+      "19",
+      "38.394400",
+      "27.045600"
+    ],
+    [
+      "Dokuz Eylül Üniversitesi Hastanesi",
+      "20",
+      "38.394200",
+      "27.037800"
+    ],
+    [
+      "Güzel Sanatlar",
+      "21",
+      "38.392400",
+      "27.023400"
+    ],
+    [
+      "Narlıdere İtfaiye",
+      "22",
+      "38.393700",
+      "27.015000"
+    ],
+    [
+      "100. Yıl Cumhuriyet Şehitlik",
+      "23",
+      "38.395700",
+      "27.000300"
+    ],
+    [
+      "Kaymakamlık",
+      "24",
+      "38.394900",
+      "26.991000"
+    ]
+  ],
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "attribution": "İzmir Büyükşehir Belediyesi / METRO İZMİR; GTFS routes.txt ve stops.txt alanları ayıklandı; sefer verisi dahil edilmedi."
+}

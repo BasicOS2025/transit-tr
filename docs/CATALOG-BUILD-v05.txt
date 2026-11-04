@@ -1,0 +1,7 @@
+Ankara 0 routes 0 stops 0 scheduled departures
+İstanbul 5413 routes 15631 stops 0 scheduled departures
+İzmir 15 routes 118 stops 51934 scheduled departures
+Kocaeli 0 routes 0 stops 0 scheduled departures
+Muğla 0 routes 0 stops 0 scheduled departures
+Eskişehir 0 routes 0 stops 0 scheduled departures
+Konya 165 routes 4463 stops 0 scheduled departures

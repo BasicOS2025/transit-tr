@@ -1,0 +1,5 @@
+-keep class org.transittr.* { *; }
+-keep class org.transittr.MainActivity$* { *; }
+-dontobfuscate
+-dontwarn org.transittr.bc.**
+-keepattributes Signature,InnerClasses,EnclosingMethod

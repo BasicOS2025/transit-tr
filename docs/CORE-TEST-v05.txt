@@ -1,0 +1,1 @@
+PASS: Turkish normalization, distance, invalid coordinates, nearby order/radius, UTC+3 midnight, GTFS >24h, canceled/added services, expired calendar and offline assistant

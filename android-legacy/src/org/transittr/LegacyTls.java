@@ -1,0 +1,28 @@
+package org.transittr;
+import java.io.*;import java.net.*;import java.util.*;import java.security.SecureRandom;
+import org.transittr.bc.tls.*;import org.transittr.bc.tls.crypto.impl.bc.BcTlsCrypto;
+/** TLS 1.2 over a bounded HTTP/1.1 request for API 8 devices. Verification disabled at user's request. */
+public final class LegacyTls {
+ private static final int LIMIT=1048576;
+ private static String line(InputStream in)throws IOException{ByteArrayOutputStream b=new ByteArrayOutputStream();int c;while((c=in.read())!=-1){if(c=='\n')return new String(b.toByteArray(),"US-ASCII").trim();if(b.size()>8192)throw new IOException("HTTP başlık sınırı");b.write(c);}if(b.size()==0)throw new EOFException();return new String(b.toByteArray(),"US-ASCII").trim();}
+ private static void copy(InputStream in,ByteArrayOutputStream out,int count)throws IOException{byte[] buffer=new byte[4096];while(count>0){int n=in.read(buffer,0,Math.min(count,buffer.length));if(n<0)throw new EOFException("Eksik HTTP yanıtı");if(out.size()+n>LIMIT)throw new IOException("Canlı yanıt sınırı aşıldı");out.write(buffer,0,n);count-=n;}}
+ public static String get(String address)throws IOException{return get(address,0);}
+ private static String get(String address,int redirects)throws IOException{
+  URL url=new URL(address);final String host=url.getHost();if(!url.getProtocol().equals("https")||!(host.equals("openapi.izmir.bel.tr")||host.equals("atus.konya.bel.tr")||host.equals("iett.istanbul")))throw new IOException("Desteklenmeyen TLS kaynağı");
+  Socket socket=new Socket();TlsClientProtocol tls=null;
+  try{socket.connect(new InetSocketAddress(host,443),10000);socket.setSoTimeout(15000);tls=new TlsClientProtocol(socket.getInputStream(),socket.getOutputStream());
+   DefaultTlsClient client=new DefaultTlsClient(new BcTlsCrypto(new SecureRandom())){
+    protected ProtocolVersion[] getSupportedVersions(){return new ProtocolVersion[]{ProtocolVersion.TLSv12};}
+    protected int[] getSupportedCipherSuites(){return new int[]{CipherSuite.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,CipherSuite.TLS_RSA_WITH_AES_128_CBC_SHA256};}
+    protected Vector getSNIServerNames(){Vector names=new Vector();try{names.addElement(new ServerName(NameType.host_name,host.getBytes("US-ASCII")));}catch(Exception ignored){}return names;}
+    public boolean requiresCloseNotify(){return false;}
+    public TlsAuthentication getAuthentication(){return new TlsAuthentication(){public void notifyServerCertificate(TlsServerCertificate certificate){}public TlsCredentials getClientCredentials(CertificateRequest request){return null;}};}
+   };tls.connect(client);OutputStream output=tls.getOutputStream();String req="GET "+url.getFile()+" HTTP/1.1\r\nHost: "+host+"\r\nUser-Agent: Mozilla/5.0 (Linux; Android 2.2) AppleWebKit/533.1 Version/4.0 Mobile Safari/533.1\r\nAccept: */*\r\nAccept-Encoding: identity\r\nConnection: close\r\n\r\n";output.write(req.getBytes("US-ASCII"));output.flush();InputStream in=tls.getInputStream();String status=line(in);int length=-1,headers=0;boolean chunked=false;String encoding="",location="";
+   for(String h;(h=line(in)).length()>0;){if(++headers>100)throw new IOException("HTTP başlık sayısı aşıldı");String lower=h.toLowerCase(Locale.US);if(lower.startsWith("location:"))location=h.substring(h.indexOf(':')+1).trim();if(lower.startsWith("content-length:")){try{length=Integer.parseInt(h.substring(h.indexOf(':')+1).trim());}catch(NumberFormatException e){throw new IOException("Geçersiz HTTP boyutu");}}if(lower.startsWith("transfer-encoding:")&&lower.contains("chunked"))chunked=true;if(lower.startsWith("content-encoding:"))encoding=lower;}
+   if(!status.matches("HTTP/1\\.[01] 200(?: .*)?")){if(status.matches("HTTP/1\\.[01] (301|302|303|307|308)(?: .*)?")&&redirects<3&&location.length()>0){URL next=new URL(url,location);if(next.getProtocol().equals("https")&&next.getHost().equals(host)){try{tls.close();}catch(Exception ignored){}socket.close();return get(next.toString(),redirects+1);}}throw new IOException("Canlı servis: "+status+"; yönlendirme: "+location);}
+   ByteArrayOutputStream out=new ByteArrayOutputStream(8192);if(chunked){int chunks=0;while(true){if(++chunks>65536)throw new IOException("HTTP parça sınırı");String s=line(in).split(";",2)[0];int n;try{n=Integer.parseInt(s,16);}catch(NumberFormatException e){throw new IOException("Geçersiz HTTP parçası");}if(n==0)break;if(n<0||n>LIMIT-out.size())throw new IOException("HTTP yanıt sınırı");copy(in,out,n);if(line(in).length()!=0)throw new IOException("Geçersiz HTTP parça sonu");}}
+   else if(length>=0){if(length>LIMIT)throw new IOException("HTTP yanıt sınırı");copy(in,out,length);}else{byte[] b=new byte[4096];int n;while((n=in.read(b))!=-1){if(out.size()+n>LIMIT)throw new IOException("HTTP yanıt sınırı");out.write(b,0,n);}}
+   byte[] bytes=out.toByteArray();if(encoding.contains("gzip")){InputStream zip=new java.util.zip.GZIPInputStream(new ByteArrayInputStream(bytes));out.reset();byte[] b=new byte[4096];int n;while((n=zip.read(b))!=-1){if(out.size()+n>LIMIT)throw new IOException("Açılmış yanıt sınırı");out.write(b,0,n);}bytes=out.toByteArray();}return EgoMobile.decode(bytes);
+  }finally{if(tls!=null)try{tls.close();}catch(Exception ignored){}try{socket.close();}catch(Exception ignored){}}
+ }
+}

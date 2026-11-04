@@ -1,0 +1,9 @@
+PASS: native-data-equivalent catalogs, route station details, favorites, GPS mock, manual offline nearby, schedules panel, 360px layout, offline reload/city switch/assistant; no page errors
+REAL STATUS SERVICE: İBB / Metro İstanbul · Alınma: 04.11.2026 19:06:29
+Hizmet duyurusu; araç konumu/ETA değil.
+
+M7 · Kaynak güncellemesi 2026-10-15T19:45:11.910
+Teknik bir arıza nedeniyle seferler Nurtepe-Mahmutbey arasında normal işletme döngüsünde, Nurtepe-Kağıthane arasında ise mekik seferi olarak yapılmaktadır.
+
+T3 · Kaynak güncellemesi 2026-10-19T07:44:06.487
+Hat bakım ve ray yenileme çalışmaları nedeniyle hattımız işletmeye kapalıdır. Çalışma süresince İETT’ye
