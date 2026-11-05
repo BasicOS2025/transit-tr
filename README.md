@@ -1,102 +1,53 @@
-# Transit TR 🚍
+# Transit TR 
 
-Türkiye’de şehir içi ulaşım bilgilerine erişmek için geliştirilen açık kaynak Android uygulaması.
-
-Eski cihazlarda çalışmaya ve düşük bellek tüketimine odaklanır. Android 2.2 desteği hedeflenir; Android 2.2 / API 8 ARM emülatöründe test edilmiştir.
+Android 6+ ve Android 2.2 için yerel toplu taşıma uygulaması. OpenStreetMap üzerinde belediye kaynaklarından gelen otobüs konumlarını, Ankara ve İstanbul metro/istasyon ağını gösterir. WebView veya Google Play Services gerektirmez.
 
 ## Özellikler
 
-- Hat ve durak arama
-- Favorilere ekleme
-- İnternet olmadan kullanılabilen yerel kataloglar
-- Desteklenen şehirlerde canlı otobüs sorgulama
-- Geçerli veri bulunan duraklarda planlı kalkış saatleri
-- Koordinatı bulunan kayıtlarla yakındaki durakları bulma
-- GPU veya yapay zekâ modeli gerektirmeyen kural tabanlı mini asistan
+- **Canlı harita:** Ankara EGO durak sorgusundan GPS ve varış dakikaları; İstanbul İETT hat sorgusundan GPS konumları. İstanbul durağının dakika sonuçları “Tüm sonuçlar” bölümündedir; GPS konumu dakika tahminine çevrilmez.
+- **Metro:** Ankara M1–M4 ve Ankaray (5 hat, 54 istasyon kaydı); İstanbul 19 raylı hat, 250 istasyon kaydı, M11 dahil. Hat seçme, istasyon listesi ve istasyona odaklanma.
+- **OpenStreetMap:** sürükleme, iki parmakla yakınlaştırma, yakınlaştır/uzaklaştır, görünür alan için karo önbelleği ve kaynak atfı.
+- **Hızlı yerel arayüz:** Geist yazı tipi, sade açık yüzeyler, Material harita ikonu. Android 2.2’de daha küçük karo belleği ve tek ağ işçisi.
+- Harita açıkken 20 saniyede yenileme; arka planda takip servisi yoktur. Hata sırasında önceki konumlar korunur ve yeniden deneme aralığı uzar.
+- **Katalog:** Ankara, İstanbul, İzmir ve Konya hat/durak arama, favoriler, yerel yakın durak ve mevcut tarife ekranları.
+- **Diğer canlı sorgular:** İzmir yaklaşan araç/kalan durak ve Konya varış bilgileri. İzmir harita GPS desteği vardır; bu sürümün gerçek GPS harita testi Ankara ve İstanbul’da yapıldı. Konya harita GPS katmanı yoktur.
 
-Projede ayrıca Web/PWA istemcisi ve isteğe bağlı Go backend bulunur. Aşağıdaki canlı bağlantı testleri Android uygulamasına aittir.
+Metro için ayrı bir harita bulunur. **Tren konumları saate dayalı tahmindir, GPS değildir.** Ankara’da EGO’nun iki yöndeki hafta içi/cumartesi/pazar kalkış çizelgeleri; İstanbul’da yayımlanan yolculuk süreleri ve sıklık modeli kullanılır. İstanbul’daki pik sıklık gün boyunca sabit kabul edilir; M11’in 10 dakikalık sıklığı model varsayımıdır. İstasyon arası süre mesafeye oranlanır, ara duraklarda 20 saniye bekleme varsayılır. M1–M2–M3, Ankara’da birleşik Koru–OSB koridoru olarak hesaplanır; seçilen etaptaki tahmini trenler gösterilir. Model ayrıntıları ve kaynaklar **Model** düğmesindedir. Gecikme, iptal, ek sefer ve resmî tatil değişiklikleri hesaba katılmaz. İstasyonlar arası çizgiler temsili bağlantıdır; gerçek ray geometrisi veya aktarmalı rota hesaplaması değildir. İstasyon sayıları veri kümesindeki ad/koordinat kayıtlarını ifade eder. Yerel ağ/katalog anlık hizmet kesintilerini takip etmez.
 
-## Şehir desteği
+## Kurulum ve kullanım(releases kısmındadır)
 
-| Şehir | Katalog | Canlı bağlantı |
-|---|---|---|
-| Ankara | 665 hat/yön, 2.813 adlandırılmış durak | EGO tahmini varış dakikaları |
-| İstanbul | İETT ve raylı sistem kataloğu | İETT otobüs varış dakikaları |
-| İzmir | Metro, tramvay ve eski İZBAN kataloğu | ESHOT yaklaşan araçlar ve kalan durak sayısı |
-| Konya | Statik GTFS hat/durak kataloğu | ATUS varış dakikaları |
-| Kocaeli | Henüz eklenmedi | Henüz eklenmedi |
-| Muğla | Henüz eklenmedi | Henüz eklenmedi |
-| Eskişehir | Henüz eklenmedi | Henüz eklenmedi |
+- Android 6+ için `Transit-TR-v1.0-android6-plus.apk` (minSdk 23, targetSdk 28).
+- Android 2.2 için `Transit-TR-v1.0-android22.apk` (minSdk 8, targetSdk 8).
 
-Kataloglar bütün şehirleri ve ulaşım türlerini eksiksiz kapsamaz. Hat/yön ve durak kayıt sayıları benzersiz fiziksel hat veya durak sayısı değildir.
+İki APK aynı paket kimliğini (`org.transittr`) kullanır; aynı anda kurulmaz. APK’lar test anahtarıyla imzalıdır. Üretim dağıtımında kendi kalıcı anahtarınızı kullanın. Özel anahtar kaynak paketinde bulunmaz. Yeni Android sürümlerinin tamamında ve fiziksel telefonlarda test yapılmadı; Play Store yayını hazırlanmadı.
 
-**İzmir’de kalan durak sayısı dakika olarak gösterilmez. Planlı kalkış saatleri de canlı varış tahmini değildir.**
+Şehri seçin, otobüs durağı numarasını yazın ve **Başlat** düğmesine dokunun. İstanbul’da GPS için hat kodunu da girin. Test örnekleri: Ankara `10940`, İstanbul `224672` + `500T`, İzmir `21050`, Konya `27`. Sonuçlar saatin, hattın ve servis erişiminin durumuna göre değişir. Araç veya istasyon işaretine dokunarak ayrıntıları açın. **Metro** sekmesinden hattı ve istasyonu seçin; **Katalog** eski arama ekranını açar.
 
-## Canlı sorgulama
+Konum zamanı kaynak tarafından verilirse ayrıntılarda gösterilir; 3 dakikadan eski zaman damgalı araçlar haritada gri çizilir. Kaynak zamanı bilinmeyen sonuçlar güncel zaman damgası verilmiş gibi sunulmaz. Canlı takibin çalışması için telefon GPS izni gerekmez; “Yakınımda” özelliği cihaz konumunu kullanır.
 
-1. Şehri seç.
-2. **Resmî → Seçili şehir · canlı otobüs** bölümünü aç.
-3. Otobüs durak numarasını gir.
-4. **Kontrol et** düğmesine bas.
+## Test
 
-İzmir sorgusunda ESHOT otobüs durak numarası kullanılmalıdır; metro istasyon kodları bu servise ait değildir.
+Android 2.2/API 8 ARM ve Android 6.0/API 23 x86 emülatörlerinde gerçek Ankara/İstanbul GPS, metro ağı, yenileme ve PSS ölçüldü. Ayrıntılar: [test raporu](docs/TEST-REPORT-v1.md). Testler gerçek servisleri kullanır; boş durak veya servis kesintisi başarısız sonuç üretebilir. Emülatör RAM ölçümü fiziksel cihaz garantisi değildir.
 
-Android canlı sorguları cihazdan doğrudan yapılır. WebView veya haricî geçit sunucusu kullanılmaz. Veriler yalnızca kullanıcı sorgu başlattığında yenilenir.
-
-## Android 2.2 test sonuçları
-
-Android 2.2 / API 8 ARM emülatöründe test edildi:
-
-- Dört şehirde gerçek canlı sorgu: **4/4 başarılı**
-- Ayrıştırma kontrolleri: **6/6 başarılı**
-- En yüksek örneklenmiş süreç PSS belleği: **13.598 KiB ≈ 13,9 MB**
-
-Bu değer emülatörün toplam belleği değil, uygulama sürecinin ölçümüdür. Bütün cihazlar ve anlık bellek zirveleri için garanti değildir.
-
-Ayrıntılar: [Test raporu](docs/TEST-REPORT-v09.md)
-
-## Bilinen sınırlamalar
-
-- Ankara durak kataloğu kısmi bir OSM anlık görüntüsüdür. Bu kayıtlarda koordinat bulunmadığından yakın durak mesafe aramasında kullanılmaz.
-- Ankara hat-durak eşleşmeleri henüz eklenmedi.
-- İZBAN takvimi eski olduğundan güncel tarife gibi kullanılmaz.
-- Kart bakiyesi ve bütün şehirleri kapsayan canlı GPS haritası tamamlanmadı.
-- Fiziksel ARMv6, ARMv7 ve ARM64 cihazlarda ayrıca test yapılması gerekir.
-- Veri kaynakları değişebilir veya geçici olarak erişilemez olabilir.
-
-**Mevcut sürümde HTTPS sertifika ve alan adı doğrulaması kapalıdır; uygulama sunucu kimliğini doğrulamaz.** Eski Android cihazlar için uygulama içinde Java TLS 1.2 desteği bulunur.
+```sh
+python tests/catalog.test.py
+node tests/core.test.cjs
+python tools/run_map_tests.py emulator-5556 --output test-results
+adb shell am instrument -w org.transittr.tests/.V09Check
+```
 
 ## Derleme
 
-Gerekli araçlar ve ortam değişkenleri:
+[Android derleme rehberi](docs/BUILD-v1.md), [veri/API kaynakları](docs/SOURCES-v1.md). Java/ECJ, Android SDK araçları ve kendi imza anahtarınız gereklidir. Gradle veya AndroidX kullanılmaz. `python tools/build_android.py`; Android 6+ için `ANDROID_VARIANT=modern`, test APK’sı için `ANDROID_TESTS=1`.
 
-[Android derleme rehberi](docs/BUILD-v09.md)
+Web/PWA kataloğunu çalıştırmak için Go 1.18+ ile `backend` klasöründe `go run .` komutunu çalıştırın ve `http://localhost:8080` adresini açın. Bu sürümün yeni yerel harita/GPS arayüzü Android APK’larına eklendi. Önceki sürümlerin ayrıntıları [tarihsel README](docs/README-v09-history.md) içindedir.
 
-Uygulama:
+## Veri, gizlilik ve lisans
 
-    python tools/build_android.py
+Resmî olmayan bağımsız projedir; belediyeler tarafından yayımlanmış bir uygulama değildir. Kullanıcı hesabı, reklam veya analiz SDK’sı yoktur. Canlı sorgular belediye servislerine, harita istekleri OpenStreetMap sunucularına gider. Yalnızca görüntülenen karolar istenir; toplu veya çevrimdışı bölge indirme yoktur. Yerel karo önbelleği en az 7 gün yeniden kullanılır.
 
-Yerel katalogları yeniden oluşturma:
+**Sertifika ve alan adı doğrulaması eski sürüm limitlemelerinden dolayı kapalıdır.** Kesin web güvenliği vaat edilemez.
 
-    python tools/build_catalog.py
+Kod Apache-2.0. Google Material Icons Apache-2.0; Geist SIL OFL; Bouncy Castle kendi lisansı; OpenStreetMap verileri ODbL, İBB ve İzmir verileri ilgili açık veri lisansları altındadır. Veri lisansları kod lisansından ayrıdır. [Üçüncü taraf bildirimleri](THIRD-PARTY-NOTICES.md) ve [kaynaklar](docs/SOURCES-v1.md) korunmalıdır.
 
-## Kaynaklar ve teşekkürler
-
-- [EGO Genel Müdürlüğü](https://www.ego.gov.tr/)
-- [İETT](https://iett.istanbul/)
-- [İzmir Açık Veri Portalı](https://acikveri.bizizmir.com/)
-- [Konya ATUS](https://atus.konya.bel.tr/)
-- [OpenStreetMap](https://www.openstreetmap.org/copyright)
-- [byigitt/egomac](https://github.com/byigitt/egomac): EGO mobil servis keşifleri ve OSM durak adı kaynağı
-- [caglarsarikaya/postman-collections](https://github.com/caglarsarikaya/postman-collections): İstanbul ve İzmir API başvuru koleksiyonları
-- [Bouncy Castle](https://www.bouncycastle.org/): Eski Android için TLS desteği
-
-Bu proje belediyelerin veya ulaşım işletmecilerinin resmî uygulaması değildir.
-
-## Lisans
-
-Proje kodu [Apache License 2.0](LICENSE) ile lisanslanmıştır.
-
-Üçüncü taraf bileşenler ve veriler kendi lisanslarına tabidir. Ayrıntılar için [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) dosyasına bakın.
-
-© OpenStreetMap contributors. OSM kaynaklı veriler ODbL koşullarına tabidir.
+MapCheck arka plan kontrolü sırasında `RESUME_FROM_HOME` durumunu üretir; Python çalıştırıcı ADB ile uygulamayı öne getirir. Bu nedenle yaşam döngüsü kontrolü için çalıştırıcıyı kullanın.
