@@ -4,19 +4,6 @@ Ankara: 665 hat/yön, 2813 adlandırılmış OSM durak kaydı (koordinatsız, k�
 
 Ayrıntılar: `docs/TEST-REPORT-v09.md`. Derleme: `docs/BUILD-v09.md`. Sertifika ve alan adı doğrulaması kullanıcı isteğiyle kapalıdır.
 
-## Önceki sürümler ve tarihsel kapsam
-
-# Transit TR 0.8
-
-EGO mobil JSON bağlantısı Android 2.2/API 8 üzerinde başarılı canlı sorguyla test edildi. Son testte en yüksek örneklenmiş PSS 6196 KiB (6,345 MB), 22 örnek. Ayrıntılar: `docs/ANDROID22-LIVE-RAM-v08.md`. Sertifika ve alan adı doğrulaması kullanıcı isteğiyle kapalıdır.
-
-EGO entegrasyonu byigitt/egomac (MIT) keşiflerine dayanır; `THIRD-PARTY-NOTICES.md` içerir.
-
-## Önceki sürümün kapsamı ve geçmiş doğrulaması
-
-# Transit TR 0.7
-
-Açık kaynak yerel Android uygulaması ve web/PWA. APK'lar gerçekten derlendi, hizalandı ve imzaları doğrulandı. Legacy APK Android 2.2 ARM emülatörüne kuruldu; uygulama açılışı, arama, yakın durak ve yerel tarife testleri geçti. **Tüm şehirlerde canlı ulaşım ve kart bakiyesi sağlayan tamamlanmış bir ürün değildir.** Güncel doğrulama ayrıntıları `docs/TEST-REPORT-v07.md` içinde.
 
 ## Bu sürümde çalışan kapsam
 
