@@ -43,6 +43,7 @@ adb shell am instrument -w org.transittr.tests/.V09Check
 Web/PWA kataloğunu çalıştırmak için Go 1.18+ ile `backend` klasöründe `go run .` komutunu çalıştırın ve `http://localhost:8080` adresini açın. Bu sürümün yeni yerel harita/GPS arayüzü Android APK’larına eklendi. Önceki sürümlerin ayrıntıları [tarihsel README](docs/README-v09-history.md) içindedir.
 
 ##Çalışma diyagramı
+
 [![Architecture diagram of basicos2025/transit-tr](https://gitdiagram.com/basicos2025/transit-tr/diagram.png)](https://gitdiagram.com/basicos2025/transit-tr?utm_source=readme&utm_medium=picture)
 
 ## Veri, gizlilik ve lisans
