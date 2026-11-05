@@ -1,0 +1,1388 @@
+ANKARA_CATALOG_ROUTES=665; STOPS=2813
+
+PARSER_FIXTURES_PASS=6
+
+CAPTURE_CATALOG
+
+LIVE_CITY=0; STOP=10940; SUCCESS=true; PEAK_PSS_KIB=7375
+
+
+
+
+
+
+
+
+
+Transit TR
+
+
+
+Ankara
+
+Ankara · EGO hatları / OSM durak kataloğu · kısmi kapsam
+
+
+
+
+
+Hatlar
+
+Duraklar
+
+Favori
+
+‹
+
+›
+
+
+
+
+
+101
+
+
+
+GÖLBAŞI-HAYMANA YOLU-BAHÇELİEVLER
+
+Otobüs
+
+
+
+
+
+101-1
+
+
+
+GÖLBAŞI-HAYMANA YOLU-BAHÇELİEVLER-KARAOĞLAN MAHALLESİ
+
+Otobüs
+
+
+
+
+
+102-1
+
+
+
+AKKÖPRÜ-ATILIM ÜNİVERSİTESİ
+
+Otobüs
+
+
+
+
+
+102-2
+
+
+
+ATILIM ÜNİVERSİTESİ-AKKÖPRÜ
+
+Otobüs
+
+
+
+
+
+Yakınımda
+
+Asistan
+
+Resmî
+
+
+
+Canlı bilgi alınıyor...
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ankara · Canlı otobüs
+
+
+
+
+
+
+
+Durak 10940 · EGO mobil servis
+
+Alınma zamanı: 05.11.2026 19:21:05
+
+Canlı ETA sayısı: 6
+
+
+
+Canlı araçlar:
+
+263-7 · (ÖHO) ETLİK-AŞAĞI EĞLENCE-BAKANLIK-BALGAT
+
+Tahmini varış: 0 dk 27 sn
+
+Kaynak konum zamanı: 05.11.2026 19:20:40
+
+
+
+263-7 · (ÖHO) ETLİK-AŞAĞI EĞLENCE-BAKANLIK-BALGAT
+
+Tahmini varış: 8 dk 3 sn
+
+Kaynak konum zamanı: 05.11.2026 19:20:42
+
+
+
+263-7 · (ÖHO) ETLİK-AŞAĞI EĞLENCE-BAKANLIK-BALGAT
+
+Tahmini varış: 56 dk 4 sn
+
+Kaynak konum zamanı: 05.11.2026 19:20:27
+
+
+
+481 · UYANIŞ-ASFALT-15 TEMMUZ KIZILAY MİLLİ İRADE MEYDANI-BALGAT-CEYHUN A.K.CAD
+
+Tahmini varış: 9 dk 45 sn
+
+Kaynak konum zamanı: 05.11.2026 19:20:39
+
+
+
+481 · UYANIŞ-ASFALT-15 TEMMUZ KIZILAY MİLLİ İRADE MEYDANI-BALGAT-CEYHUN A.K.CAD
+
+Tahmini varış: 25 dk 48 sn
+
+Kaynak konum zamanı: 05.11.2026 19:20:41
+
+
+
+481 · UYANIŞ-ASFALT-15 TEMMUZ KIZILAY MİLLİ İRADE MEYDANI-BALGAT-CEYHUN A.K.CAD
+
+Tahmini varış: 58 dk 57 sn
+
+Kaynak konum zamanı: 05.11.2026 19:20:37
+
+
+
+
+
+Tarife bilgisi (canlı araç değildir):
+
+263-7 · (ÖHO) ETLİK-AŞAĞI EĞLENCE-BAKANLIK-BALGAT
+
+Sonraki Hareket Saati İlk Duraktan
+
+19:33 / 12 dk Sonra
+
+
+
+481 · UYANIŞ-ASFALT-15 TEMMUZ KIZILAY MİLLİ İRADE MEYDANI-BALGAT-CEYHUN A.K.CAD
+
+Sonraki Hareket Saati İlk Duraktan
+
+19:45 / 24 dk Sonra
+
+
+
+481-6 · UYANIŞ-ASFALT-15 TEMMUZ KIZILAY MİLLİ İRADE MEYDANI-BALGAT-CEYHUN A.K.CAD
+
+Sonraki Hareket Saati İlk Duraktan
+
+00:01 / 4 sa 40 dk Sonra
+
+
+
+
+
+Kaynak: EGO Cep'te mobil servisi
+
+Tahminler değişebilir.
+
+
+
+
+
+
+
+
+
+
+
+Kapat
+
+
+
+
+
+
+
+
+
+CAPTURE_CITY_0
+
+LIVE_CITY=1; STOP=224672; SUCCESS=true; PEAK_PSS_KIB=8337
+
+
+
+
+
+
+
+
+
+Transit TR
+
+
+
+İstanbul
+
+İstanbul · otobüs ve raylı sistem kataloğu
+
+
+
+
+
+Hatlar
+
+Duraklar
+
+Favori
+
+‹
+
+›
+
+
+
+
+
+1
+
+
+
+KADIKÖY - KİRAZLITEPE
+
+Otobüs
+
+
+
+
+
+1
+
+
+
+KİRAZLITEPE - KADIKÖY
+
+Otobüs
+
+
+
+
+
+10
+
+
+
+ALİ NİHAT TARLAN CADDESİ - ÜMRANİYE DEVLET HASTANESİ ACİL
+
+Otobüs
+
+
+
+
+
+10
+
+
+
+BOSTANCI - BOSTANCI KÖPRÜSÜ
+
+Otobüs
+
+
+
+
+
+Yakınımda
+
+Asistan
+
+Resmî
+
+
+
+Canlı bilgi alınıyor...
+
+
+
+
+
+
+
+
+
+
+
+
+
+İstanbul · Canlı otobüs
+
+
+
+
+
+
+
+İstanbul / İETT · Otobüs durağı 224672
+
+Alınma zamanı: 05.11.2026 19:21:13
+
+
+
+19S · YENİDOĞAN PERONLAR - KADIKÖY
+
+Tahmini varış: (19:21) 1 dk
+
+
+
+4 · MALTEPE PERONLAR - KADIKÖY ÇARŞI
+
+Tahmini varış: (19:21) 1 dk
+
+
+
+GZ1 · KADIKÖY - GÖZTEPE
+
+Tahmini varış: (19:21) 1 dk
+
+
+
+14ES · SARIGAZİ GARAJI - KADIKÖY
+
+Tahmini varış: (19:21) 1 dk
+
+
+
+8A · BATI ATAŞEHİR PERONLAR - KADIKÖY
+
+Tahmini varış: (19:21) 1 dk
+
+
+
+19F · YEDİTEPE ÜNİVERSİTESİ ALT KAPI - KADIKÖY
+
+Tahmini varış: (19:21) 1 dk
+
+
+
+16D · KAYNARCA SONDURAK - KADIKÖY
+
+Tahmini varış: (19:22) 2 dk
+
+
+
+20K · KAZIM KARABEKİR - KADIKÖY
+
+Tahmini varış: (19:23) 3 dk
+
+
+
+14B · ADEM YAVUZ MAHALLESİ - KADIKÖY
+
+Tahmini varış: (19:24) 4 dk
+
+
+
+8A · BATI ATAŞEHİR PERONLAR - KADIKÖY
+
+Tahmini varış: (19:25) 5 dk
+
+
+
+19F · YEDİTEPE ÜNİVERSİTESİ ALT KAPI - KADIKÖY
+
+Tahmini varış: (19:26) 6 dk
+
+
+
+19F · YEDİTEPE ÜNİVERSİTESİ ALT KAPI - KADIKÖY
+
+Tahmini varış: (19:26) 6 dk
+
+
+
+8A · BATI ATAŞEHİR PERONLAR - KADIKÖY
+
+Tahmini varış: (19:27) 7 dk
+
+
+
+19F · YEDİTEPE ÜNİVERSİTESİ ALT KAPI - KADIKÖY
+
+Tahmini varış: (19:27) 7 dk
+
+
+
+FB1 · KADIKÖY - FENERBAHÇE
+
+Tahmini varış: (19:29) 9 dk
+
+
+
+16D · KAYNARCA SONDURAK - KADIKÖY
+
+Tahmini varış: (19:30) 10 dk
+
+
+
+4 · MALTEPE PERONLAR - KADIKÖY ÇARŞI
+
+Tahmini varış: (19:30) 10 dk
+
+
+
+10E · ESATPAŞA - KADIKÖY ÇARŞI
+
+Tahmini varış: (19:30) 10 dk
+
+
+
+15ÇK · ŞEHİT İBRAHİM TURAN CAMİİ - KADIKÖY
+
+Tahmini varış: (19:33) 13 dk
+
+
+
+19F · YEDİTEPE ÜNİVERSİTESİ ALT KAPI - KADIKÖY
+
+Tahmini varış: (19:33) 13 dk
+
+
+
+20K · KAZIM KARABEKİR - KADIKÖY
+
+Tahmini varış: (19:34) 14 dk
+
+
+
+8E · ESENEVLER MAHALLESİ - KADIKÖY ÇARŞI
+
+Tahmini varış: (19:34) 14 dk
+
+
+
+20K · KAZIMKARABEKİR CEM EVİ - KADIKÖY
+
+Tahmini varış: (19:34) 14 dk
+
+
+
+14ŞB · ŞEHİT ŞAHİNBEY - KADIKÖY
+
+Tahmini varış: (19:34) 14 dk
+
+
+
+19Y · ATATÜRK BULVARI - KADIKÖY
+
+Tahmini varış: (19:35) 15 dk
+
+
+
+14ŞB · ŞEHİT ŞAHİNBEY - KADIKÖY
+
+Tahmini varış: (19:36) 16 dk
+
+
+
+14B · ADEM YAVUZ MAHALLESİ - KADIKÖY
+
+Tahmini varış: (19:37) 17 dk
+
+
+
+16D · KAYNARCA SONDURAK - KADIKÖY
+
+Tahmini varış: (19:38) 18 dk
+
+
+
+19F · YEDİTEPE ÜNİVERSİTESİ ALT KAPI - KADIKÖY
+
+Tahmini varış: (19:38) 18 dk
+
+
+
+19F · YEDİTEPE ÜNİVERSİTESİ ALT KAPI - KADIKÖY
+
+Tahmini varış: (19:38) 18 dk
+
+
+
+19S · YENİDOĞAN PERONLAR - KADIKÖY
+
+Tahmini varış: (19:39) 19 dk
+
+
+
+4 · MALTEPE PERONLAR - KADIKÖY ÇARŞI
+
+Tahmini varış: (19:39) 19 dk
+
+
+
+8A · BATI ATAŞEHİR PERONLAR - KADIKÖY
+
+Tahmini varış: (19:40) 20 dk
+
+
+
+14ŞB · ŞEHİT ŞAHİNBEY - KADIKÖY
+
+Tahmini varış: (19:40) 20 dk
+
+
+
+16D · KAYNARCA SONDURAK - KADIKÖY
+
+Tahmini varış: (19:41) 21 dk
+
+
+
+16D · KAYNARCA SONDURAK - KADIKÖY
+
+Tahmini varış: (19:41) 21 dk
+
+
+
+8A · BATI ATAŞEHİR PERONLAR - KADIKÖY
+
+Tahmini varış: (19:41) 21 dk
+
+
+
+19M · ACARLAR SİTESİ - KADIKÖY ÇARŞI
+
+Tahmini varış: (19:43) 23 dk
+
+
+
+19K · ACARLAR SİTESİ - KADIKÖY ÇARŞI
+
+Tahmini varış: (19:43) 23 dk
+
+
+
+19S · YENİDOĞAN PERONLAR - KADIKÖY
+
+Tahmini varış: (19:44) 24 dk
+
+
+
+8E · ESENEVLER MAHALLESİ - KADIKÖY ÇARŞI
+
+Tahmini varış: (19:45) 25 dk
+
+
+
+14ŞB · ŞEHİT ŞAHİNBEY - KADIKÖY
+
+Tahmini varış: (19:45) 25 dk
+
+
+
+19S · YENİDOĞAN PERONLAR - KADIKÖY
+
+Tahmini varış: (19:47) 27 dk
+
+
+
+14ŞB · ŞEHİT ŞAHİNBEY - KADIKÖY
+
+Tahmini varış: (19:47) 27 dk
+
+
+
+16D · KAYNARCA SONDURAK - KADIKÖY
+
+Tahmini varış: (19:48) 28 dk
+
+
+
+14B · ADEM YAVUZ MAHALLESİ - KADIKÖY
+
+Tahmini varış: (19:50) 30 dk
+
+
+
+14ES · SARIGAZİ GARAJI - KADIKÖY
+
+Tahmini varış: (19:50) 30 dk
+
+
+
+20K · KAZIMKARABEKİR CEM EVİ - KADIKÖY
+
+Tahmini varış: (19:51) 31 dk
+
+
+
+ER1 · KADIKÖY - ERENKÖY
+
+Tahmini varış: (19:51) 31 dk
+
+
+
+14ES · SARIGAZİ GARAJI - KADIKÖY
+
+Tahmini varış: (19:52) 32 dk
+
+
+
+15SK · SULTAN MURAT CADDESİ - KADIKÖY
+
+Tahmini varış: (19:53) 33 dk
+
+
+
+ER2 · KADIKÖY - ERENKÖY
+
+Tahmini varış: (19:53) 33 dk
+
+
+
+8A · BATI ATAŞEHİR PERONLAR - KADIKÖY
+
+Tahmini varış: (19:54) 34 dk
+
+
+
+20D · SARIGAZİ GARAJI - KADIKÖY
+
+Tahmini varış: (19:54) 34 dk
+
+
+
+14B · ADEM YAVUZ MAHALLESİ - KADIKÖY
+
+Tahmini varış: (19:56) 36 dk
+
+
+
+8E · ESENEVLER MAHALLESİ - KADIKÖY
+
+Tahmini varış: (19:55) 40 dk
+
+
+
+8A · BATI ATAŞEHİR PERONLAR - KADIKÖY
+
+Tahmini varış: (19:56) 41 dk
+
+
+
+8A · BATI ATAŞEHİR PERONLAR - KADIKÖY
+
+Tahmini varış: (19:56) 49 dk
+
+
+
+Kaynak: https://iett.istanbul/
+
+B işareti: sefer başlamamış veya sinyal sorunu olabilir. Tahminler değişebilir.
+
+
+
+
+
+
+
+
+
+
+
+Kapat
+
+
+
+
+
+
+
+
+
+CAPTURE_CITY_1
+
+LIVE_CITY=2; STOP=21050; SUCCESS=true; PEAK_PSS_KIB=8931
+
+
+
+
+
+
+
+
+
+Transit TR
+
+
+
+İzmir
+
+İzmir · metro ve tramvay tarifesi · İZBAN eski
+
+
+
+
+
+Hatlar
+
+Duraklar
+
+Favori
+
+‹
+
+›
+
+
+
+
+
+1793
+
+
+
+Menemen-Cumaovası
+
+İZBAN (eski katalog)
+
+
+
+
+
+1884
+
+
+
+Aliağa-Çiğli
+
+İZBAN (eski katalog)
+
+
+
+
+
+1946
+
+
+
+Tepeköy-Aliağa
+
+İZBAN (eski katalog)
+
+
+
+
+
+1949
+
+
+
+Cumaovası-Aliağa
+
+İZBAN (eski katalog)
+
+
+
+
+
+Yakınımda
+
+Asistan
+
+Resmî
+
+
+
+Canlı bilgi alınıyor...
+
+
+
+
+
+
+
+
+
+
+
+
+
+İzmir · Canlı otobüs
+
+
+
+
+
+
+
+İzmir / ESHOT · Otobüs durağı 21050
+
+Alınma zamanı: 05.11.2026 19:21:21
+
+
+
+346 · EVKA.5 - EGEKENT AKT.MRK
+
+Kalan durak: 2
+
+Yön: 1
+
+
+
+Canlı yaklaşan araç verisidir. Bu servis dakika vermiyor; durak sayısı dakikaya çevrilmedi.
+
+Kaynak: openapi.izmir.bel.tr / İZTEK
+
+
+
+
+
+
+
+
+
+
+
+Kapat
+
+
+
+
+
+
+
+
+
+CAPTURE_CITY_2
+
+LIVE_CITY=6; STOP=27; SUCCESS=true; PEAK_PSS_KIB=12941
+
+
+
+
+
+
+
+
+
+Transit TR
+
+
+
+Konya
+
+Konya: GTFS 11/2025 · statik hat/durak kataloğu
+
+
+
+
+
+Hatlar
+
+Duraklar
+
+Favori
+
+‹
+
+›
+
+
+
+
+
+1-A
+
+
+
+Hocafakıh Tıp Fakültesi - Hocafakıh Tıp Fakültesi Anasultan
+
+Otobüs
+
+
+
+
+
+1-B
+
+
+
+Hocafakıh Tıp Fakültesi - Hocafakıh Tıp Fakültesi Dörtokka
+
+Otobüs
+
+
+
+
+
+10-A
+
+
+
+Köyceğiz Yeni Yol - Köyceğiz Yeni Yol
+
+Otobüs
+
+
+
+
+
+101-A
+
+
+
+Beyhekim Bosna Tramvay - Beyhekim Bosna Tramvay
+
+Otobüs
+
+
+
+
+
+Yakınımda
+
+Asistan
+
+Resmî
+
+
+
+
+
+
+
+
+
+
+
+
+
+Konya · Canlı otobüs
+
+
+
+
+
+
+
+Konya / ATUS · Otobüs durağı 27
+
+Alınma zamanı: 05.11.2026 19:21:32
+
+
+
+7-A · DURUNDAY YORGANCI
+
+Yön: ALAADDİN
+
+Tahmini varış: 3 dk
+
+
+
+65-A · MEDRESE KUMKÖPRÜ
+
+Yön: ERENKÖY
+
+Tahmini varış: 3 dk
+
+
+
+56-A · ŞEYH ŞAMİL
+
+Yön: KÜLTÜRPARK
+
+Tahmini varış: 3 dk
+
+
+
+31-A · SARAÇOĞLU
+
+Yön: ALAADDİN
+
+Tahmini varış: 6 dk
+
+
+
+84-C · GÖDENE TOKİ 2. ETAP
+
+Yön: ALAADDİN
+
+Tahmini varış: 7 dk
+
+
+
+110-A · HOCAFAKIH NEÜ KÖYCEĞİZ
+
+Yön: ALAADDİN
+
+Tahmini varış: 8 dk
+
+
+
+9-C · LALEBAHÇE TATBİKAT
+
+Yön: ALAADDİN
+
+Tahmini varış: 8 dk
+
+
+
+10-A · KÖYCEĞİZ YENİ YOL
+
+Yön: ALAADDİN
+
+Tahmini varış: 9 dk
+
+
+
+123-A · KARAMAN YOLU
+
+Yön: ALAADDİN
+
+Tahmini varış: 9 dk
+
+
+
+4-A · MERAM YENİYOL ANASULTAN
+
+Yön: ALAADDİN
+
+Tahmini varış: 10 dk
+
+
+
+127-A · AHMET ÖZCAN FETİH CAD.
+
+Yön: ALAADDİN
+
+Tahmini varış: 12 dk
+
+
+
+6-A · MERAM ESKİYOL HAVZAN
+
+Yön: ALAADDİN
+
+Tahmini varış: 12 dk
+
+
+
+76-A · KARATEPE GAZZE
+
+Yön: ALAADDİN
+
+Tahmini varış: 12 dk
+
+
+
+8-A · KOVANAĞZI
+
+Yön: ŞEHİR HASTANESİ
+
+Tahmini varış: 14 dk
+
+
+
+11-B · KARAHÜYÜK HARMANCIK OLCAY
+
+Yön: ALAADDİN
+
+Tahmini varış: 16 dk
+
+
+
+17-A · TIRILIRMAK KAŞ
+
+Yön: ALAADDİN
+
+Tahmini varış: 20 dk
+
+
+
+19-A · KURTULUŞ
+
+Yön: ALAADDİN
+
+Tahmini varış: 20 dk
+
+
+
+2-A · MERAM YAKA ANASULTAN
+
+Yön: ALAADDİN
+
+Tahmini varış: 21 dk
+
+
+
+1-A · HOCAFAKIH TIP FAKÜLTESİ ANASULTAN
+
+Yön: ALAADDİN
+
+Tahmini varış: 23 dk
+
+
+
+84-B · GÖDENE TOKİ 1. ETAP
+
+Yön: ALAADDİN
+
+Tahmini varış: 24 dk
+
+
+
+70-A · HOCACİHAN
+
+Yön: KÜLTÜRPARK
+
+Tahmini varış: 25 dk
+
+
+
+31-B · SARAÇOĞLU ALTINOLUK
+
+Yön: ALAADDİN
+
+Tahmini varış: 26 dk
+
+
+
+137-A · İ. KETENCİ KONYA GAR
+
+Yön: ALAADDİN
+
+Tahmini varış: 37 dk
+
+
+
+31-C · SARAÇOĞLU KANAL
+
+Yön: ALAADDİN
+
+Tahmini varış: 37 dk
+
+
+
+75-A · GÖDENE BEYBES
+
+Yön: ALAADDİN
+
+Tahmini varış: 44 dk
+
+
+
+12-A · KOZAĞAÇ
+
+Yön: ALAADDİN
+
+Tahmini varış: 45 dk
+
+
+
+50-A · SAKYATAN BAKIRTOLU ŞATIR
+
+Yön: ALAADDİN
+
+Tahmini varış: 48 dk
+
+
+
+92-A · ÇARIKLAR ALAADDİN
+
+Yön: ALAADDİN
+
+Tahmini varış: 58 dk
+
+
+
+1-B · HOCAFAKIH TIP FAKÜLTESİ DÖRTOKKA
+
+Yön: ALAADDİN
+
+Kaynak varış bilgisi: 
+
+
+
+11-C · KARAHÜYÜK HARMANCIK TOKALI
+
+Yön: ALAADDİN
+
+Kaynak varış bilgisi: 
+
+
+
+112-A · K. KUMKÖPRÜ ALAADDİN
+
+Yön: ALAADDİN
+
+Kaynak varış bilgisi: 
+
+
+
+13-A · ÇAYIRBAĞI HATIP
+
+Yön: ALAADDİN
+
+Kaynak varış bilgisi: 
+
+
+
+2-B · MERAM YAKA DÖRTOKKA
+
+Yön: ALAADDİN
+
+Kaynak varış bilgisi: 
+
+
+
+4-B · MERAM YENİYOL DÖRTOKKA
+
+Yön: ALAADDİN
+
+Kaynak varış bilgisi: 
+
+
+
+4-C · MERAM YENİYOL AYANBEY
+
+Yön: ALAADDİN
+
+Kaynak varış bilgisi: 
+
+
+
+67-A · MİMAR SİNAN
+
+Yön: ALAADDİN
+
+Kaynak varış bilgisi: 
+
+
+
+7-B · DURUNDAY YORGANCI TOPRAKSARNIÇ
+
+Yön: ALAADDİN
+
+Kaynak varış bilgisi: 
+
+
+
+74-A · DUTLU CAD. YENİ YOL
+
+Yön: ALAADDİN
+
+Kaynak varış bilgisi: 
+
+
+
+76-B · KARATEPE GAZZE ŞAKİRLER SK
+
+Yön: ALAADDİN
+
+Kaynak varış bilgisi: 
+
+
+
+84-D · GÖDENE TOKİ 1. ETAP EKSPRES
+
+Yön: ALAADDİN
+
+Kaynak varış bilgisi: 
+
+
+
+84-E · GÖDENE TOKİ 2. ETAP EKSPRES
+
+Yön: ALAADDİN
+
+Kaynak varış bilgisi: 
+
+
+
+9-B · LALEBAHÇE ÇALIKLI
+
+Yön: ALAADDİN
+
+Kaynak varış bilgisi: 
+
+
+
+120-A · ALAADDİN AYKENT KONSAN
+
+Yön: AYKENT
+
+Kaynak varış bilgisi: 
+
+
+
+25-A · DERE TIP ŞEHİRHASTANESİ
+
+Yön: ŞEHİR HASTANESİ
+
+Kaynak varış bilgisi: 
+
+
+
+38-B · GAR MEVLANA
+
+Yön: ŞEHİR HASTANESİ
+
+Kaynak varış bilgisi: 
+
+
+
+Kaynak: https://atus.konya.bel.tr/
+
+Tahminler değişebilir.
+
+
+
+
+
+
+
+
+
+
+
+Kapat
+
+
+
+
+
+
+
+
+
+CAPTURE_CITY_6
+
+DONE Android 2.2 API 8; LIVE_CITY_PASS=4/4
+
+
+

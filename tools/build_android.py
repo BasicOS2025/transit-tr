@@ -37,7 +37,7 @@ if (source/'res').exists():resources+=['-S',source/'res']
 run(bt/('aapt'+exe),'package','-f','-0','sqlite','-M',manifest,'-I',jar,*resources,'-F',unsigned)
 with zipfile.ZipFile(unsigned,'a',zipfile.ZIP_DEFLATED) as z:z.write(dex/'classes.dex','classes.dex')
 aligned=work/'aligned.apk';run(bt/('zipalign'+exe),'-f','4',unsigned,aligned)
-apk=dist/('transit-tr-v0.9-'+('tests' if tests_mode else 'modern' if modern else 'legacy')+'.apk');minimum='23' if modern else '8'
+apk=dist/('transit-tr-v1.0-'+('tests' if tests_mode else 'modern' if modern else 'legacy')+'.apk');minimum='23' if modern else '8'
 run(java,'-jar',bt/'lib/apksigner.jar','sign','--min-sdk-version',minimum,'--ks',key,'--ks-key-alias',os.environ.get('KEY_ALIAS','transittr'),'--ks-pass','env:KS_PASS','--key-pass','env:KS_PASS','--out',apk,aligned)
 run(java,'-jar',bt/'lib/apksigner.jar','verify','--verbose','--min-sdk-version',minimum,apk)
 print('APK:',apk)

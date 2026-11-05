@@ -37,3 +37,7 @@ contributors), licensed under the Open Database License (ODbL).
 
 TLS compatibility: Bouncy Castle 1.86 (bcprov/bctls/bcutil jdk15to18), relocated to org.transittr.bc. Full license: android-legacy/libs/BOUNCY-CASTLE-LICENSE.txt.
 Ankara stop-name snapshot: OpenStreetMap contributors, ODbL, distributed by egomac under its attribution. Coordinates are not present in that snapshot.
+
+Google Material Icons: map icon, Copyright Google, Apache License 2.0 (see LICENSE). Source: https://github.com/google/material-design-icons/blob/master/src/maps/map/materialicons/24px.svg . The SVG path is rendered with Android Canvas for API 8 compatibility.
+
+Rail station-network snapshot: Ankara M1–M4/Ankaray and Istanbul M11 use OpenStreetMap-derived factual records published by kacdurak.com, © OpenStreetMap contributors, ODbL 1.0 (https://opendatacommons.org/licenses/odbl/1-0/). Metadata and source data accompany the app; see data/raw/rail-networks-v1.json and docs/SOURCES-v1.md. Other Istanbul rail records retain the IBB Open Data License referenced in docs/SOURCES-v05.md. Code licensing does not relicense database rights.
