@@ -20,9 +20,9 @@ $env:ANDROID_TESTS='1'
 python tools/build_android.py
 ```
 
-Son komut test APK’sı üretir; normal uygulamayı yeniden derlemek için ANDROID_TESTS değişkenini kaldırın. Çıktılar `dist/transit-tr-v1.0-{modern,legacy,tests}.apk`. ZIP dağıtımındaki kullanıcı dosya adları daha açıklayıcıdır. Yeni derleme klasörleri her seferinde oluşturulur. aapt, zipalign ve apksigner işlemleri betik tarafından yürütülür. Windows Unicode yol sorunu için 8.3 kısa yollar kullanılır; sistemde kısa yol üretimi kapalıysa ASCII bir klasörden derleyin.
+Son komut test APK’sı üretir; normal uygulamayı yeniden derlemek için ANDROID_TESTS değişkenini kaldırın. Çıktılar `dist/transit-tr-v1.1.0-{modern,legacy,tests}.apk`. ZIP dağıtımındaki kullanıcı dosya adları daha açıklayıcıdır. Yeni derleme klasörleri her seferinde oluşturulur. aapt, zipalign ve apksigner işlemleri betik tarafından yürütülür. Windows Unicode yol sorunu için 8.3 kısa yollar kullanılır; sistemde kısa yol üretimi kapalıysa ASCII bir klasörden derleyin.
 
-Katalog: `python tools/build_catalog.py`. Metro ağı: `python tools/build_rail.py`. Test paketini kurduktan sonra `python tools/run_map_tests.py emulator-5556 --output test-results`; eski katalog/canlı sorgular için `.V09Check`. Test kodu son kullanıcı APK’sına paketlenmez.
+Katalog ve rota verileri: `python tools/build_route_data.py` (ham kaynaklar veri paketindedir). APK derlemesi SQLite varlığını GZIP akışı olarak `.dbz` dosyasına paketler; Android 2.2’nin büyük sıkıştırılmış Asset sınırını aşmadan disk dosyasına açar. Verinin tamamı Java belleğine alınmaz. Metro ağı: `python tools/build_rail.py`. Test paketini kurduktan sonra `python tools/run_map_tests.py emulator-5556 --output test-results`; eski katalog/canlı sorgular için `.V09Check`. Test kodu son kullanıcı APK’sına paketlenmez.
 
 API 8 android.jar SHA256: `a1d34a01ddb9ab7222445b79893d4af584ed4dd7cd180224b8f9037fb94395aa`.
 

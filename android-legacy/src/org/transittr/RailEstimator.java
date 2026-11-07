@@ -13,9 +13,10 @@ public final class RailEstimator {
  }
  private static JSONObject data;
  private static synchronized JSONObject data(Context context)throws Exception{
-  if(data==null){InputStream in=context.getAssets().open("rail-estimates.json");ByteArrayOutputStream out=new ByteArrayOutputStream();try{byte[] b=new byte[4096];int n;while((n=in.read(b))!=-1){if(out.size()+n>262144)throw new IOException("Metro model sınırı");out.write(b,0,n);}}finally{in.close();}data=new JSONObject(new String(out.toByteArray(),"UTF-8"));}return data;
+  if(data==null){InputStream in=context.getAssets().open("rail-estimates.json");ByteArrayOutputStream out=new ByteArrayOutputStream();try{byte[] b=new byte[4096];int n;while((n=in.read(b))!=-1){if(out.size()+n>262144)throw new IOException("Metro model sınırı");out.write(b,0,n);}}finally{in.close();}data=new JSONObject(new String(out.toByteArray(),"UTF-8"));EgoSchedule.applyRail(context,data);}return data;
  }
  public static long serviceStart(long now){Calendar c=Calendar.getInstance(TimeZone.getTimeZone("GMT+03:00"));c.setTimeInMillis(now);if(c.get(Calendar.HOUR_OF_DAY)<6)c.add(Calendar.DATE,-1);c.set(Calendar.HOUR_OF_DAY,0);c.set(Calendar.MINUTE,0);c.set(Calendar.SECOND,0);c.set(Calendar.MILLISECOND,0);return c.getTimeInMillis();}
+ public static synchronized void invalidate(){data=null;}
  private static int day(long start){Calendar c=Calendar.getInstance(TimeZone.getTimeZone("GMT+03:00"));c.setTimeInMillis(start);int d=c.get(Calendar.DAY_OF_WEEK);return d==Calendar.SATURDAY?1:d==Calendar.SUNDAY?2:0;}
  private static boolean night(long start){Calendar c=Calendar.getInstance(TimeZone.getTimeZone("GMT+03:00"));c.setTimeInMillis(start);int d=c.get(Calendar.DAY_OF_WEEK);return d==Calendar.FRIDAY||d==Calendar.SATURDAY;}
  private static JourneyData.RailLine find(ArrayList<JourneyData.RailLine> lines,String id){for(JourneyData.RailLine l:lines)if(id.equals(l.id))return l;return null;}
@@ -37,7 +38,7 @@ public final class RailEstimator {
   if(profile==null){out.explanation="Bu hat için saat modeli yok; istasyon ağı gösteriliyor.";return out;}
   JourneyData.RailLine route=id.equals("M123")?corridor(lines):selected;if(route.stations.size()<2){out.explanation="Model için istasyon verisi eksik.";return out;}
   long start=serviceStart(now);double seconds=(now-start)/1000.0;int day=day(start),dwell=root.optInt("dwellSeconds",20);boolean scheduled="departures".equals(profile.getString("kind"));
-  out.source=profile.getJSONArray("sources").getString(0);out.explanation=scheduled?"EGO kalkış çizelgesi · "+(day==0?"hafta içi":day==1?"cumartesi":"pazar")+" · 05.11.2026":"Sıklık modeli · gerçek kalkış çizelgesi değil";
+  out.source=profile.getJSONArray("sources").getString(0);out.explanation=scheduled?"EGO kalkış çizelgesi · "+(day==0?"hafta içi":day==1?"cumartesi":"pazar")+" · "+(profile.optLong("synced_at",0)>0?new java.text.SimpleDateFormat("dd.MM.yyyy",Locale.US).format(new Date(profile.optLong("synced_at"))):"05.11.2026"):"Sıklık modeli · gerçek kalkış çizelgesi değil";
   out.explanation+="\n"+(id.equals("M123")?"M1–M2–M3 birleşik Koru–OSB hattı. ":"")+root.getString("assumptions");
   if(!scheduled)out.explanation+="\n"+profile.optString("note","");
   HashSet<String> allowed=new HashSet<String>();for(JourneyData.Station st:selected.stations)allowed.add(st.name);

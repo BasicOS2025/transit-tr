@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-07",
+  "ego_lines": 665,
+  "ankara_stops": 10866,
+  "ankara_coordinate_records": 6501,
+  "konya_shape_points": 53538,
+  "favourite_ids_preserved": true,
+  "osm_query": "Ankara administrative boundary, highway=bus_stop, ref"
+}

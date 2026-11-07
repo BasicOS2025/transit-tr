@@ -41,3 +41,35 @@ Ankara stop-name snapshot: OpenStreetMap contributors, ODbL, distributed by egom
 Google Material Icons: map icon, Copyright Google, Apache License 2.0 (see LICENSE). Source: https://github.com/google/material-design-icons/blob/master/src/maps/map/materialicons/24px.svg . The SVG path is rendered with Android Canvas for API 8 compatibility.
 
 Rail station-network snapshot: Ankara M1–M4/Ankaray and Istanbul M11 use OpenStreetMap-derived factual records published by kacdurak.com, © OpenStreetMap contributors, ODbL 1.0 (https://opendatacommons.org/licenses/odbl/1-0/). Metadata and source data accompany the app; see data/raw/rail-networks-v1.json and docs/SOURCES-v1.md. Other Istanbul rail records retain the IBB Open Data License referenced in docs/SOURCES-v05.md. Code licensing does not relicense database rights.
+
+
+## Otobüsüm Anlık API integration
+
+Native adaptation of public API contracts and direction/vehicle matching from the user-supplied otobusum-anlik-main.zip. No React Native runtime, copied map styles, bundled fonts, OAuth keys or embedded service passwords are used. The following license applies to adapted code, separately from service data rights:
+
+MIT License
+
+Copyright (c) 2025 metkm
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+## 1.1.0 durak ve rota verileri
+Ankara koordinatları: OpenStreetMap contributors, ODbL; 7 Kasım 2026 Ankara il sınırı içindeki `highway=bus_stop` + `ref` sorgusu. Ham yanıt `data/raw/ankara-osm-20261107.json` içindedir. EGO saatleri, adlar ve sıralar ego.gov.tr sitesindeki yayımlanmış hizmet bilgileridir; ayrı bir açık veri lisansı belirtilmemiştir.
+İzmir ESHOT: `eshot-otobus-duraklari.csv`, `eshot-otobus-hat-listesi.csv`, `otobus-hat-guzergahlari.csv`; 7 Kasım 2026 indirmesi. Kaynak: https://acikveri.bizizmir.com/tr/dataset/otobus-hat-guzergahlari . İzmir Büyükşehir Belediyesi Açık Veri Lisansı: https://acikveri.bizizmir.com/tr/license . Veriler uygulamaya dönüştürülmüş, koordinat hassasiyeti artırılmamıştır. Lisans kodun Apache-2.0 lisansından ayrıdır.

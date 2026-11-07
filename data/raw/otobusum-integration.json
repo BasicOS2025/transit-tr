@@ -1,0 +1,14 @@
+{
+  "archive": "otobusum-anlik-main.zip",
+  "sha256": "1075f71f4a0c0ce38bebf471e2a6a43c272b78700ca2235d43d9c35b941e51b8",
+  "license": "MIT, Copyright (c) 2025 metkm",
+  "verified": "2026-11-07",
+  "api": "https://otobusum.metkm.win",
+  "scope": [
+    "stop arrivals with GPS",
+    "line GPS fallback",
+    "direction filtering",
+    "line stop markers"
+  ],
+  "official_gps_primary": "https://api.ibb.gov.tr/iett/FiloDurum/SeferGerceklesme.asmx"
+}

@@ -1,7 +1,7 @@
 """Run MapCheck, bring the app back from HOME and capture actual Android screens. Requires adb."""
 import argparse, os, subprocess, sys, time, socket, struct, binascii, zlib
 from pathlib import Path
-parser=argparse.ArgumentParser();parser.add_argument('serial');parser.add_argument('--output',type=Path,default=Path('test-results'));args=parser.parse_args()
+parser=argparse.ArgumentParser();parser.add_argument('serial');parser.add_argument('--test-class',default='MapCheck',choices=['MapCheck','EgoLineCheck','IettCheck','RoutePinCheck']);parser.add_argument('--output',type=Path,default=Path('test-results'));args=parser.parse_args()
 adb=os.environ.get('ANDROID_ADB','adb');args.output.mkdir(parents=True,exist_ok=True)
 def capture(name):
     sdk=int(subprocess.check_output([adb,'-s',args.serial,'shell','getprop','ro.build.version.sdk']).strip())
@@ -32,7 +32,7 @@ def capture(name):
             png=b'\x89PNG\r\n\x1a\n'+chunk(b'IHDR',struct.pack('>2I5B',w,h,8,2,0,0,0))+chunk(b'IDAT',zlib.compress(scan))+chunk(b'IEND',b'')
     if not png.startswith(b'\x89PNG'):raise RuntimeError('Invalid screenshot')
     (args.output/(args.serial+'-'+name+'.png')).write_bytes(png)
-p=subprocess.Popen([adb,'-s',args.serial,'shell','am','instrument','-w','org.transittr.tests/.MapCheck'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+p=subprocess.Popen([adb,'-s',args.serial,'shell','am','instrument','-w','org.transittr.tests/.'+args.test_class],stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
 passed=False;log=[]
 for raw in iter(p.stdout.readline,b''):
     line=raw.decode('utf-8','replace');log.append(line);print(line,end='',flush=True)

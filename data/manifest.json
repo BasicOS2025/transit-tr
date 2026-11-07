@@ -1,12 +1,12 @@
 {
-  "date": "2026-11-04",
+  "date": "2026-11-07",
   "cities": [
     {
       "id": 0,
       "name": "Ankara",
       "official": "https://www.ego.gov.tr/",
       "routes": 665,
-      "stops": 2813
+      "stops": 10866
     },
     {
       "id": 1,
@@ -19,8 +19,8 @@
       "id": 2,
       "name": "İzmir",
       "official": "https://www.eshot.gov.tr/",
-      "routes": 15,
-      "stops": 118
+      "routes": 907,
+      "stops": 12101
     },
     {
       "id": 3,
@@ -110,16 +110,30 @@
     },
     {
       "id": 8,
-      "name": "OpenStreetMap Ankara / egomac, 2026-05-02",
-      "url": "https://github.com/byigitt/egomac",
-      "license": "© OpenStreetMap contributors, ODbL; egomac MIT",
+      "name": "Ankara durakları · EGO adları / OpenStreetMap koordinatları, 2026-11-07",
+      "url": "https://www.openstreetmap.org/copyright",
+      "license": "© OpenStreetMap contributors, ODbL; EGO yayımlanmış durak adları; eski ad girdisi egomac MIT",
       "downloaded": "2026-11-04",
+      "end": ""
+    },
+    {
+      "id": 9,
+      "name": "İzmir Büyükşehir Belediyesi / ESHOT",
+      "url": "https://acikveri.bizizmir.com/tr/dataset/otobus-hat-guzergahlari",
+      "license": "İzmir Büyükşehir Belediyesi Açık Veri Lisansı — https://acikveri.bizizmir.com/tr/license",
+      "downloaded": "2026-11-07",
       "end": ""
     }
   ],
   "raw_sha256": {
     "ankara-lines.json": "12402c7aea874049b508b913ba975622082e53e88d5f844264a93bdab958325d",
-    "ankara-stops-osm.json": "8387364f6c01b4b93737fc5c664be5ec0e9017c182ed3d9b40f49961c73165e2",
+    "ankara-osm-20261107.json": "bd879c81717778a29981cd20e33ce5650f8dec80eb81ab465222a5ce6c422878",
+    "ankara-stops-egomac-names.json": "8387364f6c01b4b93737fc5c664be5ec0e9017c182ed3d9b40f49961c73165e2",
+    "ankara-stops-osm.json": "507de310232dce62f02f940e54ff6f1bbc2eb115c9df4958f77508cfe59b67e5",
+    "ego-sync-report.json": "da588a0aec621fea72ad07aaec082f96501786abc67a2270f3002f6201499445",
+    "egomac-upstream-v101.json": "aceebc0a1d22ecf2ef236be305fe27307cf76de627a67e79aef36bb5bee56dc0",
+    "eshot-otobus-duraklari.csv": "1fdc33d215f00c72a0e7da8fafe5f750e6242bd72d5b9c8a36636dbe1e15a0fb",
+    "eshot-otobus-hat-listesi.csv": "8a4035a96290b4a2258e0f32af2d60266242a03de5cc235df685828e33ee1dff",
     "iett-metadata.json": "5e2ae911a8f93511140ce1402a4ffa979011c10073693bae06382f99d9e8c34a",
     "iett-routes.csv": "830aa6fec981a699d8164bd5569a1c90e7154b95f713be3fc1327a9ac71cbc3a",
     "iett-stops.csv": "fe68b255378db380aee114ab8f93002c7a23aaf32850c5cd35db419d611382bc",
@@ -130,6 +144,17 @@
     "izmir-tram.zip": "9af3877eb5d567ebe54a634f2f7188e66c8192fcbea96a89ca0496bf11a214fe",
     "konya-gtfs-meta.json": "f6c867f4d9ff7168d2c73c919616e420e6a30200474b2db8eeca4860a0c90875",
     "konya-gtfs.zip": "73ba19c284fe76896bb33fb6898919104e922e14c029a622e455e835ce998a3d",
-    "metro-meta.json": "2d87ffb58f6d56c1fa12156e3e38e6b3faf387d9af609b1ffe1f2bf8a808cd51"
+    "metro-meta.json": "2d87ffb58f6d56c1fa12156e3e38e6b3faf387d9af609b1ffe1f2bf8a808cd51",
+    "otobus-hat-guzergahlari.csv": "c3699d4839ac1019cdadbdaea3f9446daeafc260072604433c7ee8ca2eed9b14",
+    "otobusum-integration.json": "23fdafd48a74488130ce41e161bc782c1471200dfe88171a9a4e072249838146",
+    "rail-estimates-v1.json": "4fa2dabcc32aee68ab0aabe32c81f2bbf8f8c3f8632aff40361730a2fc77296e",
+    "rail-networks-v1.json": "617ee1fcec51184be9f1d0f43d06c3a961bc122a0cf64ff286bcd3e68420f38b",
+    "route-build-report.json": "b60fbf8ca1641ee5f6ab77ea42f0ad5f947f8e6a94cd6d456f9653a23e242e5d"
+  },
+  "snapshots": {
+    "ankara_osm_coordinates": "2026-11-07",
+    "ego_schedule_sync": "2026-11-07",
+    "izmir_bus_csv": "2026-11-07",
+    "konya_gtfs": "2025-11"
   }
 }

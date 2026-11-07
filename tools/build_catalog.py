@@ -107,15 +107,15 @@ c=catalogs[0]
 src=source(0,'EGO resmî hat kataloğu','https://www.ego.gov.tr/hareketsaatleri','Resmî hizmet; veri lisansı belirtilmemiş')
 for r in json.loads((RAW/'ankara-lines.json').read_text(encoding='utf-8')):
  c['routes'].append(dict(id=new('route'),code=r['code'],name=r['name'],type=r['type'],source=src,stops=[]))
-src=source(0,'OpenStreetMap Ankara / egomac, 2026-05-02','https://github.com/byigitt/egomac','© OpenStreetMap contributors, ODbL; egomac MIT')
+src=source(0,'Ankara durakları · EGO adları / OpenStreetMap koordinatları, 2026-11-07','https://www.openstreetmap.org/copyright','© OpenStreetMap contributors, ODbL; EGO yayımlanmış durak adları; eski ad girdisi egomac MIT')
 seen_stops=set()
 for r in json.loads((RAW/'ankara-stops-osm.json').read_text(encoding='utf-8'))['stops']:
  code=str(r.get('r','')).strip();name=r.get('n','').strip()
- if not re.fullmatch(r'[0-9]{5}',code) or not name or code in seen_stops:continue
- seen_stops.add(code);c['stops'].append(dict(id=new('stop'),code=code,name=name,lat=None,lon=None,source=src))
+ if not re.fullmatch(r'(?:[0-9]{5}|[MA][0-9]{1,3})',code) or not name or code in seen_stops:continue
+ seen_stops.add(code);c['stops'].append(dict(id=new('stop'),code=code,name=name,lat=r.get('lat'),lon=r.get('lon'),source=src))
 
 # Output SQLite optimized for old Android's built-in SQLite, plus browser JSON.
-asset=ROOT/'android-legacy/assets/transit-v09.sqlite';asset.unlink(missing_ok=True);db=sqlite3.connect(asset)
+asset=ROOT/'android-legacy/assets/transit-v101.sqlite';asset.unlink(missing_ok=True);db=sqlite3.connect(asset)
 db.executescript('''CREATE TABLE routes(id INTEGER PRIMARY KEY,city INTEGER,code TEXT,name TEXT,type TEXT,source INTEGER,search TEXT);
 CREATE TABLE stops(id INTEGER PRIMARY KEY,city INTEGER,code TEXT,name TEXT,lat REAL,lon REAL,source INTEGER,search TEXT);
 CREATE TABLE route_stops(route INTEGER,stop INTEGER,seq INTEGER);
@@ -127,6 +127,7 @@ CREATE INDEX rs_route ON route_stops(route,seq); CREATE INDEX stop_geo ON stops(
 CREATE INDEX route_city ON routes(city);CREATE INDEX d_stop ON departures(stop,time);CREATE INDEX ex_service ON exceptions(service,date);
 ''')
 for s in sources:db.execute('INSERT INTO sources VALUES(?,?,?,?,?,?)',(s['id'],s['name'],s['url'],s['license'],s['downloaded'],s['end']))
+db.executescript('CREATE TABLE IF NOT EXISTS route_external(route INTEGER PRIMARY KEY,code TEXT); CREATE TABLE IF NOT EXISTS route_shapes(route INTEGER,seq INTEGER,lat REAL,lon REAL); CREATE INDEX IF NOT EXISTS idx_shapes_route ON route_shapes(route,seq);')
 for c in catalogs:
  for r in c['routes']:
   db.execute('INSERT INTO routes VALUES(?,?,?,?,?,?,?)',(r['id'],c['id'],r['code'],r['name'],r['type'],r['source'],norm(r['code']+' '+r['name'])))

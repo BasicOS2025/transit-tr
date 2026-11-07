@@ -2,7 +2,7 @@ import sqlite3,json,unittest
 from pathlib import Path
 root=Path(__file__).resolve().parents[1]
 class CatalogTest(unittest.TestCase):
- def setUp(self):self.db=sqlite3.connect(root/'android-legacy/assets/transit-v09.sqlite')
+ def setUp(self):self.db=sqlite3.connect(root/'android-legacy/assets/transit-v101.sqlite')
  def tearDown(self):self.db.close()
  def test_integrity(self):
   self.assertEqual(self.db.execute('pragma integrity_check').fetchone()[0],'ok')

@@ -1,6 +1,6 @@
 """Build API 8 APK with ECJ, R8, aapt, zipalign and apksigner; no network access."""
 from pathlib import Path
-import os,subprocess,tempfile,zipfile,ctypes,shutil
+import os,subprocess,tempfile,zipfile,ctypes,shutil,re,gzip
 ROOT=Path(__file__).resolve().parents[1]
 def short(p):
  p=str(Path(p).resolve())
@@ -32,12 +32,18 @@ if modern:text=text.replace('android:minSdkVersion="8"','android:minSdkVersion="
 manifest.write_text(text,encoding='utf-8')
 exe='.exe' if os.name=='nt' else '';unsigned=work/'unsigned.apk'
 resources=[]
-if (source/'assets').exists():resources+=['-A',source/'assets']
+if (source/'assets').exists():
+ assets=work/'assets';shutil.copytree(source/'assets',assets,ignore=shutil.ignore_patterns('*.sqlite'))
+ for database in (source/'assets').glob('*.sqlite'):
+  with database.open('rb') as inp,(assets/(database.name+'.dbz')).open('wb') as target:
+   with gzip.GzipFile(filename='',mode='wb',fileobj=target,mtime=0) as out:shutil.copyfileobj(inp,out,65536)
+ resources+=['-A',assets]
 if (source/'res').exists():resources+=['-S',source/'res']
-run(bt/('aapt'+exe),'package','-f','-0','sqlite','-M',manifest,'-I',jar,*resources,'-F',unsigned)
+run(bt/('aapt'+exe),'package','-f','-0','dbz','-M',manifest,'-I',jar,*resources,'-F',unsigned)
 with zipfile.ZipFile(unsigned,'a',zipfile.ZIP_DEFLATED) as z:z.write(dex/'classes.dex','classes.dex')
 aligned=work/'aligned.apk';run(bt/('zipalign'+exe),'-f','4',unsigned,aligned)
-apk=dist/('transit-tr-v1.0-'+('tests' if tests_mode else 'modern' if modern else 'legacy')+'.apk');minimum='23' if modern else '8'
+version=re.search(r'android:versionName="([^"]+)"',(root/'android-legacy/AndroidManifest.xml').read_text(encoding='utf-8')).group(1)
+apk=dist/('transit-tr-v'+version+'-'+('tests' if tests_mode else 'modern' if modern else 'legacy')+'.apk');minimum='23' if modern else '8'
 run(java,'-jar',bt/'lib/apksigner.jar','sign','--min-sdk-version',minimum,'--ks',key,'--ks-key-alias',os.environ.get('KEY_ALIAS','transittr'),'--ks-pass','env:KS_PASS','--key-pass','env:KS_PASS','--out',apk,aligned)
 run(java,'-jar',bt/'lib/apksigner.jar','verify','--verbose','--min-sdk-version',minimum,apk)
 print('APK:',apk)
