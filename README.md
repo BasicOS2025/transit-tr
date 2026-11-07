@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Transit TR
 
 Android 6+ ve Android 2.2 için yerel toplu taşıma uygulaması. OpenStreetMap üzerinde otobüs konumlarını, durakları ve hat rotalarını gösterir. Ankara ve İstanbul için ayrı metro haritası ve saate dayalı tren konumu tahminleri sunar. WebView veya Google Play Services gerektirmez.
