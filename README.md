@@ -97,7 +97,7 @@ node tests/core.test.cjs
 python tools/run_map_tests.py emulator-5556 --output test-results
 adb shell am instrument -w org.transittr.tests/.V09Check
 ```
->>>>>>> ecb1baefdb77d54e9c43373c0eb279c304d4c407
+
 
 APK indirmeleri için [Releases](https://github.com/basicos2025/transit-tr/releases) bölümünü kullanın. 1.1.0 dağıtım dosyaları:
 
@@ -227,4 +227,3 @@ Resmî olmayan bağımsız projedir; belediyeler tarafından yayımlanmış bir 
 Kod Apache-2.0. Google Material Icons Apache-2.0; Geist SIL OFL; Bouncy Castle kendi lisansı; OpenStreetMap verileri ODbL, İBB ve İzmir verileri ilgili açık veri lisansları altındadır. Veri lisansları kod lisansından ayrıdır. [Üçüncü taraf bildirimleri](THIRD-PARTY-NOTICES.md) ve [kaynaklar](docs/SOURCES-v1.md) korunmalıdır.
 
 MapCheck arka plan kontrolü sırasında `RESUME_FROM_HOME` durumunu üretir; Python çalıştırıcı ADB ile uygulamayı öne getirir. Bu nedenle yaşam döngüsü kontrolü için çalıştırıcıyı kullanın.
->>>>>>> ecb1baefdb77d54e9c43373c0eb279c304d4c407
