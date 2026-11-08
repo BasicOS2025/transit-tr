@@ -1,11 +1,10 @@
-
 # Transit TR
 
 Android 6+ ve Android 2.2 için yerel toplu taşıma uygulaması. OpenStreetMap üzerinde otobüs konumlarını, durakları ve hat rotalarını gösterir. Ankara ve İstanbul için ayrı metro haritası ve saate dayalı tren konumu tahminleri sunar. WebView veya Google Play Services gerektirmez.
 
-**Sürüm: 1.1.0** · [Kaynak kod](#kaynak-kod) · [Kurulum](#kurulum) · [Test raporu](docs/TEST-REPORT-v110.md) · [Lisans](LICENSE)
+**Sürüm: 1.2.0** · [Kaynak kod](#kaynak-kod) · [Kurulum](#kurulum) · [Test raporu](docs/WIDGET-v120.md) · [Lisans](LICENSE)
 
-![Android 6 üzerinde canlı harita ve sorgulanan durak](docs/screenshots/v110/harita-android6.png)
+![Android 6 üzerinde canlı harita ve sorgulanan durak](docs/screenshots/v120/bus-route-android6.png)
 
 ## Özellikler
 
@@ -16,31 +15,39 @@ Android 6+ ve Android 2.2 için yerel toplu taşıma uygulaması. OpenStreetMap 
 - **Yeni katalog:** ana uygulama içinde Hatlar, Duraklar ve Kaydedilenler; arama, yıldızla kaydetme, yakın duraklar ve kaydırarak yeni sonuç yükleme.
 - **Ankara sefer saatleri:** EGO'dan otobüs, metro ve Ankaray saatleri; hafta içi, cumartesi ve pazar sütunları, özel sefer notları ve yenileme.
 - **Ayrı metro haritası:** Ankara ve İstanbul hatları, istasyonlar ve saate dayalı tahmini tren konumları.
-- **Yerel arayüz:** Geist yazı tipi, açık yüzeyler ve Material harita ikonu. Android 2.2'de daha küçük karo belleği ve tek harita ağ işçisi.
+- **Yerel arayüz:** Geist yazı tipi, açık/koyu tema ve dört Material menü ikonu. Android 2.2'de daha küçük karo belleği ve tek harita ağ işçisi.
 - **OpenStreetMap:** sürükleme, iki parmakla yakınlaştırma, artı/eksi düğmeleri ve görünür karolar için en az 7 günlük önbellek.
 
-Canlı takip ön planda Ankara, İzmir ve Konya için yaklaşık 20 saniyede, İstanbul için yaklaşık 60 saniyede yenilenir. Arka planda takip servisi çalışmaz. Bağlantı hatasında önceki sonuçlar korunur ve yeniden deneme aralığı uzar.
-=======
-# Transit TR 
+Canlı takip ön planda Ankara, İzmir ve Konya için yaklaşık 20 saniyede, İstanbul için yaklaşık 60 saniyede yenilenir. Uygulama içi harita takibi arka planda durur. Widget kuruluysa görünen kayıtlar için kısa süreli yenileme işleri çalışabilir. Bağlantı hatasında önceki sonuçlar korunur ve yeniden deneme aralığı uzar.
 
-Android 6+ ve Android 2.2 için yerel toplu taşıma uygulaması. OpenStreetMap üzerinde belediye kaynaklarından gelen otobüs konumlarını, Ankara ve İstanbul metro/istasyon ağını gösterir. WebView veya Google Play Services gerektirmez.
+## Ana ekran widget’ı
 
-## Özellikler
+Ankara, İstanbul, İzmir ve Konya’dan **durak + hat çiftlerini** kaydedip launcher üzerinde varış bilgisini görebilirsiniz. İlk kullanımda örnek hat eklenmez; yalnız kullanıcının kaydettiği sorgular listelenir.
 
-- **Canlı harita:** Ankara EGO durak sorgusundan GPS ve varış dakikaları; İstanbul İETT hat sorgusundan GPS konumları. İstanbul durağının dakika sonuçları “Tüm sonuçlar” bölümündedir; GPS konumu dakika tahminine çevrilmez.
-- **Metro:** Ankara M1–M4 ve Ankaray (5 hat, 54 istasyon kaydı); İstanbul 19 raylı hat, 250 istasyon kaydı, M11 dahil. Hat seçme, istasyon listesi ve istasyona odaklanma.
-- **OpenStreetMap:** sürükleme, iki parmakla yakınlaştırma, yakınlaştır/uzaklaştır, görünür alan için karo önbelleği ve kaynak atfı.
-- **Hızlı yerel arayüz:** Geist yazı tipi, sade açık yüzeyler, Material harita ikonu. Android 2.2’de daha küçük karo belleği ve tek ağ işçisi.
-- Harita açıkken 20 saniyede yenileme; arka planda takip servisi yoktur. Hata sırasında önceki konumlar korunur ve yeniden deneme aralığı uzar.
-- **Katalog:** Ankara, İstanbul, İzmir ve Konya hat/durak arama, favoriler, yerel yakın durak ve mevcut tarife ekranları.
-- **Diğer canlı sorgular:** İzmir yaklaşan araç/kalan durak ve Konya varış bilgileri. İzmir harita GPS desteği vardır; bu sürümün gerçek GPS harita testi Ankara ve İstanbul’da yapıldı. Konya harita GPS katmanı yoktur.
+1. Canlı takip ekranındaki yıldızı veya **Katalog → Durak + hat favorileri** bağlantısını açın.
+2. Şehir, durak numarası ve hat kodunu girip **Durak + hattı kaydet** düğmesine dokunun. İsterseniz kısa bir ad verin.
+3. Launcher’ın widget listesinden **Transit TR · Varışlar** öğesini ana ekrana ekleyin.
+4. **Yenile** ile yeni sorgu yapın. Satıra dokununca uygulama aynı şehir, durak ve hatla açılır. **Sonraki** ile diğer kayıtlara geçin.
 
-Metro için ayrı bir harita bulunur. **Tren konumları saate dayalı tahmindir, GPS değildir.** Ankara’da EGO’nun iki yöndeki hafta içi/cumartesi/pazar kalkış çizelgeleri; İstanbul’da yayımlanan yolculuk süreleri ve sıklık modeli kullanılır. İstanbul’daki pik sıklık gün boyunca sabit kabul edilir; M11’in 10 dakikalık sıklığı model varsayımıdır. İstasyon arası süre mesafeye oranlanır, ara duraklarda 20 saniye bekleme varsayılır. M1–M2–M3, Ankara’da birleşik Koru–OSB koridoru olarak hesaplanır; seçilen etaptaki tahmini trenler gösterilir. Model ayrıntıları ve kaynaklar **Model** düğmesindedir. Gecikme, iptal, ek sefer ve resmî tatil değişiklikleri hesaba katılmaz. İstasyonlar arası çizgiler temsili bağlantıdır; gerçek ray geometrisi veya aktarmalı rota hesaplaması değildir. İstasyon sayıları veri kümesindeki ad/koordinat kayıtlarını ifade eder. Yerel ağ/katalog anlık hizmet kesintilerini takip etmez.
+En fazla 12 çift kaydedilebilir. Android 6+ widget’ı kenarlarından yeniden boyutlandırılabilir; küçük görünüm tek, büyük görünümler iki veya üç kayıt gösterir. Varsayılan boyut yaklaşık 4×2’dir; launcher ızgarasına göre hücre sayısı değişebilir. Android 2.2’de kompakt sabit boyut kullanılır. Küçük görünümde durak yazısına dokunarak kayıtları düzenleyebilirsiniz.
 
+Widget ekran açıkken yaklaşık dakikada bir yenilemeyi dener; Android güç tasarrufu bu işi erteleyebilir. Her satırda son sorgu saati gösterilir; eski veya yenilenemeyen sonuçlar işaretlenir. İstanbul widget’ı tam GPS filosunu indirmeden durak varış servisini kullanır. İzmir’de kaynak yalnız durak sayısı veriyorsa dakika üretilmez; Konya’da süre yayımlanmayan bir satır için **Dakika yok** gösterilir.
 
-## Kurulum ve kullanım(releases kısmındadır)
+## Açık ve koyu tema
 
-<<<<<<< HEAD
+**Ayarlar → Görünüm → Açık / Koyu** seçimi kaydedilir. Harita, metro, katalog, saat pencereleri, favori düzenleme ekranı ve widget’lar aynı tercihe uyar. Gece haritası mevcut OSM karolarının çizim sırasında renklendirilmesidir; ikinci bir karo seti indirilmez veya saklanmaz.
+
+## Depolama sınırları
+
+- Katalog: yaklaşık **5,7 MiB**; kimlikler, adlar ve koordinatlar korunur.
+- Harita ve çevrimiçi rota dosyaları: birlikte **en fazla 1 MiB** önbellek bütçesi. Sınır dolunca eski önbellek girdileri kaldırılır.
+- EGO güncellenmiş saatleri: ayrı yüzlerce dosya yerine **en fazla 1,25 MiB** tek sıkıştırılmış arşiv.
+- 451.793 rota noktası ve 51.934 statik tarife girdisi, önceki veriyle birebir karşılaştırıldı; sıkıştırma kayıpsızdır.
+
+8 Kasım 2026 Android 6 testinde Depolama ekranındaki toplam **42,33 MB’den yaklaşık 12,43 MB’ye** indi; önbellek ayrı olarak yaklaşık 0,98 MB gösterildi. Android’in derlenmiş kod dosyaları da dahil dosya sistemi ölçümü yaklaşık 17,2 MiB idi. İki emülatörde 20 MiB hedefi ve önbellek sınırı doğrulandı. Derlenmiş kod boyutu işletim sistemine göre değişebilir; bunlar test edilen emülatör ölçümleridir. [Widget, tema ve depolama raporu](docs/WIDGET-v120.md).
+
+## Şehir desteği
+
 | Şehir | Canlı bilgi | Hat haritası |
 |---|---|---|
 | Ankara | EGO durak/hat sorgusundan GPS ve varış dakikaları | EGO'nun sıralı durakları ve bilinen OSM koordinatlarıyla şematik bağlantı |
@@ -50,7 +57,7 @@ Metro için ayrı bir harita bulunur. **Tren konumları saate dayalı tahmindir,
 
 Kaynakta dakika bulunmadığında GPS konumu veya kalan durak sayısı dakikaya çevrilmez. Hat rotası bir aracın o anda bulunduğu konumu ifade etmez.
 
-Ankara çizgileri **şematiktir**; koordinatı eksik duraklarda çizgi kesilir. Konya GTFS verisi 2025 tarihlidir ve sonradan değişen hatları içermeyebilir. İzmir ve Konya'da bazı geometrilerin sıralı durak listesi bulunmaz. Her durak için koordinat veya her hat için çizilebilir rota garantisi yoktur. [Veri ve API kaynakları](docs/SOURCES-v1.md).
+Ankara çizgileri **şematiktir**; koordinatı bulunan duraklar sırayla kesintisiz bağlanır, eksik durağa koordinat atanmaz. Konya GTFS verisi 2025 tarihlidir ve sonradan değişen hatları içermeyebilir. İzmir ve Konya'da bazı geometrilerin sıralı durak listesi bulunmaz. Her durak için koordinat veya her hat için çizilebilir rota garantisi yoktur. [Veri ve API kaynakları](docs/SOURCES-v1.md).
 
 ### Ankara kataloğu ve saat eşitleme
 
@@ -72,42 +79,20 @@ Otobüsüm Anlık projesinin MIT lisanslı API sözleşmeleri yerel Java koduna 
 
 ### Metro haritası
 
-Ankara M1–M4 ve Ankaray; İstanbul'da M11 dahil 19 raylı hat görüntülenir. Hat ve istasyon seçilebilir, istasyona odaklanılabilir.
+Ankara M1–M4 ve Ankaray; İstanbul'da M11 dahil 25 raylı hat ve ayrı M2 Seyrantepe mekik kolu olmak üzere 26 rota görüntülenir. M5, Sultanbeyli’ye kadar 24 istasyon içerir; Marmaray (B1), B2, T2, T6, F2 ve F3 de listelenir. Hat ve istasyon seçilebilir, istasyona odaklanılabilir.
 
 **Tren konumları saate dayalı tahmindir, GPS değildir.** Ankara modeli eşitlenen EGO kalkış saatlerini; İstanbul modeli yayımlanmış yolculuk sürelerini ve sıklık varsayımlarını kullanır. Ankara M1–M2–M3 birleşik Koru–OSB koridoru olarak hesaplanır. İstanbul'da pik sıklığın gün boyunca sabit olması, M11 için 10 dakikalık sıklık ve ara istasyonlarda 20 saniyelik bekleme model varsayımlarıdır. Gecikme, iptal ve özel gün değişiklikleri hesaba katılmaz. Ayrıntılar uygulamadaki **Model** bölümündedir; istasyon bağlantıları gerçek ray geometrisi değildir.
 
 ## Kurulum
-=======
-- Android 6+ için `Transit-TR-v1.0-android6-plus.apk` (minSdk 23, targetSdk 28).
-- Android 2.2 için `Transit-TR-v1.0-android22.apk` (minSdk 8, targetSdk 8).
 
-İki APK aynı paket kimliğini (`org.transittr`) kullanır; aynı anda kurulmaz. APK’lar test anahtarıyla imzalıdır. Üretim dağıtımında kendi kalıcı anahtarınızı kullanın. Özel anahtar kaynak paketinde bulunmaz. Yeni Android sürümlerinin tamamında ve fiziksel telefonlarda test yapılmadı; Play Store yayını hazırlanmadı.
+APK indirmeleri için [Releases](https://github.com/basicos2025/transit-tr/releases) bölümünü kullanın. 1.2.0 dağıtım dosyaları:
 
-Şehri seçin, otobüs durağı numarasını yazın ve **Başlat** düğmesine dokunun. İstanbul’da GPS için hat kodunu da girin. Test örnekleri: Ankara `10940`, İstanbul `224672` + `500T`, İzmir `21050`, Konya `27`. Sonuçlar saatin, hattın ve servis erişiminin durumuna göre değişir. Araç veya istasyon işaretine dokunarak ayrıntıları açın. **Metro** sekmesinden hattı ve istasyonu seçin; **Katalog** eski arama ekranını açar.
-
-Konum zamanı kaynak tarafından verilirse ayrıntılarda gösterilir; 3 dakikadan eski zaman damgalı araçlar haritada gri çizilir. Kaynak zamanı bilinmeyen sonuçlar güncel zaman damgası verilmiş gibi sunulmaz. Canlı takibin çalışması için telefon GPS izni gerekmez; “Yakınımda” özelliği cihaz konumunu kullanır.
-
-## Test
-
-Android 2.2/API 8 ARM ve Android 6.0/API 23 x86 emülatörlerinde gerçek Ankara/İstanbul GPS, metro ağı, yenileme ve PSS ölçüldü. Ayrıntılar: [test raporu](docs/TEST-REPORT-v1.md). Testler gerçek servisleri kullanır; boş durak veya servis kesintisi başarısız sonuç üretebilir. Emülatör RAM ölçümü fiziksel cihaz garantisi değildir.
-
-```sh
-python tests/catalog.test.py
-node tests/core.test.cjs
-python tools/run_map_tests.py emulator-5556 --output test-results
-adb shell am instrument -w org.transittr.tests/.V09Check
-```
-
-
-APK indirmeleri için [Releases](https://github.com/basicos2025/transit-tr/releases) bölümünü kullanın. 1.1.0 dağıtım dosyaları:
-
-<<<<<<< HEAD
 | Dosya | Minimum Android | targetSdk |
 |---|---|---:|
-| `Transit-TR-v1.1.0-android6-plus.apk` | Android 6.0 / API 23 | 28 |
-| `Transit-TR-v1.1.0-android22.apk` | Android 2.2 / API 8 | 8 |
+| `Transit-TR-v1.2.0-android6-plus.apk` | Android 6.0 / API 23 | 28 |
+| `Transit-TR-v1.2.0-android22.apk` | Android 2.2 / API 8 | 8 |
 
-Her APK yaklaşık 13,3 MiB'dir. Katalog ilk açılışta sıkıştırılmış paketten diske açılır ve yaklaşık 28,9 MiB ek alan kullanır.
+Her APK yaklaşık 6,7 MiB'dir. Açılmış yerel katalog yaklaşık 5,7 MiB kullanır; rotalar ve statik tarifeler APK içinden sıkıştırılmış olarak okunur. Eski büyük katalog güncellemeden sonraki ilk çalışmada temizlenir; favori kimlikleri korunur.
 
 İki APK aynı paket kimliğini (`org.transittr`) kullanır; aynı cihazda ayrı uygulamalar olarak kurulmaz. APK'lar test anahtarıyla imzalıdır. Üretim dağıtımında kendi kalıcı anahtarınızı kullanın. Özel anahtar kaynak paketinde bulunmaz. Android 6+ paketinin tüm yeni Android sürümlerinde ve fiziksel cihazlarda çalıştığı doğrulanmadı; Play Store yayını hazırlanmadı.
 
@@ -136,7 +121,7 @@ git clone https://github.com/basicos2025/transit-tr.git
 cd transit-tr
 ```
 
-Hazırlanan sürüm kaynak arşivi `Transit-TR-v1.1.0-kaynak-readme-guncel.zip` adını taşır. APK yerine kaynak ZIP'i açtığınızda aşağıdaki klasörler bulunur:
+Hazırlanan sürüm kaynak arşivi `Transit-TR-v1.2.0-kaynak.zip` adını taşır. APK yerine kaynak ZIP'i açtığınızda aşağıdaki klasörler bulunur:
 
 | Konum | İçerik |
 |---|---|
@@ -152,7 +137,7 @@ Android uygulamasının başlangıç ekranı [TransitActivity.java](android-lega
 
 ### Derleme
 
-[Android derleme rehberi](docs/BUILD-v1.md), gerekli Java/ECJ, Android SDK araçları ve imza anahtarı ortam değişkenlerini açıklar. Java kodu API 8'e karşı derlenir; Gradle ve AndroidX kullanılmaz.
+[Android derleme rehberi](docs/BUILD-v1.md), gerekli Java/ECJ, Android SDK araçları ve imza anahtarı ortam değişkenlerini açıklar. Paylaşılan Java kodu API 8'e karşı derlenir; Android 8+ widget iş zamanlayıcısı modern pakete ayrıca eklenir. Modern derlemede API 26+ platform jar gerekir; testte API 34 kullanıldı. Gradle ve AndroidX kullanılmaz.
 
 PowerShell'de, rehberdeki ortam değişkenlerini ayarladıktan sonra:
 
@@ -166,7 +151,7 @@ $env:ANDROID_VARIANT='legacy'
 python tools/build_android.py
 ```
 
-Çıktılar `dist/transit-tr-v1.1.0-modern.apk` ve `dist/transit-tr-v1.1.0-legacy.apk` olur. Verileri ham kaynaklardan yeniden üretmek için `python tools/build_route_data.py` çalıştırın. Test APK'sı üretirken `ANDROID_TESTS=1` kullanılır; normal uygulamaya dönerken bu değişken kaldırılmalıdır.
+Çıktılar `dist/transit-tr-v1.2.0-modern.apk` ve `dist/transit-tr-v1.2.0-legacy.apk` olur. Verileri ham kaynaklardan yeniden üretmek için `python tools/build_route_data.py` çalıştırın. Test APK'sı üretirken `ANDROID_TESTS=1` kullanılır; normal uygulamaya dönerken bu değişken kaldırılmalıdır.
 
 Web/PWA kataloğu için Go 1.18+ ile `backend` klasöründe `go run .` çalıştırın ve `http://localhost:8080` adresini açın. Yeni yerel harita arayüzü Android APK'larındadır.
 
@@ -180,14 +165,12 @@ node tests/core.test.cjs
 
 # Uygulama ve test APK'sını önce emülatöre kurun.
 python tools/run_map_tests.py emulator-5556 --test-class RoutePinCheck --output test-results
-python tools/run_map_tests.py emulator-5558 --test-class IettCheck --output test-results
+python tools/run_map_tests.py emulator-5558 --test-class WidgetCheck --output widget-results
+python tools/run_map_tests.py emulator-5558 --test-class ThemeCheck --output theme-results
+python tools/run_map_tests.py emulator-5556 --test-class StorageCheck --output storage-results
 ```
 
 Canlı testler haricî servislerin o anda yanıt vermesine ve sefer bulunmasına bağlıdır. MapCheck yaşam döngüsü testinde uygulamayı öne getirmek için Python çalıştırıcısının ADB desteği kullanılır.
-
-## Çalışma diyagramı
-
-[![Architecture diagram of basicos2025/transit-tr](https://gitdiagram.com/basicos2025/transit-tr/diagram.png)](https://gitdiagram.com/basicos2025/transit-tr?utm_source=readme&utm_medium=picture)
 
 ## Veri, gizlilik ve lisans
 
@@ -209,21 +192,7 @@ flowchart LR
     UI --> METRO[Saat tabanlı metro tahmin modeli]
     METRO --> TIMES[Eşitlenmiş EGO saatleri ve sıklık profilleri]
 ```
-=======
-[Android derleme rehberi](docs/BUILD-v1.md), [veri/API kaynakları](docs/SOURCES-v1.md). Java/ECJ, Android SDK araçları ve kendi imza anahtarınız gereklidir. Gradle veya AndroidX kullanılmaz. `python tools/build_android.py`; Android 6+ için `ANDROID_VARIANT=modern`, test APK’sı için `ANDROID_TESTS=1`.
 
-Web/PWA kataloğunu çalıştırmak için Go 1.18+ ile `backend` klasöründe `go run .` komutunu çalıştırın ve `http://localhost:8080` adresini açın. Bu sürümün yeni yerel harita/GPS arayüzü Android APK’larına eklendi. Önceki sürümlerin ayrıntıları [tarihsel README](docs/README-v09-history.md) içindedir.
+### 1.2.0 harita düzeltmesi
 
-## Çalışma diyagramı
-
-[![Architecture diagram of basicos2025/transit-tr](https://gitdiagram.com/basicos2025/transit-tr/diagram.png)](https://gitdiagram.com/basicos2025/transit-tr?utm_source=readme&utm_medium=picture)
-
-## Veri, gizlilik ve lisans
-
-Resmî olmayan bağımsız projedir; belediyeler tarafından yayımlanmış bir uygulama değildir. Kullanıcı hesabı, reklam veya analiz SDK’sı yoktur. Canlı sorgular belediye servislerine, harita istekleri OpenStreetMap sunucularına gider. Yalnızca görüntülenen karolar istenir; toplu veya çevrimdışı bölge indirme yoktur. Yerel karo önbelleği en az 7 gün yeniden kullanılır.
-
-**Sertifika ve alan adı doğrulaması eski sürüm limitlemelerinden dolayı kapalıdır.** Kesin web güvenliği vaat edilemez.
-
-Kod Apache-2.0. Google Material Icons Apache-2.0; Geist SIL OFL; Bouncy Castle kendi lisansı; OpenStreetMap verileri ODbL, İBB ve İzmir verileri ilgili açık veri lisansları altındadır. Veri lisansları kod lisansından ayrıdır. [Üçüncü taraf bildirimleri](THIRD-PARTY-NOTICES.md) ve [kaynaklar](docs/SOURCES-v1.md) korunmalıdır.
-
-MapCheck arka plan kontrolü sırasında `RESUME_FROM_HOME` durumunu üretir; Python çalıştırıcı ADB ile uygulamayı öne getirir. Bu nedenle yaşam döngüsü kontrolü için çalıştırıcıyı kullanın.
+Alt menüde **Otobüs** adı ve Material `directions_bus` ikonu kullanılır. Ortak harita bileşeni, karoları ekran yoğunluğuna göre otomatik ölçeklemek yerine tam 256×256 harita pikseline çizer; otobüs ve katalog rota ekranlarındaki parçalanma giderilmiştir. İstasyonlar arası raylı çizgiler şematiktir. Yeni eklenen B1/B2/T2/T6/F2/F3 ve M2-S için doğrulanmış saat modeli yoksa yalnız istasyon ağı gösterilir; gerçek veya tahmini tren konumu üretilmez.
