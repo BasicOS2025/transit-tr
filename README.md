@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Transit TR
 
 Android 6+ ve Android 2.2 için yerel toplu taşıma uygulaması. OpenStreetMap üzerinde otobüs konumlarını, durakları ve hat rotalarını gösterir. Ankara ve İstanbul için ayrı metro haritası ve saate dayalı tren konumu tahminleri sunar. WebView veya Google Play Services gerektirmez.
@@ -36,7 +36,7 @@ Android 6+ ve Android 2.2 için yerel toplu taşıma uygulaması. OpenStreetMap 
 - **Diğer canlı sorgular:** İzmir yaklaşan araç/kalan durak ve Konya varış bilgileri. İzmir harita GPS desteği vardır; bu sürümün gerçek GPS harita testi Ankara ve İstanbul’da yapıldı. Konya harita GPS katmanı yoktur.
 
 Metro için ayrı bir harita bulunur. **Tren konumları saate dayalı tahmindir, GPS değildir.** Ankara’da EGO’nun iki yöndeki hafta içi/cumartesi/pazar kalkış çizelgeleri; İstanbul’da yayımlanan yolculuk süreleri ve sıklık modeli kullanılır. İstanbul’daki pik sıklık gün boyunca sabit kabul edilir; M11’in 10 dakikalık sıklığı model varsayımıdır. İstasyon arası süre mesafeye oranlanır, ara duraklarda 20 saniye bekleme varsayılır. M1–M2–M3, Ankara’da birleşik Koru–OSB koridoru olarak hesaplanır; seçilen etaptaki tahmini trenler gösterilir. Model ayrıntıları ve kaynaklar **Model** düğmesindedir. Gecikme, iptal, ek sefer ve resmî tatil değişiklikleri hesaba katılmaz. İstasyonlar arası çizgiler temsili bağlantıdır; gerçek ray geometrisi veya aktarmalı rota hesaplaması değildir. İstasyon sayıları veri kümesindeki ad/koordinat kayıtlarını ifade eder. Yerel ağ/katalog anlık hizmet kesintilerini takip etmez.
->>>>>>> ecb1baefdb77d54e9c43373c0eb279c304d4c407
+
 
 ## Kurulum ve kullanım(releases kısmındadır)
 
@@ -97,7 +97,7 @@ node tests/core.test.cjs
 python tools/run_map_tests.py emulator-5556 --output test-results
 adb shell am instrument -w org.transittr.tests/.V09Check
 ```
->>>>>>> ecb1baefdb77d54e9c43373c0eb279c304d4c407
+
 
 APK indirmeleri için [Releases](https://github.com/basicos2025/transit-tr/releases) bölümünü kullanın. 1.1.0 dağıtım dosyaları:
 
@@ -227,4 +227,3 @@ Resmî olmayan bağımsız projedir; belediyeler tarafından yayımlanmış bir 
 Kod Apache-2.0. Google Material Icons Apache-2.0; Geist SIL OFL; Bouncy Castle kendi lisansı; OpenStreetMap verileri ODbL, İBB ve İzmir verileri ilgili açık veri lisansları altındadır. Veri lisansları kod lisansından ayrıdır. [Üçüncü taraf bildirimleri](THIRD-PARTY-NOTICES.md) ve [kaynaklar](docs/SOURCES-v1.md) korunmalıdır.
 
 MapCheck arka plan kontrolü sırasında `RESUME_FROM_HOME` durumunu üretir; Python çalıştırıcı ADB ile uygulamayı öne getirir. Bu nedenle yaşam döngüsü kontrolü için çalıştırıcıyı kullanın.
->>>>>>> ecb1baefdb77d54e9c43373c0eb279c304d4c407
