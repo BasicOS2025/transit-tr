@@ -1,0 +1,7 @@
+package org.transittr.tests;
+import android.app.*;import android.content.*;import android.os.*;import java.lang.reflect.*;import java.util.*;
+/** One-off cleanup of the four exact sample pairs inserted by the initial widget test. */
+public final class WidgetCleanSamples extends Instrumentation {
+ public void onCreate(Bundle b){super.onCreate(b);start();}
+ public void onStart(){Bundle out=new Bundle();try{Context c=getTargetContext();Class<?> favorites=c.getClassLoader().loadClass("org.transittr.WidgetFavorites");ArrayList entries=(ArrayList)favorites.getMethod("all",Context.class).invoke(null,c);String[] matches={"0|10940|481|Ankara","1|205471|500T|İstanbul","2|21050|446|İzmir","6|27|6-A|Konya"};int count=0;for(Object e:entries){Class<?> t=e.getClass();String value=t.getField("city").get(e)+"|"+t.getField("stop").get(e)+"|"+t.getField("line").get(e)+"|"+t.getField("label").get(e);for(String exact:matches)if(value.equals(exact)){favorites.getMethod("remove",Context.class,String.class).invoke(null,c,t.getField("id").get(e));count++;break;}}Class<?> widget=c.getClassLoader().loadClass("org.transittr.TransitWidget");widget.getMethod("renderAll",Context.class).invoke(null,c);widget.getMethod("schedule",Context.class).invoke(null,c);out.putString("stream","TEST_SAMPLES_REMOVED="+count+"\n");finish(Activity.RESULT_OK,out);}catch(Exception e){out.putString("stream",e.toString());finish(Activity.RESULT_CANCELED,out);}}
+}

@@ -1,0 +1,18 @@
+package org.transittr;
+import android.content.*;import java.util.*;import org.json.*;
+/** Stop and line are saved together; old catalogue stars remain independent. */
+public final class WidgetFavorites {
+ public static final String PREFS="widget-favorites-v1";
+ public static final class Entry {public String id,stop,line,direction,label;public int city;}
+ private static SharedPreferences prefs(Context c){return c.getSharedPreferences(PREFS,0);}
+ public static boolean valid(int city,String stop,String line,String direction){return (city==0||city==1||city==2||city==6)&&stop!=null&&stop.matches(city==0?"[0-9]{5}":"[0-9]{1,8}")&&line!=null&&line.matches("[A-Za-z0-9ÇĞİÖŞÜçğıöşü-]{1,16}")&&direction!=null&&(direction.equals("")||city==1&&(direction.equals("G")||direction.equals("D")));}
+ public static String cityName(int city){return city==0?"Ankara":city==1?"İstanbul":city==2?"İzmir":"Konya";}
+ public static synchronized ArrayList<Entry> all(Context c){ArrayList<Entry> result=new ArrayList<Entry>();try{JSONArray array=new JSONArray(prefs(c).getString("entries","[]"));for(int i=0;i<array.length()&&i<12;i++){JSONObject o=array.getJSONObject(i);Entry e=new Entry();e.id=o.getString("id");e.city=o.getInt("city");e.stop=o.getString("stop");e.line=o.getString("line");e.direction=o.optString("direction");e.label=o.optString("label");if(valid(e.city,e.stop,e.line,e.direction))result.add(e);}}catch(JSONException ignored){}return result;}
+ private static void save(Context c,ArrayList<Entry> entries){JSONArray a=new JSONArray();try{for(Entry e:entries){JSONObject o=new JSONObject();o.put("id",e.id);o.put("city",e.city);o.put("stop",e.stop);o.put("line",e.line);o.put("direction",e.direction);o.put("label",e.label);a.put(o);}}catch(JSONException impossible){throw new IllegalStateException(impossible);}if(!prefs(c).edit().putString("entries",a.toString()).commit())throw new IllegalStateException("Kayıt saklanamadı");}
+ public static synchronized Entry add(Context c,int city,String stop,String line,String direction,String label){line=line.trim().toUpperCase(Locale.US);stop=stop.trim();if(!valid(city,stop,line,direction))throw new IllegalArgumentException("Şehir, durak ve hat kodunu kontrol et");ArrayList<Entry> entries=all(c);for(Entry e:entries)if(e.city==city&&e.stop.equals(stop)&&e.line.equals(line)&&e.direction.equals(direction)){if(label!=null&&label.trim().length()>0){e.label=label.trim();if(e.label.length()>60)e.label=e.label.substring(0,60);save(c,entries);}return e;}if(entries.size()>=12)throw new IllegalArgumentException("En fazla 12 durak + hat kaydedilebilir");Entry e=new Entry();e.id=UUID.randomUUID().toString();e.city=city;e.stop=stop;e.line=line;e.direction=direction;e.label=label==null?"":label.trim();if(e.label.length()>60)e.label=e.label.substring(0,60);entries.add(e);save(c,entries);return e;}
+ public static synchronized void remove(Context c,String id){ArrayList<Entry> entries=all(c);for(int i=entries.size()-1;i>=0;i--)if(entries.get(i).id.equals(id))entries.remove(i);save(c,entries);prefs(c).edit().remove("result:"+id).commit();}
+ public static Entry find(Context c,String id){for(Entry e:all(c))if(e.id.equals(id))return e;return null;}
+ public static JSONObject result(Context c,String id){try{return new JSONObject(prefs(c).getString("result:"+id,"{}"));}catch(JSONException ignored){return new JSONObject();}}
+ public static synchronized void result(Context c,String id,JSONObject value){if(find(c,id)!=null)prefs(c).edit().putString("result:"+id,value.toString()).commit();}
+ public static SharedPreferences state(Context c){return prefs(c);}
+}

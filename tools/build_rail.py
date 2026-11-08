@@ -16,9 +16,9 @@ for line in data['lines']:
         assert stop['name'].strip() and 35<=stop['lat']<=43 and 25<=stop['lon']<=45
         assert math.isfinite(stop['lat']) and math.isfinite(stop['lon'])
 assert sum(c==0 for c,_ in ids)==5
-assert sum(c==1 for c,_ in ids)==19
+assert sum(c==1 for c,_ in ids)==26
 (root/'android-legacy/assets/rail-networks.json').write_text(json.dumps(data,ensure_ascii=False,separators=(',',':')),encoding='utf-8')
-print('PASS: 5 Ankara + 19 Istanbul rail lines, unique IDs, named stations and valid coordinates')
+print('PASS: 5 Ankara + 26 Istanbul rail entries, unique IDs, named stations and valid coordinates')
 
 models=json.loads((root/'data/raw/rail-estimates-v1.json').read_text(encoding='utf-8'))
 assert models['timezone']=='GMT+03:00' and models['dwellSeconds']==20

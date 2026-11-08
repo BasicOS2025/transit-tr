@@ -26,12 +26,12 @@ public final class EgoSchedule {
  private static void validate(String code)throws IOException{if(!code.matches("[A-Za-z0-9-]{1,16}"))throw new IOException("Geçerli EGO hat kodu gerekli");}
  private static JSONObject read(InputStream in)throws IOException{try{ByteArrayOutputStream out=new ByteArrayOutputStream();byte[] b=new byte[4096];int n;while((n=in.read(b))!=-1){if(out.size()+n>262144)throw new IOException("Tarife önbellek sınırı");out.write(b,0,n);}return new JSONObject(new String(out.toByteArray(),"UTF-8"));}catch(JSONException e){throw new IOException("Tarife önbelleği okunamadı");}finally{in.close();}}
  public static JSONObject cached(Context context,String code)throws IOException{
-  validate(code);File file=new File(new File(context.getFilesDir(),"ego-times"),code+".json");if(file.exists())try{return read(new FileInputStream(file));}catch(IOException ignored){}
+  validate(code);try{InputStream in=ScheduleCache.open(context,code);if(in!=null)return read(in);}catch(IOException ignored){}
   try{return read(context.getAssets().open("ego-times/"+code+".json"));}catch(IOException e){return null;}
  }
  public static JSONObject get(Context context,String code,boolean force)throws IOException{
   validate(code);JSONObject old=cached(context,code);long now=System.currentTimeMillis();if(!force&&old!=null&&now-old.optLong("synced_at",0)<86400000L)return old;
-  try{JSONObject fresh=parse(MapHttp.text("https://www.ego.gov.tr/hareketsaatleri?hat_no="+URLEncoder.encode(code,"UTF-8"),null,""),code,now);File directory=new File(context.getFilesDir(),"ego-times");directory.mkdirs();File file=new File(directory,code+".json"),tmp=new File(directory,code+".tmp");FileOutputStream out=new FileOutputStream(tmp);try{out.write(fresh.toString().getBytes("UTF-8"));}finally{out.close();}if(!tmp.renameTo(file)){tmp.delete();throw new IOException("Tarife kaydedilemedi");}RailEstimator.invalidate();return fresh;
+  try{JSONObject fresh=parse(MapHttp.text("https://www.ego.gov.tr/hareketsaatleri?hat_no="+URLEncoder.encode(code,"UTF-8"),null,""),code,now);ScheduleCache.write(context,code,fresh.toString().getBytes("UTF-8"));RailEstimator.invalidate();return fresh;
   }catch(IOException e){if(old==null)throw e;try{JSONObject fallback=new JSONObject(old.toString());fallback.put("stale",true);fallback.put("sync_error",e.getMessage());return fallback;}catch(JSONException impossible){throw e;}}
  }
  public static void applyRail(Context context,JSONObject root){

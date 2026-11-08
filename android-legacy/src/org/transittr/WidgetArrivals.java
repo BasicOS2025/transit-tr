@@ -1,0 +1,11 @@
+package org.transittr;
+import android.content.*;import java.io.*;import java.util.*;import org.json.*;
+/** A launcher needs stop ETAs, not the full GPS fleet or map tiles. */
+public final class WidgetArrivals {
+ public static JSONObject select(JourneyData.Snapshot snapshot,WidgetFavorites.Entry entry,long at)throws JSONException{
+  JourneyData.Vehicle best=null;long score=Long.MAX_VALUE;int known=0;
+  for(JourneyData.Vehicle v:snapshot.rows){if(v.passed||!(v.line.equalsIgnoreCase(entry.line)||(entry.city==0||entry.city==6)&&v.line.split("-")[0].equalsIgnoreCase(entry.line)))continue;if(entry.city==1&&!IettClient.matchesDirection(v.routeCode,entry.direction))continue;known++;String eta=v.eta.trim();if(eta.length()==0||eta.equals("GPS")||eta.equals("—")||eta.equalsIgnoreCase("Tarife")||eta.equalsIgnoreCase("Geçti"))continue;long rank=v.etaSeconds>=0?v.etaSeconds:Long.MAX_VALUE-1;java.util.regex.Matcher digits=java.util.regex.Pattern.compile("^([0-9]+)").matcher(eta);if(v.etaSeconds<0&&digits.find())rank=Long.parseLong(digits.group(1))*60;if(eta.equalsIgnoreCase("DURAKTA"))rank=0;if(best==null||rank<score){best=v;score=rank;}}
+  JSONObject result=new JSONObject();result.put("at",at);result.put("eta",best==null?(known>0?"Dakika yok":"Varış yok"):best.eta);result.put("detail",best==null?(snapshot.stopServed==0?"Bu duraktan geçmiyor":known>0?"Kaynak süre vermiyor":"Kaynakta yaklaşan araç yok"):best.name);result.put("source",snapshot.source);result.put("error",false);return result;
+ }
+ public static void update(Context context,WidgetFavorites.Entry entry){long now=System.currentTimeMillis();JSONObject previous=WidgetFavorites.result(context,entry.id);if(now-previous.optLong("attempt",0)<15000)return;try{JourneyData.Snapshot snapshot=entry.city==1?IettClient.widgetArrivals(entry.stop,entry.line,entry.direction):TrackingClient.query(entry.city,entry.stop,entry.line,entry.direction);JSONObject value=select(snapshot,entry,now);value.put("attempt",now);WidgetFavorites.result(context,entry.id,value);}catch(Exception e){try{previous.put("attempt",now);previous.put("error",true);if(!previous.has("at")){previous.put("eta","Bağlantı yok");previous.put("detail","Yenile’ye dokun");}WidgetFavorites.result(context,entry.id,previous);}catch(JSONException ignored){}}}
+}

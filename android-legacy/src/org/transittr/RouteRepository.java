@@ -26,21 +26,20 @@ public final class RouteRepository {
    if(route.stops.isEmpty()){String code=item.code.split("_")[0];for(JourneyData.RailLine line:MetroData.lines(context,city))if(line.id.equals(code))route.stops.addAll(line.stations);}
    if(route.parts.isEmpty()){
     ArrayList<JourneyData.Station> part=new ArrayList<JourneyData.Station>();
-    for(JourneyData.Station stop:route.stops){if(located(stop))part.add(stop);else{if(part.size()>1)route.parts.add(part);part=new ArrayList<JourneyData.Station>();}}
+    for(JourneyData.Station stop:route.stops)if(located(stop))part.add(stop);
     if(part.size()>1)route.parts.add(part);
    }
    for(JourneyData.Station stop:route.stops)if(located(stop))route.mappedStops++;
-   if(route.mappedStops<route.stops.size())route.notice=(route.notice.length()>0?route.notice+"\n":"")+route.mappedStops+"/"+route.stops.size()+" durağın koordinatı var; eksik noktalar arasında çizgi üretilmez.";
+   if(route.mappedStops<route.stops.size())route.notice=(route.notice.length()>0?route.notice+"\n":"")+route.mappedStops+"/"+route.stops.size()+" durağın koordinatı var. "+(route.schematic?"Bilinen duraklar sırayla kesintisiz bağlanır; eksik durakların konumu ve gerçek yol güzergâhı gösterilmez.":"Koordinatı eksik duraklar işaretlenmez; yayımlanmış yol çizgisi korunur.");
    return route;
   }catch(JSONException e){throw new IOException("Hat verisi okunamadı");}finally{store.close();}
  }
  private static ArrayList<JourneyData.Station> istanbul(Context context,String line,String external,String name,boolean force)throws IOException{
   if(!line.matches("[A-Za-z0-9ÇĞİÖŞÜçğıöşü-]{1,16}"))throw new IOException("Geçerli İETT hat kodu gerekli");
-  File directory=new File(context.getCacheDir(),"iett-route-json");directory.mkdirs();File file=new File(directory,URLEncoder.encode(line,"UTF-8")+".json");
+  File directory=new File(context.getCacheDir(),"iett-route-json");directory.mkdirs();File file=new File(directory,URLEncoder.encode(line,"UTF-8")+".ijz");
   if(force||!file.exists()||System.currentTimeMillis()-file.lastModified()>86400000L){
-   try{byte[] bytes=MapHttp.request("https://otobusum.metkm.win/v1/routes/"+URLEncoder.encode(line,"UTF-8")+"?city=istanbul",null,"",4194304);File tmp=new File(file+".tmp");FileOutputStream out=new FileOutputStream(tmp);try{out.write(bytes);}finally{out.close();}if(!tmp.renameTo(file)){tmp.delete();throw new IOException("Güzergâh önbelleği yazılamadı");}trim(directory,file);}catch(IOException e){if(!file.exists())throw e;}
+   try{byte[] bytes=MapHttp.request("https://otobusum.metkm.win/v1/routes/"+URLEncoder.encode(line,"UTF-8")+"?city=istanbul",null,"",4194304);if(!StorageBudget.cache(context,file,bytes,true))return RouteJson.select(new ByteArrayInputStream(bytes),external,name);}catch(IOException e){if(!file.exists())throw e;}
   }
-  InputStream in=new FileInputStream(file);try{return RouteJson.select(in,external,name);}finally{in.close();}
+  InputStream in=new java.util.zip.GZIPInputStream(new FileInputStream(file),8192);try{return RouteJson.select(in,external,name);}finally{in.close();}
  }
- private static void trim(File directory,File current){File[] files=directory.listFiles();if(files==null)return;long bytes=0;ArrayList<File> old=new ArrayList<File>();for(File f:files)if(f.getName().endsWith(".json")){bytes+=f.length();if(!f.equals(current))old.add(f);}Collections.sort(old,new Comparator<File>(){public int compare(File a,File b){return a.lastModified()<b.lastModified()?-1:a.lastModified()>b.lastModified()?1:0;}});for(File f:old){if(bytes<=12582912)break;long length=f.length();if(f.delete())bytes-=length;}}
 }

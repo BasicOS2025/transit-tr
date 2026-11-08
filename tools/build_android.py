@@ -17,18 +17,23 @@ if not os.environ.get('KS_PASS'):raise SystemExit('Set KS_PASS')
 java=os.environ.get('JAVA_EXE','java');root=Path(short(ROOT));(root/'build').mkdir(exist_ok=True)
 work=Path(tempfile.mkdtemp(prefix='android-',dir=str(root/'build')));classes=work/'classes';classes.mkdir();dex=work/'dex';dex.mkdir();dist=root/'dist';dist.mkdir(exist_ok=True)
 tests_mode=os.environ.get('ANDROID_TESTS')=='1'
+modern=not tests_mode and os.environ.get('ANDROID_VARIANT','legacy')=='modern'
+modern_jar=None
+if modern:
+ modern_jar=short(os.environ.get('ANDROID_MODERN_JAR',str(bt.parent.parent/'platforms/android-34/android.jar')))
+ if not Path(modern_jar).exists():raise SystemExit('Set ANDROID_MODERN_JAR to Android API 26+ android.jar')
 source=root/('android-tests' if tests_mode else 'android-legacy');library=root/'android-legacy/libs/transit-tls.jar'
 run(java,'-jar',ecj,'-1.6','-encoding','UTF-8','-bootclasspath',jar,'-classpath',library,'-d',classes,*sorted((source/'src').rglob('*.java')))
+if modern:run(java,'-jar',ecj,'-1.6','-encoding','UTF-8','-bootclasspath',modern_jar,'-classpath',classes,'-d',classes,*sorted((root/'android-modern/src').rglob('*.java')))
 program=work/'program.jar'
 with zipfile.ZipFile(program,'w',zipfile.ZIP_DEFLATED) as z:
  for p in classes.rglob('*.class'):z.write(p,p.relative_to(classes))
 rules=root/'tools/android-r8.pro'
 if tests_mode:
  rules=work/'test-rules.pro';rules.write_text('-keep class org.transittr.tests.** { *; }\n-dontobfuscate\n',encoding='utf-8')
-run(java,'-cp',bt/'lib/d8.jar','com.android.tools.r8.R8','--release','--min-api','8','--lib',jar,'--pg-conf',rules,'--output',dex,program,*([] if tests_mode else [library]))
-modern=not tests_mode and os.environ.get('ANDROID_VARIANT','legacy')=='modern'
+run(java,'-cp',bt/'lib/d8.jar','com.android.tools.r8.R8','--release','--min-api','8','--lib',modern_jar if modern else jar,'--pg-conf',rules,'--output',dex,program,*([] if tests_mode else [library]))
 manifest=work/'AndroidManifest.xml';text=(source/'AndroidManifest.xml').read_text(encoding='utf-8')
-if modern:text=text.replace('android:minSdkVersion="8"','android:minSdkVersion="23"').replace('android:targetSdkVersion="8"','android:targetSdkVersion="28"')
+if modern:text=text.replace('android:minSdkVersion="8"','android:minSdkVersion="23"').replace('android:targetSdkVersion="8"','android:targetSdkVersion="28"').replace('</application>','<service android:name=".WidgetJobService" android:permission="android.permission.BIND_JOB_SERVICE" android:exported="true"/></application>')
 manifest.write_text(text,encoding='utf-8')
 exe='.exe' if os.name=='nt' else '';unsigned=work/'unsigned.apk'
 resources=[]
@@ -38,8 +43,14 @@ if (source/'assets').exists():
   with database.open('rb') as inp,(assets/(database.name+'.dbz')).open('wb') as target:
    with gzip.GzipFile(filename='',mode='wb',fileobj=target,mtime=0) as out:shutil.copyfileobj(inp,out,65536)
  resources+=['-A',assets]
-if (source/'res').exists():resources+=['-S',source/'res']
-run(bt/('aapt'+exe),'package','-f','-0','dbz','-M',manifest,'-I',jar,*resources,'-F',unsigned)
+if (source/'res').exists():
+ res=source/'res'
+ if modern:
+  res=work/'res';shutil.copytree(source/'res',res)
+  widget=res/'xml/transit_widget.xml'
+  widget.write_text(widget.read_text(encoding='utf-8').replace('/>','android:resizeMode="horizontal|vertical" android:minResizeWidth="180dp" android:minResizeHeight="50dp" />'),encoding='utf-8')
+ resources+=['-S',res]
+run(bt/('aapt'+exe),'package','-f','-0','dbz','-M',manifest,'-I',modern_jar if modern else jar,*resources,'-F',unsigned)
 with zipfile.ZipFile(unsigned,'a',zipfile.ZIP_DEFLATED) as z:z.write(dex/'classes.dex','classes.dex')
 aligned=work/'aligned.apk';run(bt/('zipalign'+exe),'-f','4',unsigned,aligned)
 version=re.search(r'android:versionName="([^"]+)"',(root/'android-legacy/AndroidManifest.xml').read_text(encoding='utf-8')).group(1)

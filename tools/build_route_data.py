@@ -102,3 +102,5 @@ with sqlite3.connect(asset) as finaldb:
         assert all(now.get(identifier)==(city,code) for identifier,city,code in oldrows),'Favourite identity changed'
 
 subprocess.run([sys.executable,str(ROOT/"tools/update_route_manifest.py")],check=True)
+
+subprocess.run([sys.executable,str(ROOT/"tools/compact_android_data.py")],check=True)

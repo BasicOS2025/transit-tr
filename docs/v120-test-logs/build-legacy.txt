@@ -1,0 +1,112 @@
+----------
+1. WARNING in C:\Users\Ata K�se\Documents\Codex\2026-11-04\tr\work\v07\transit-tr\android-legacy\src\org\transittr\CatalogScreen.java (at line 11)
+	private ThemeColors palette;private int INK=0xff141414,MUTED=0xff606460,BLUE=0xff1d5fbf,GROUND=0xfff4f3f1;
+	                                                                                        ^^^^^^
+The value of the field CatalogScreen.GROUND is not used
+----------
+----------
+2. WARNING in C:\Users\Ata K�se\Documents\Codex\2026-11-04\tr\work\v07\transit-tr\android-legacy\src\org\transittr\LegacyTls.java (at line 19)
+	protected Vector getSNIServerNames(){Vector names=new Vector();try{names.addElement(new ServerName(NameType.host_name,host.getBytes("US-ASCII")));}catch(Exception ignored){}return names;}
+	          ^^^^^^
+Vector is a raw type. References to generic type Vector<E> should be parameterized
+----------
+3. WARNING in C:\Users\Ata K�se\Documents\Codex\2026-11-04\tr\work\v07\transit-tr\android-legacy\src\org\transittr\LegacyTls.java (at line 19)
+	protected Vector getSNIServerNames(){Vector names=new Vector();try{names.addElement(new ServerName(NameType.host_name,host.getBytes("US-ASCII")));}catch(Exception ignored){}return names;}
+	                                     ^^^^^^
+Vector is a raw type. References to generic type Vector<E> should be parameterized
+----------
+4. WARNING in C:\Users\Ata K�se\Documents\Codex\2026-11-04\tr\work\v07\transit-tr\android-legacy\src\org\transittr\LegacyTls.java (at line 19)
+	protected Vector getSNIServerNames(){Vector names=new Vector();try{names.addElement(new ServerName(NameType.host_name,host.getBytes("US-ASCII")));}catch(Exception ignored){}return names;}
+	                                                      ^^^^^^
+Vector is a raw type. References to generic type Vector<E> should be parameterized
+----------
+5. WARNING in C:\Users\Ata K�se\Documents\Codex\2026-11-04\tr\work\v07\transit-tr\android-legacy\src\org\transittr\LegacyTls.java (at line 19)
+	protected Vector getSNIServerNames(){Vector names=new Vector();try{names.addElement(new ServerName(NameType.host_name,host.getBytes("US-ASCII")));}catch(Exception ignored){}return names;}
+	                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Type safety: The method addElement(Object) belongs to the raw type Vector. References to generic type Vector<E> should be parameterized
+----------
+6. WARNING in C:\Users\Ata K�se\Documents\Codex\2026-11-04\tr\work\v07\transit-tr\android-legacy\src\org\transittr\LegacyTls.java (at line 26)
+	else if(length>=0){if(length>limit)throw new IOException("HTTP yan�t s�n�r�");copy(in,out,length,limit);}else{byte[] b=new byte[4096];int n;while((n=in.read(b))!=-1){if(out.size()+n>limit)throw new IOException("HTTP yan�t s�n�r�");out.write(b,0,n);}}
+	                                                                                                                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Resource leak: 'out' is not closed at this location
+----------
+----------
+7. WARNING in C:\Users\Ata K�se\Documents\Codex\2026-11-04\tr\work\v07\transit-tr\android-legacy\src\org\transittr\MainActivity.java (at line 25)
+	private static class Departure {int delta;String text;Departure(int d,String t){delta=d;text=t;}}
+	                     ^^^^^^^^^
+The type MainActivity.Departure is never used locally
+----------
+8. WARNING in C:\Users\Ata K�se\Documents\Codex\2026-11-04\tr\work\v07\transit-tr\android-legacy\src\org\transittr\MainActivity.java (at line 25)
+	private static class Departure {int delta;String text;Departure(int d,String t){delta=d;text=t;}}
+	                                    ^^^^^
+The value of the field MainActivity.Departure.delta is not used
+----------
+9. WARNING in C:\Users\Ata K�se\Documents\Codex\2026-11-04\tr\work\v07\transit-tr\android-legacy\src\org\transittr\MainActivity.java (at line 25)
+	private static class Departure {int delta;String text;Departure(int d,String t){delta=d;text=t;}}
+	                                                 ^^^^
+The value of the field MainActivity.Departure.text is not used
+----------
+10. WARNING in C:\Users\Ata K�se\Documents\Codex\2026-11-04\tr\work\v07\transit-tr\android-legacy\src\org\transittr\MainActivity.java (at line 25)
+	private static class Departure {int delta;String text;Departure(int d,String t){delta=d;text=t;}}
+	                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+The constructor MainActivity.Departure(int, String) is never used locally
+----------
+11. WARNING in C:\Users\Ata K�se\Documents\Codex\2026-11-04\tr\work\v07\transit-tr\android-legacy\src\org\transittr\MainActivity.java (at line 68)
+	private void egoLive(){liveDialog(0,"");}
+	             ^^^^^^^^^
+The method egoLive() from the type MainActivity is never used locally
+----------
+----------
+12. WARNING in C:\Users\Ata K�se\Documents\Codex\2026-11-04\tr\work\v07\transit-tr\android-legacy\src\org\transittr\OsmMapView.java (at line 13)
+	private final boolean dark;private final Paint tilePaint=new Paint();private Selection selection;private final Paint paint=new Paint(3);private final Handler main=new Handler();private final ExecutorService pool;private final File disk;private final int capacity;private final LinkedHashMap<String,Bitmap> memory=new LinkedHashMap<String,Bitmap>(24,.75f,true);private final HashSet<String> pending=new HashSet<String>(),visible=new HashSet<String>();private final LinkedHashMap<String,Long> failedUntil=new LinkedHashMap<String,Long>();private volatile boolean closed;private boolean paused,userMoved,metro=true;private double lat=39.9255,lon=32.8538;private int zoom=13,tilesLoaded,failures;private float downX,downY,lastX,lastY;private boolean moved;private final float density;private final ScaleGestureDetector pinch;
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ^^^^^^^^^
+The value of the field OsmMapView.userMoved is not used
+----------
+----------
+13. WARNING in C:\Users\Ata K�se\Documents\Codex\2026-11-04\tr\work\v07\transit-tr\android-legacy\src\org\transittr\RouteScreen.java (at line 3)
+	import android.app.*;import android.content.*;import android.graphics.*;import android.graphics.drawable.*;import android.os.*;import android.view.*;import android.widget.*;
+	                            ^^^^^^^^^^^^^^^
+The import android.content is never used
+----------
+----------
+14. WARNING in C:\Users\Ata K�se\Documents\Codex\2026-11-04\tr\work\v07\transit-tr\android-legacy\src\org\transittr\TransitActivity.java (at line 7)
+	private EgoSyncDialog egoSync;private RouteScreen routeScreen;private CatalogStore.Item selectedCatalogRoute;private CatalogScreen catalog;private final HashMap<Integer,CatalogScreen.State> catalogStates=new HashMap<Integer,CatalogScreen.State>();private LinearLayout root,body,bottomRows,railRows;private TextView cityLabel,status,summary,railStatus;private RailEstimator.Result railEstimate;private EditText stopInput,lineInput;private Button start;private OsmMapView map;private android.graphics.Typeface face;private boolean compact,resumed,destroyed,tracking,refreshing,fitNext;private int city=0,screen=0,generation;private Handler handler=new Handler();private Thread request;private JourneyData.Snapshot snapshot;private ArrayList<JourneyData.RailLine> rails=new ArrayList<JourneyData.RailLine>();private JourneyData.RailLine selectedRail;
+	                                                                                                                                                                                                                                                                                                                           ^^^^^^^^^
+The value of the field TransitActivity.cityLabel is not used
+----------
+15. WARNING in C:\Users\Ata K�se\Documents\Codex\2026-11-04\tr\work\v07\transit-tr\android-legacy\src\org\transittr\TransitActivity.java (at line 7)
+	private EgoSyncDialog egoSync;private RouteScreen routeScreen;private CatalogStore.Item selectedCatalogRoute;private CatalogScreen catalog;private final HashMap<Integer,CatalogScreen.State> catalogStates=new HashMap<Integer,CatalogScreen.State>();private LinearLayout root,body,bottomRows,railRows;private TextView cityLabel,status,summary,railStatus;private RailEstimator.Result railEstimate;private EditText stopInput,lineInput;private Button start;private OsmMapView map;private android.graphics.Typeface face;private boolean compact,resumed,destroyed,tracking,refreshing,fitNext;private int city=0,screen=0,generation;private Handler handler=new Handler();private Thread request;private JourneyData.Snapshot snapshot;private ArrayList<JourneyData.RailLine> rails=new ArrayList<JourneyData.RailLine>();private JourneyData.RailLine selectedRail;
+	                                                                                                                                                                                                                                                                                                                                            ^^^^^^^
+The value of the field TransitActivity.summary is not used
+----------
+----------
+16. WARNING in C:\Users\Ata K�se\Documents\Codex\2026-11-04\tr\work\v07\transit-tr\android-legacy\src\org\transittr\WidgetArrivals.java (at line 2)
+	import android.content.*;import java.io.*;import java.util.*;import org.json.*;
+	                                ^^^^^^^
+The import java.io is never used
+----------
+17. WARNING in C:\Users\Ata K�se\Documents\Codex\2026-11-04\tr\work\v07\transit-tr\android-legacy\src\org\transittr\WidgetArrivals.java (at line 2)
+	import android.content.*;import java.io.*;import java.util.*;import org.json.*;
+	                                                 ^^^^^^^^^
+The import java.util is never used
+----------
+17 problems (17 warnings)
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::loadLibrary has been called by org.conscrypt.NativeLibraryUtil in an unnamed module (file:/C:/Users/Ata%20K%c3%b6se/AppData/Local/Android/Sdk/build-tools/36.1.0/lib/apksigner.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::loadLibrary has been called by org.conscrypt.NativeLibraryUtil in an unnamed module (file:/C:/Users/Ata%20K%c3%b6se/AppData/Local/Android/Sdk/build-tools/36.1.0/lib/apksigner.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+Verifies
+Verified using v1 scheme (JAR signing): true
+Verified using v2 scheme (APK Signature Scheme v2): true
+Verified using v3 scheme (APK Signature Scheme v3): true
+Verified using v3.1 scheme (APK Signature Scheme v3.1): false
+Verified using v4 scheme (APK Signature Scheme v4): false
+Verified for SourceStamp: false
+Number of signers: 1
+APK: C:\Users\ATAKSE~1\DOCUME~1\Codex\203022~1\tr\work\v07\TRANSI~1\dist\transit-tr-v1.2.0-legacy.apk
