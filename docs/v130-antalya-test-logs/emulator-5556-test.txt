@@ -1,0 +1,5 @@
+ANTALYA_ROUTE_STOPS=81
+ANTALYA_LIVE_GPS=7; ETA_ROWS=7
+CAPTURE=ANTALYA_LIVE
+PASS Android 2.2 API 8; Antalya live GPS, minutes, route and UI
+

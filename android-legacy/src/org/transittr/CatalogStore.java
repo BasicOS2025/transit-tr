@@ -26,11 +26,12 @@ public final class CatalogStore {
  public static String normalize(String value){return value.toLowerCase(new Locale("tr","TR")).replace('ı','i').replace('ş','s').replace('ğ','g').replace('ü','u').replace('ö','o').replace('ç','c').replace('â','a').replace('î','i').replace('û','u');}
  private String key(Item item){return "fav:"+item.kind+":"+item.id;}
  public boolean saved(Item item){return favorites.getBoolean(key(item),false);}
- public void toggle(Item item){favorites.edit().putBoolean(key(item),!saved(item)).commit();}
+ public void toggle(Item item){NetworkCatalog.remember(context,item);favorites.edit().putBoolean(key(item),!saved(item)).commit();}
  private String savedIds(int kind){StringBuilder ids=new StringBuilder();String prefix="fav:"+kind+":";for(Map.Entry<String,?> entry:favorites.getAll().entrySet())if(entry.getKey().startsWith(prefix)&&Boolean.TRUE.equals(entry.getValue()))try{int id=Integer.parseInt(entry.getKey().substring(prefix.length()));if(id>0){if(ids.length()>0)ids.append(',');ids.append(id);}}catch(NumberFormatException ignored){}return ids.length()==0?"-1":ids.toString();}
  private int count(String table,int city)throws IOException{open();Cursor c=db.rawQuery("SELECT count(*) FROM "+table+" WHERE city=?",new String[]{""+city});try{c.moveToFirst();return c.getInt(0);}finally{c.close();}}
  private static Item item(Cursor c){Item row=new Item();row.id=c.getInt(0);row.kind=c.getInt(1);row.code=c.getString(2);row.name=c.getString(3);row.type=c.getString(4);if(!c.isNull(5))row.lat=c.getDouble(5);if(!c.isNull(6))row.lon=c.getDouble(6);row.source=c.getInt(7);return row;}
  public Page page(int city,int mode,String query,int offset)throws IOException{
+  if(NetworkCatalog.city(city))return NetworkCatalog.page(context,city,mode,query,offset);
   open();Page page=new Page();page.routes=count("routes",city);page.stops=count("stops",city);
   String match="%"+normalize(query).replace("\\","\\\\").replace("%","\\%").replace("_","\\_")+"%";
   String expression=query.trim().matches("[0-9-]*")?"(code||' '||name)":searchSql();
@@ -57,6 +58,7 @@ public final class CatalogStore {
   Collections.sort(times,new Comparator<Departure>(){public int compare(Departure a,Departure b){return a.delta-b.delta;}});StringBuilder text=new StringBuilder("Planlı kalkışlar · Türkiye saati\nCanlı varış değildir.\n");for(int i=0;i<times.size()&&i<8;i++)text.append(times.get(i).label).append('\n');if(times.isEmpty())text.append("Önümüzdeki 24 saat için geçerli tarife kaydı yok.");return text.toString();
  }
  public Page nearby(int city,double lat,double lon)throws IOException{
+  if(NetworkCatalog.city(city))return NetworkCatalog.nearby(context,city,lat,lon);
   open();if(Double.isNaN(lat)||Double.isNaN(lon)||Math.abs(lat)>90||Math.abs(lon)>180)throw new IOException("Geçerli koordinat gir");Page result=new Page();result.routes=count("routes",city);result.stops=count("stops",city);double width=.025/Math.max(.05,Math.cos(lat*Math.PI/180));
   Cursor c=db.rawQuery("SELECT id,1,code,name,'Durak',lat,lon,source FROM stops WHERE city=? AND lat BETWEEN ? AND ? AND lon BETWEEN ? AND ?",new String[]{""+city,""+(lat-.02),""+(lat+.02),""+(lon-width),""+(lon+width)});
   try{while(c.moveToNext()){Item row=item(c);row.distance=distance(lat,lon,row.lat,row.lon);if(row.distance<=2000)result.items.add(row);}}finally{c.close();}
@@ -65,7 +67,8 @@ public final class CatalogStore {
  private static double distance(double a,double b,double c,double d){double r=Math.PI/180,x=Math.sin((c-a)*r/2),y=Math.sin((d-b)*r/2),h=x*x+Math.cos(a*r)*Math.cos(c*r)*y*y;return 12742000*Math.asin(Math.sqrt(Math.min(1,h)));}
  public String external(int route)throws IOException{open();Cursor c=db.rawQuery("SELECT code FROM route_external WHERE route=?",new String[]{""+route});try{return c.moveToFirst()?c.getString(0):"";}finally{c.close();}}
  public ArrayList<JourneyData.Station> shape(int route)throws IOException{return CompactData.shape(context,route);}
- public Item stop(int city,String code)throws IOException{open();Cursor c=db.rawQuery("SELECT id,1,code,name,'Durak',lat,lon,source FROM stops WHERE city=? AND code=? LIMIT 1",new String[]{""+city,code});try{return c.moveToFirst()?item(c):null;}finally{c.close();}}
+ public Item stop(int city,String code)throws IOException{
+  if(NetworkCatalog.city(city))return NetworkCatalog.stop(context,city,code);open();Cursor c=db.rawQuery("SELECT id,1,code,name,'Durak',lat,lon,source FROM stops WHERE city=? AND code=? LIMIT 1",new String[]{""+city,code});try{return c.moveToFirst()?item(c):null;}finally{c.close();}}
  public Item uniqueKonyaStop(String code)throws IOException{open();Cursor c=db.rawQuery("SELECT id,1,code,name,'Durak',lat,lon,source FROM stops WHERE city=6 AND code GLOB ? LIMIT 2",new String[]{code+"[a-zA-Z]"});try{if(!c.moveToFirst())return null;Item found=item(c);return c.moveToNext()?null:found;}finally{c.close();}}
  public void close(){if(db!=null){db.close();db=null;}}
 }

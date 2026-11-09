@@ -1,7 +1,7 @@
 package org.transittr;
 import java.io.*;import java.net.*;import android.os.Build;
 public final class MapHttp {
- public static final String AGENT="TransitTR/1.1.0 (org.transittr; Android)";
+ public static final String AGENT="TransitTR/1.3.0 (org.transittr; Android)";
  public static byte[] request(String address,byte[] post,String action,int limit)throws IOException{
   try{EgoLocal.disableCertificateChecks();}catch(Exception e){throw new IOException("TLS: "+e);}
   if(Build.VERSION.SDK_INT<21)return LegacyTls.requestBytesLimited(address,post==null?"GET":"POST",post,action,AGENT,limit);

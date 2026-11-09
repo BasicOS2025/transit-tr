@@ -11,6 +11,7 @@ public final class RouteRepository {
   return load(context,city,item,force,"");
  }
  public static JourneyData.Route load(Context context,int city,CatalogStore.Item item,boolean force,String variant)throws IOException{
+  if(city==3||city==8)return KentClient.route(city,item.code,item.name);if(city==7)return AsisClient.route(item.code,item.name);
   CatalogStore store=new CatalogStore(context);JourneyData.Route route=new JourneyData.Route();route.code=item.code;route.name=item.name;
   try{
    route.source=store.source(item.source);ArrayList<CatalogStore.Item> local=store.routeStops(item.id);

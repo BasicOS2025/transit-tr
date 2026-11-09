@@ -73,3 +73,10 @@ SOFTWARE.
 ## 1.1.0 durak ve rota verileri
 Ankara koordinatları: OpenStreetMap contributors, ODbL; 7 Kasım 2026 Ankara il sınırı içindeki `highway=bus_stop` + `ref` sorgusu. Ham yanıt `data/raw/ankara-osm-20261107.json` içindedir. EGO saatleri, adlar ve sıralar ego.gov.tr sitesindeki yayımlanmış hizmet bilgileridir; ayrı bir açık veri lisansı belirtilmemiştir.
 İzmir ESHOT: `eshot-otobus-duraklari.csv`, `eshot-otobus-hat-listesi.csv`, `otobus-hat-guzergahlari.csv`; 7 Kasım 2026 indirmesi. Kaynak: https://acikveri.bizizmir.com/tr/dataset/otobus-hat-guzergahlari . İzmir Büyükşehir Belediyesi Açık Veri Lisansı: https://acikveri.bizizmir.com/tr/license . Veriler uygulamaya dönüştürülmüş, koordinat hassasiyeti artırılmamıştır. Lisans kodun Apache-2.0 lisansından ayrıdır.
+
+
+## Ek Material gezinme ikonları (1.2.0)
+Google Material Icons `subway`, `menu_book`, `settings`; Apache-2.0. Resmî SVG geometrileri Android 2.2 uyumlu Canvas Path komutlarına dönüştürülmüştür. SVG kopyaları `docs/icons` içindedir.
+Kaynaklar: https://github.com/google/material-design-icons/tree/master/src/maps/subway , https://github.com/google/material-design-icons/tree/master/src/maps/menu_book , https://github.com/google/material-design-icons/tree/master/src/action/settings .
+
+Material directions_bus icon: https://github.com/google/material-design-icons/blob/master/src/maps/directions_bus/materialicons/24px.svg — Apache-2.0; Canvas path conversion in TransitNavDrawable.

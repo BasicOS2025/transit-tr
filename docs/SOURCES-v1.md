@@ -41,14 +41,9 @@ Ankara: EGO [M1-D](https://www.ego.gov.tr/hareketsaatleri?hat_no=M1-D), [M1-G](h
 Hizmet günü Türkiye UTC+3 saatinde 06:00 sınırında seçilir. Gece yarısından sonraki geç seferler önceki hizmet gününe bağlanır. Model sürerken her tren kendi kalkışından toplam süre kadar gösterilir; son kalkıştan sonraki yolculuk tamamlanabilir. Android 2.2’de 5 sn, modern görünümde 1 sn hesaplama; ağ isteği veya arka plan servisi yoktur. Gerçek tren kimlikleri yoktur.
 
 
+## 1.0.1 ilavesi: İETT / Otobüsüm Anlık
 
-## 1.1.0 kaynakları (7 Kasım 2026)
-- EGO saat/metadata/sıralı duraklar: https://www.ego.gov.tr/hareketsaatleri?hat_no=481 . Uygulama üç gün sütununu ve saat notlarını saklar. 665/665 indirildi; 20 hat kaynakta saat yayımlamıyor. Tarife gerçek zamanlı varış değildir.
-- Ankara koordinatları: OSM Ankara il sınırı `node[highway=bus_stop][ref]`, https://overpass-api.de/api/interpreter üzerinden bağımsız indirme. Çakışan koordinatlı aynı ref kayıtları eşleştirilmez. ODbL; ham veri kaynak paketinde.
-- İETT rota/stop yedeği: https://otobusum.metkm.win/v1/routes/500T?city=istanbul ve `/v1/stop/224672?city=istanbul`. Otobüs GPS'inde resmî İETT SOAP servisi önceliklidir. Kullanıcının sağladığı otobusum-anlik-main.zip uyarlamasına ait MIT bildirimi korunmuştur.
-- ESHOT resmi CSV: https://openfiles.izmir.bel.tr/211488/docs/eshot-otobus-hat-guzergahlari.csv , aynı klasörde `eshot-otobus-hatlari.csv` ve `eshot-otobus-duraklari.csv`. Lisans: https://acikveri.bizizmir.com/tr/license . Kaynakta yuvarlanmış koordinatlar hassaslaştırılmaz. Durakları hatta/yöne göre tam sıralı eşleştiren veri bu sürümde yoktur.
-- Konya: mevcut Kasım 2025 GTFS şekilleri ve ATUS güncel varış sayfası ayrı kaynaklardır. GTFS geometrisi güncel seferin çalıştığını kanıtlamaz. Sayısal durak kodunun GTFS son harfli kaydı yalnız tek eşleşme varsa konuma dönüştürülür; belirsiz durumlarda pin üretilmez.
--https://github.com/metkm/otobusum-anlik (MIT, Copyright 2025 metkm) içindeki API sözleşmeleri uyarlandı. Arşiv SHA256 ve kapsam data/raw/otobusum-integration.json içinde. Çalışan GET uçları: `https://otobusum.metkm.win/v1/stop/{code}/arrivals?city=istanbul`, `/v1/route-stops/{line}?direction=G|D&city=istanbul`, `/v1/bus-locations/{line}?city=istanbul`. Bu servis belediyenin resmî alan adı değildir; aracı Otobüsüm Anlık hizmetidir. Hat GPS birincil kaynağı İETT açık SOAP servisidir.
+7 Kasım 2026 tarihinde kullanıcının verdiği `otobusum-anlik-main.zip` (MIT, Copyright 2025 metkm) içindeki API sözleşmeleri uyarlandı. Arşiv SHA256 ve kapsam data/raw/otobusum-integration.json içinde. Çalışan GET uçları: `https://otobusum.metkm.win/v1/stop/{code}/arrivals?city=istanbul`, `/v1/route-stops/{line}?direction=G|D&city=istanbul`, `/v1/bus-locations/{line}?city=istanbul`. Bu servis belediyenin resmî alan adı değildir; aracı Otobüsüm Anlık hizmetidir. Hat GPS birincil kaynağı İETT açık SOAP servisidir.
 
 Alan eşlemesi: arrivals `door_no,line_code,route_code,minutes_left,lat,lng,last_location_time`; GPS yedeği `bus_id,route_code,lat,lng,last_update_time`; hat durakları `code,name,lat,lng`. Dakika yalnızca aynı araç + hat + güzergâh kodu eşleşmesinde GPS satırına taşınır. Zaman boşsa veya yalnız saat varsa gün/tarih uydurulmaz; tam ISO UTC/offset zamanlar saat dilimiyle ayrıştırılır. Hat durakları 24 saat/8 anahtarla sınırlandırılmış bellek önbelleğinde; JSON ve sonuç sayısı sınırları vardır. İETT ön plan yenilemesi 60 sn.
 
@@ -56,3 +51,10 @@ NTC OAuth kolu boş client ayarları nedeniyle etkinleştirilmedi. Arşivdeki g�
 
 İETT arayüz düzeltmesi: Snapshot filo GPS konumları ile durak varış satırlarını ayrı tutar. `/v1/stop/{code}` içindeki `buses` listesi hat-durak eşleşmesini doğrular (24 saat, 16 durak bellek önbelleği). 224672 Kadıköy Çarşı listesinde 500T yoktur; 205471’de 500T kaynak dakikası vardır. Hat seçimi dakika listesini filtreler, tüm filonun GPS kayıtları dakika satırı gibi sunulmaz. Uygun durak seçimi için aramalı Hat durağı seç diyaloğu eklendi. HTTP 500/502/503/504 için GET isteği en fazla bir kez, 350 ms sonra tekrarlanır; diğer hata türleri sonsuz denemeye dönüştürülmez.
 
+
+## 1.1.0 kaynakları (7 Kasım 2026)
+- EGO saat/metadata/sıralı duraklar: https://www.ego.gov.tr/hareketsaatleri?hat_no=481 . Uygulama üç gün sütununu ve saat notlarını saklar. 665/665 indirildi; 20 hat kaynakta saat yayımlamıyor. Tarife gerçek zamanlı varış değildir.
+- Ankara koordinatları: OSM Ankara il sınırı `node[highway=bus_stop][ref]`, https://overpass-api.de/api/interpreter üzerinden bağımsız indirme. Çakışan koordinatlı aynı ref kayıtları eşleştirilmez. ODbL; ham veri kaynak paketinde.
+- İETT rota/stop yedeği: https://otobusum.metkm.win/v1/routes/500T?city=istanbul ve `/v1/stop/224672?city=istanbul`. Otobüs GPS'inde resmî İETT SOAP servisi önceliklidir. Kullanıcının sağladığı otobusum-anlik-main.zip uyarlamasına ait MIT bildirimi korunmuştur.
+- ESHOT resmi CSV: https://openfiles.izmir.bel.tr/211488/docs/eshot-otobus-hat-guzergahlari.csv , aynı klasörde `eshot-otobus-hatlari.csv` ve `eshot-otobus-duraklari.csv`. Lisans: https://acikveri.bizizmir.com/tr/license . Kaynakta yuvarlanmış koordinatlar hassaslaştırılmaz. Durakları hatta/yöne göre tam sıralı eşleştiren veri bu sürümde yoktur.
+- Konya: mevcut Kasım 2025 GTFS şekilleri ve ATUS güncel varış sayfası ayrı kaynaklardır. GTFS geometrisi güncel seferin çalıştığını kanıtlamaz. Sayısal durak kodunun GTFS son harfli kaydı yalnız tek eşleşme varsa konuma dönüştürülür; belirsiz durumlarda pin üretilmez.

@@ -10,8 +10,11 @@ public final class TrackingClient {
   if(!stop.matches("[0-9]{1,8}"))throw new IOException("Geçerli otobüs durak numarası gir");if(line.length()>16||!line.matches("[A-Za-z0-9ÇĞİÖŞÜçğıöşü-]*"))throw new IOException("Geçerli hat kodu gir");
   if(city==0)return ankara(EgoMobile.fetch(stop,line),line);
   if(city==1)return IettClient.query(stop,line,direction);
-  if(city==2)return izmir(MapHttp.text("https://openapi.izmir.bel.tr/api/iztek/duragayaklasanotobusler/"+stop,null,""),line);
-  return konya(LiveTransit.get("https://atus.konya.bel.tr/atus/otobusum-nerede?durakNo="+stop),line);
+  if(city==2){try{return EshotClient.query(stop,line);}catch(IOException e){JourneyData.Snapshot fallback=izmir(MapHttp.text("https://openapi.izmir.bel.tr/api/iztek/duragayaklasanotobusler/"+stop,null,""),line);fallback.message="ESHOT dakika servisi alınamadı; açık servis durak sayısı gösteriliyor.";return fallback;}}
+  if(city==3||city==8)return KentClient.query(city,stop,line);
+  if(city==7)return AsisClient.query(stop,line);
+  if(city==6)return KonyaClient.query(stop,line,true);
+  throw new IOException("Bu şehirde canlı servis desteklenmiyor");
  }
  public static JourneyData.Snapshot konya(String html,String filter)throws IOException{
   java.util.regex.Matcher body=java.util.regex.Pattern.compile("<tbody[^>]*id=[\"']searchBody[\"'][^>]*>(.*?)</tbody>",34).matcher(html);if(!body.find())throw new IOException("ATUS varış tablosu bulunamadı");JourneyData.Snapshot s=new JourneyData.Snapshot();s.source="Konya ATUS";java.util.regex.Matcher rows=java.util.regex.Pattern.compile("<tr[^>]*>(.*?)</tr>",34).matcher(body.group(1));int n=0;while(rows.find()){if(++n>100)throw new IOException("ATUS araç sınırı");String row=rows.group(1);JourneyData.Vehicle v=new JourneyData.Vehicle();v.line=LiveTransit.cell(row,"tdHatno");if(filter.length()>0&&!v.line.equalsIgnoreCase(filter)&&!v.line.split("-")[0].equalsIgnoreCase(filter))continue;v.name=LiveTransit.cell(row,"tdAdi");v.eta=LiveTransit.cell(row,"tdSure");if(v.eta.length()==0)v.eta="Tarife";s.rows.add(v);}if(s.rows.isEmpty())s.message="Bu sorguda yaklaşan araç yok.";return s;
