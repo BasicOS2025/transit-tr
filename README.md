@@ -3,7 +3,7 @@
 Android 6+ ve Android 2.2 için yerel toplu taşıma uygulaması; ayrıca bağımsız çalıştırılabilen web arayüzü ve web servisi.
 
 **Sürüm: 1.4.0 — test sürümü.** BursaKart ve ASİS şehirleri, ayrı web kaynak paketi ve 10 MB depolama hedefi.
-
+[Android 6 üzerinde canlı harita ve sorgulanan durak](docs/screenshots/v120/bus-route-android6.png)
 ## Özellikler
 
 - OpenStreetMap üzerinde kaynak otobüs GPS konumları ve seçilen durağa ait varış dakikaları.
