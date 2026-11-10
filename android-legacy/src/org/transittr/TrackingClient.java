@@ -12,7 +12,7 @@ public final class TrackingClient {
   if(city==1)return IettClient.query(stop,line,direction);
   if(city==2){try{return EshotClient.query(stop,line);}catch(IOException e){JourneyData.Snapshot fallback=izmir(MapHttp.text("https://openapi.izmir.bel.tr/api/iztek/duragayaklasanotobusler/"+stop,null,""),line);fallback.message="ESHOT dakika servisi alınamadı; açık servis durak sayısı gösteriliyor.";return fallback;}}
   if(city==3||city==8)return KentClient.query(city,stop,line);
-  if(city==7)return AsisClient.query(stop,line);
+  if(city==9)return BursaClient.query(stop,line,true);if(CityRegistry.asis(city))return AsisCityClient.forCity(city).query(stop,line);
   if(city==6)return KonyaClient.query(stop,line,true);
   throw new IOException("Bu şehirde canlı servis desteklenmiyor");
  }

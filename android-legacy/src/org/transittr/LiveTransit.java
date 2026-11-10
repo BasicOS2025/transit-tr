@@ -13,7 +13,7 @@ public final class LiveTransit {
  }
  public static String get(String url)throws IOException{
   if(android.os.Build.VERSION.SDK_INT<21&&(url.contains("openapi.izmir.bel.tr")||url.contains("atus.konya.bel.tr")))return LegacyTls.get(url);
-  try{EgoLocal.disableCertificateChecks();}catch(Exception e){throw new IOException("TLS: "+e);}
+  try{EgoLocal.enableCertificateChecks();}catch(Exception e){throw new IOException("TLS: "+e);}
   HttpURLConnection c=(HttpURLConnection)new URL(url).openConnection();try{c.setConnectTimeout(10000);c.setReadTimeout(15000);c.setInstanceFollowRedirects(false);c.setUseCaches(false);c.setRequestProperty("User-Agent","Mozilla/5.0 TransitTR/0.9 Android");c.setRequestProperty("Accept-Encoding","identity");if(!url.contains("atus.konya.bel.tr"))c.setRequestProperty("X-Requested-With","XMLHttpRequest");int code=c.getResponseCode();if(code!=200)throw new IOException("Canlı servis HTTP "+code);InputStream in=c.getInputStream();ByteArrayOutputStream out=new ByteArrayOutputStream(8192);try{byte[] b=new byte[4096];int n;long end=System.currentTimeMillis()+20000;while((n=in.read(b))!=-1){if(Thread.currentThread().isInterrupted()||System.currentTimeMillis()>end)throw new IOException("Sorgu süresi doldu");if(out.size()+n>LIMIT)throw new IOException("Yanıt 1 MiB sınırını aştı");out.write(b,0,n);}return EgoMobile.decode(out.toByteArray());}finally{in.close();}}finally{c.disconnect();}
  }
  private static String clean(String s){return android.text.Html.fromHtml(s).toString().replaceAll("\\s+"," ").trim();}

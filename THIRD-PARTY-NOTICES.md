@@ -27,9 +27,10 @@ SOFTWARE.
 
 This project is an unofficial third-party tool. It is not affiliated with,
 endorsed by, or connected to Ankara Büyükşehir Belediyesi or EGO Genel
-Müdürlüğü. The "EGO" name and the EGO Cep'te logo are trademarks of their
-respective owners and are used here only for descriptive purposes (nominative
-fair use) to identify the public transit data the tool consumes.
+Müdürlüğü. Municipality, operator, application names and logos belong to their respective
+rights holders. Provider names identify data sources and do not imply endorsement
+or an automatic right to use a mark or logo. No general trademark permission
+under Turkish law is asserted by this notice.
 
 Bus stop coordinate / name data ships from OpenStreetMap (© OpenStreetMap
 contributors), licensed under the Open Database License (ODbL).
@@ -80,3 +81,18 @@ Google Material Icons `subway`, `menu_book`, `settings`; Apache-2.0. Resmî SVG 
 Kaynaklar: https://github.com/google/material-design-icons/tree/master/src/maps/subway , https://github.com/google/material-design-icons/tree/master/src/maps/menu_book , https://github.com/google/material-design-icons/tree/master/src/action/settings .
 
 Material directions_bus icon: https://github.com/google/material-design-icons/blob/master/src/maps/directions_bus/materialicons/24px.svg — Apache-2.0; Canvas path conversion in TransitNavDrawable.
+
+## Public distribution review — 2026-11-10
+
+Code licenses do not grant permission to access provider systems or redistribute
+provider databases, credentials, app-session identities, signatures, names or
+logos. Reverse-engineered protocol compatibility is not an authorization record.
+The supplied APKs and extracted binaries are not licensed as Transit TR code.
+Existing MIT/Apache notices cover their identified code contributions only.
+Open-data license scope must be checked per dataset; a portal license does not
+automatically cover the provider mobile-app API. See legal/README.md and
+docs/LEGAL-REVIEW-2026-11-10.md. No public release has been approved by this notice.
+
+Additional public CA trust anchors: ISRG Root X1/X2, DigiCert Global Root G2, GlobalSign Root CA-R3, GTS Root R4 and USERTrust RSA Certification Authority; issuer sources and SHA-256 certificate fingerprints are recorded in android-legacy/assets/trust-roots/README.txt. These trust anchors do not authorize provider API access.
+
+Independent forks and modified distributions are not endorsed. Responsibility is limited only to the extent permitted by mandatory law; see docs/TERMS-TR.md. Code license rights remain unchanged.

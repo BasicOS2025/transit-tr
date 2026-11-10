@@ -1,0 +1,71 @@
+[
+  {
+    "name": "ankara",
+    "status": 200,
+    "rows": 6,
+    "gps": 6,
+    "eta": 3,
+    "message": ""
+  },
+  {
+    "name": "bursa",
+    "status": 200,
+    "rows": 0,
+    "gps": 0,
+    "eta": 0,
+    "message": "Hat filo konumları alınamadı; durak süreleri gösteriliyor."
+  },
+  {
+    "name": "bursa-route",
+    "status": 200,
+    "stops": 100
+  },
+  {
+    "name": "antalya",
+    "status": 200,
+    "rows": 9,
+    "gps": 9,
+    "eta": 9,
+    "message": ""
+  },
+  {
+    "name": "kocaeli",
+    "status": 200,
+    "rows": 2,
+    "gps": 2,
+    "eta": 2,
+    "message": ""
+  },
+  {
+    "name": "izmir",
+    "status": 200,
+    "rows": 3,
+    "gps": 3,
+    "eta": 3,
+    "message": ""
+  },
+  {
+    "name": "konya",
+    "status": 200,
+    "rows": 26,
+    "gps": 8,
+    "eta": 26,
+    "message": ""
+  },
+  {
+    "name": "balikesir",
+    "status": 200,
+    "rows": 1,
+    "gps": 0,
+    "eta": 1,
+    "message": ""
+  },
+  {
+    "name": "istanbul",
+    "status": 200,
+    "rows": 2,
+    "gps": 30,
+    "eta": 2,
+    "message": ""
+  }
+]

@@ -3,3 +3,17 @@ dist/
 *.p12
 *.jks
 node_modules/
+
+# Private research and local credentials; this does not untrack old files or clean old ZIPs.
+*.apk
+*.xapk
+*.dex
+*.keystore
+*.pfx
+.env
+.env.local
+*.har
+*.pcap
+*.pcapng
+decompiled/
+auth-cache/

@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "purpose": "Manual evidence record; pending never means unlawful. Do not mark reviewed without evidence.",
+  "publisher": {
+    "legal_name": "Ata Köse",
+    "contact": "atakose2012@gmail.com",
+    "privacy_notice_url": "web/privacy.txt (bundled local notice)"
+  },
+  "providers": [
+    {
+      "id": "ego-mobile",
+      "status": "pending"
+    },
+    {
+      "id": "ego-website",
+      "status": "pending"
+    },
+    {
+      "id": "iett-soap",
+      "status": "pending"
+    },
+    {
+      "id": "otobusum-proxy",
+      "status": "pending"
+    },
+    {
+      "id": "ibb-metro",
+      "status": "pending"
+    },
+    {
+      "id": "eshot-app",
+      "status": "pending"
+    },
+    {
+      "id": "izmir-open-data",
+      "status": "pending",
+      "license_url": "https://acikveri.bizizmir.com/tr/license",
+      "note": "Portal license is CC BY 4.0 unless otherwise stated; verify each exact dataset and attribution. Does not establish rights to the separate app API."
+    },
+    {
+      "id": "konya-atus",
+      "status": "pending"
+    },
+    {
+      "id": "konya-gtfs",
+      "status": "pending"
+    },
+    {
+      "id": "kentkart",
+      "status": "pending"
+    },
+    {
+      "id": "asis",
+      "status": "pending"
+    },
+    {
+      "id": "bursa",
+      "status": "pending"
+    },
+    {
+      "id": "osm",
+      "status": "pending",
+      "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+      "note": "Verify attribution, derivative database/source offer, mixed-data compatibility and tile-service policy separately."
+    }
+  ],
+  "release_review": {
+    "source_sha256": "",
+    "privacy_notice_in_ui": true,
+    "data_minimization": false,
+    "retention_and_deletion": false,
+    "cross_border_transfer_basis": false,
+    "database_license_obligations": false,
+    "third_party_code_and_marks": false,
+    "credential_distribution_rights": false,
+    "custom_tls_validated": false
+  }
+}

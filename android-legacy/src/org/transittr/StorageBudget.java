@@ -2,7 +2,7 @@ package org.transittr;
 import android.content.Context;import java.io.*;import java.util.*;import java.util.zip.*;
 /** One shared disk budget for every map/route cache, including allocated block rounding. */
 public final class StorageBudget {
- public static final long CACHE_LIMIT=1048576;
+ public static final long CACHE_LIMIT=131072;
  private static boolean prepared;
  private static long allocated(File f){return f.isDirectory()?4096:((f.length()+4095)/4096)*4096;}
  private static void files(File root,File dir,ArrayList<File> output)throws IOException{File[] list=dir.listFiles();if(list==null)return;String prefix=root.getCanonicalPath()+File.separator;for(File f:list){if(!f.getCanonicalPath().startsWith(prefix))continue;if(f.isDirectory())files(root,f,output);else output.add(f);}}
@@ -13,7 +13,7 @@ public final class StorageBudget {
  public static synchronized boolean cache(Context c,File target,byte[] bytes,boolean compressed)throws IOException{return write(c.getCacheDir(),target,compressed?gzip(bytes):bytes,CACHE_LIMIT);}
  public static synchronized void trimCache(Context c)throws IOException{trim(c.getCacheDir(),CACHE_LIMIT,0);}
  public static synchronized void prepare(Context c)throws IOException{if(prepared)return;
-  for(String name:new String[]{"transit-v05.sqlite","transit-v09.sqlite","transit-v101.sqlite","transit-v110.sqlite"}){File old=c.getDatabasePath(name);if(old.exists()&&!old.delete())throw new IOException("Eski katalog temizlenemedi");File tmp=new File(old+".catalog.tmp");if(tmp.exists())tmp.delete();}
+  for(String name:new String[]{"transit-v05.sqlite","transit-v09.sqlite","transit-v101.sqlite","transit-v110.sqlite","transit-v120.sqlite"}){File old=c.getDatabasePath(name);if(old.exists()&&!old.delete())throw new IOException("Eski katalog temizlenemedi");File tmp=new File(old+".catalog.tmp");if(tmp.exists())tmp.delete();}
   trimCache(c);ScheduleCache.migrate(c);prepared=true;
  }
 

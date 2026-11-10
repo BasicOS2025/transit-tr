@@ -27,7 +27,7 @@ public final class EgoMobile {
  public static String fetch(String stop)throws IOException{return fetch(stop,"");}
  public static String fetch(String stop,String line)throws IOException{
   String address=requestUrl(stop,line);
-  if(!stop.matches("[0-9]{5}"))throw new IOException("5 haneli durak gerekli");try{EgoLocal.disableCertificateChecks();}catch(Exception e){throw new IOException("TLS kurulamadı: "+e);}
+  if(!stop.matches("[0-9]{5}"))throw new IOException("5 haneli durak gerekli");try{EgoLocal.enableCertificateChecks();}catch(Exception e){throw new IOException("TLS kurulamadı: "+e);}
   HttpURLConnection c=(HttpURLConnection)new URL(address).openConnection();try{
    c.setConnectTimeout(10000);c.setReadTimeout(10000);c.setInstanceFollowRedirects(false);c.setRequestProperty("User-Agent","EGO Cepte/8 CFNetwork/1568.300.101 Darwin/24.0.0");c.setRequestProperty("Accept","application/json");c.setRequestProperty("Accept-Encoding","identity");c.setUseCaches(false);
    int status=c.getResponseCode();if(status!=200)throw new IOException("EGO HTTP "+status);InputStream in=c.getInputStream();ByteArrayOutputStream out=new ByteArrayOutputStream(4096);try{byte[] buffer=new byte[4096];int n;long deadline=System.currentTimeMillis()+15000;while((n=in.read(buffer))!=-1){if(Thread.currentThread().isInterrupted()||System.currentTimeMillis()>deadline)throw new IOException("Sorgu süresi doldu");if(out.size()+n>LIMIT)throw new IOException("Yanıt sınırı aşıldı");out.write(buffer,0,n);}return decode(out.toByteArray());}finally{in.close();}

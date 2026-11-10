@@ -2,6 +2,9 @@
 from pathlib import Path
 import os,subprocess,tempfile,zipfile,ctypes,shutil,re,gzip
 ROOT=Path(__file__).resolve().parents[1]
+if os.environ.get('TRANSIT_DISTRIBUTION')=='public':
+ from legal_release_check import enforce
+ enforce(ROOT)
 def short(p):
  p=str(Path(p).resolve())
  if os.name=='nt':
@@ -38,10 +41,7 @@ manifest.write_text(text,encoding='utf-8')
 exe='.exe' if os.name=='nt' else '';unsigned=work/'unsigned.apk'
 resources=[]
 if (source/'assets').exists():
- assets=work/'assets';shutil.copytree(source/'assets',assets,ignore=shutil.ignore_patterns('*.sqlite'))
- for database in (source/'assets').glob('*.sqlite'):
-  with database.open('rb') as inp,(assets/(database.name+'.dbz')).open('wb') as target:
-   with gzip.GzipFile(filename='',mode='wb',fileobj=target,mtime=0) as out:shutil.copyfileobj(inp,out,65536)
+ assets=work/'assets';shutil.copytree(source/'assets',assets,ignore=shutil.ignore_patterns('*.sqlite','ego-times'))
  resources+=['-A',assets]
 if (source/'res').exists():
  res=source/'res'

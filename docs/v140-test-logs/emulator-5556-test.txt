@@ -1,0 +1,15 @@
+FAIL Android 8
+java.lang.reflect.InvocationTargetException
+	at org.transittr.AsisCityClient.query(SourceFile:18)
+	at java.lang.reflect.Method.invokeNative(Native Method)
+	at java.lang.reflect.Method.invoke(Method.java:521)
+	at org.transittr.tests.ExpandedCitiesCheck.onStart(SourceFile:14)
+	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:1447)
+Caused by: java.io.IOException: Canlı servis: HTTP/1.1 400 Bad Request; yönlendirme: 
+	at org.transittr.LegacyTls.request(SourceFile:26)
+	at org.transittr.LegacyTls.requestApi(SourceFile:12)
+	at org.transittr.ApiHttp.text(SourceFile:10)
+	at org.transittr.AsisCityClient.token(SourceFile:11)
+	at org.transittr.AsisCityClient.request(SourceFile:12)
+	... 5 more
+

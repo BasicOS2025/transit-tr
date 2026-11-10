@@ -11,13 +11,13 @@ public final class RouteRepository {
   return load(context,city,item,force,"");
  }
  public static JourneyData.Route load(Context context,int city,CatalogStore.Item item,boolean force,String variant)throws IOException{
-  if(city==3||city==8)return KentClient.route(city,item.code,item.name);if(city==7)return AsisClient.route(item.code,item.name);
+  if(city==9)return BursaClient.route(item.code,item.name);if(city==3||city==8)return KentClient.route(city,item.code,item.name);if(CityRegistry.asis(city))return AsisCityClient.forCity(city).route(item.code,item.name);
   CatalogStore store=new CatalogStore(context);JourneyData.Route route=new JourneyData.Route();route.code=item.code;route.name=item.name;
   try{
    route.source=store.source(item.source);ArrayList<CatalogStore.Item> local=store.routeStops(item.id);
    if(city==0){
     JSONObject schedule=EgoSchedule.get(context,item.code,force);route.at=schedule.optLong("synced_at",0);route.stale=schedule.optBoolean("stale",false);route.source=schedule.optString("source")+"\nKonumlar: © OpenStreetMap contributors, ODbL.";
-    JSONArray stops=schedule.getJSONArray("stops");for(int i=0;i<stops.length();i++){JSONObject value=stops.getJSONObject(i);CatalogStore.Item known=store.stop(city,value.getString("code"));JourneyData.Station stop=known==null?new JourneyData.Station(value.getString("name"),Double.NaN,Double.NaN):station(known);stop.code=value.getString("code");stop.name=value.getString("name");route.stops.add(stop);}
+    JSONArray stops=schedule.getJSONArray("stops");HashSet<String> codes=new HashSet<String>();for(int i=0;i<stops.length();i++)codes.add(stops.getJSONObject(i).getString("code"));HashMap<String,CatalogStore.Item> locations=store.stops(city,codes);for(int i=0;i<stops.length();i++){JSONObject value=stops.getJSONObject(i);CatalogStore.Item known=locations.get(value.getString("code"));JourneyData.Station stop=known==null?new JourneyData.Station(value.getString("name"),Double.NaN,Double.NaN):station(known);stop.code=value.getString("code");stop.name=value.getString("name");route.stops.add(stop);}
    }else for(CatalogStore.Item stop:local)route.stops.add(station(stop));
    if(city==1&&item.type.toLowerCase(new Locale("tr","TR")).contains("otob")){
     String external=variant.length()>0?variant:store.external(item.id),direction=external.contains("_G_")?"G":external.contains("_D_")?"D":"G";

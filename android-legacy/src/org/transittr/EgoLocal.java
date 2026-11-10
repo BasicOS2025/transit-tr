@@ -9,19 +9,9 @@ import java.security.cert.*;
 
 /** One bounded HTTP session per explicit query. No browser or persistent service. */
 public final class EgoLocal {
+ /** Enable authenticated HTTPS. Kept as a shared call site for existing clients. */
  private static SSLSocketFactory tlsFactory;
- /** User-requested compatibility mode: no certificate-chain or hostname verification. */
- public static synchronized void disableCertificateChecks()throws Exception{
-  if(tlsFactory!=null)return;
-  X509TrustManager unchecked=new X509TrustManager(){
-   public X509Certificate[] getAcceptedIssuers(){return new X509Certificate[0];}
-   public void checkClientTrusted(X509Certificate[] chain,String auth){}
-   public void checkServerTrusted(X509Certificate[] chain,String auth){}
-  };
-  SSLContext context=SSLContext.getInstance("TLS");context.init(null,new TrustManager[]{unchecked},null);tlsFactory=context.getSocketFactory();
-  HttpsURLConnection.setDefaultSSLSocketFactory(tlsFactory);
-  HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier(){public boolean verify(String hostname,SSLSession session){return true;}});
- }
+ public static synchronized void enableCertificateChecks()throws Exception{TlsSecurity.configure();tlsFactory=HttpsURLConnection.getDefaultSSLSocketFactory();}
  private static final String ORIGIN="https://www.ego.gov.tr";
  private static final int MAX_BYTES=262144;
  private static String attr(String tag,String name){Matcher m=Pattern.compile("\\b"+name+"\\s*=\\s*([\"'])(.*?)\\1",Pattern.CASE_INSENSITIVE|Pattern.DOTALL).matcher(tag);return m.find()?m.group(2):"";}
@@ -47,7 +37,7 @@ public final class EgoLocal {
   if(cards.length==1)out.append("Kaynak şu an yaklaşan araç göstermedi.\n");return out.append("\nKaynak: https://www.ego.gov.tr/otobusnerede\nTahminler değişebilir. GPS haritası değildir.").toString();
  }
  private static String request(String path,byte[] post,List<String> cookies)throws IOException{
-  if(tlsFactory==null)try{disableCertificateChecks();}catch(Exception setup){throw new IOException("TLS setup: "+setup.toString());}
+  if(tlsFactory==null)try{enableCertificateChecks();}catch(Exception setup){throw new IOException("TLS setup: "+setup.toString());}
   HttpURLConnection c=(HttpURLConnection)new URL(ORIGIN+path).openConnection();if(tlsFactory!=null&&c instanceof HttpsURLConnection)((HttpsURLConnection)c).setSSLSocketFactory(tlsFactory);try{c.setConnectTimeout(8000);c.setReadTimeout(8000);c.setInstanceFollowRedirects(false);c.setRequestProperty("User-Agent","Mozilla/5.0 (Linux; U; Android 2.2; tr-tr) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1");c.setRequestProperty("Accept-Encoding","identity");c.setRequestProperty("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");c.setRequestProperty("Accept-Language","tr-TR,tr;q=0.9");if(!cookies.isEmpty()){StringBuilder h=new StringBuilder();for(String cookie:cookies){if(h.length()>0)h.append("; ");h.append(cookie);}c.setRequestProperty("Cookie",h.toString());}if(post!=null){c.setRequestMethod("POST");c.setDoOutput(true);c.setRequestProperty("Content-Type","application/x-www-form-urlencoded; charset=UTF-8");c.setRequestProperty("Referer",ORIGIN+"/otobusnerede");c.setRequestProperty("Origin",ORIGIN);c.setFixedLengthStreamingMode(post.length);OutputStream output=c.getOutputStream();try{output.write(post);}finally{output.close();}}
    int status=c.getResponseCode();if(status!=200)throw new IOException("EGO HTTP "+status+"; sorgu tamamlanamadı");for(Map.Entry<String,List<String>> e:c.getHeaderFields().entrySet())if(e.getKey()!=null&&e.getKey().equalsIgnoreCase("Set-Cookie"))for(String raw:e.getValue()){String cookie=raw.split(";",2)[0];if(cookie.length()<4096&&cookies.size()<16)cookies.add(cookie);}
    InputStream input=c.getInputStream();ByteArrayOutputStream output=new ByteArrayOutputStream(32768);try{byte[] b=new byte[4096];int n;long deadline=System.currentTimeMillis()+12000;while((n=input.read(b))!=-1){if(Thread.currentThread().isInterrupted()||System.currentTimeMillis()>deadline)throw new IOException("Sorgu süresi doldu");if(output.size()+n>MAX_BYTES)throw new IOException("EGO yanıt boyutu sınırı aşıldı");output.write(b,0,n);}return new String(output.toByteArray(),"UTF-8");}finally{input.close();}

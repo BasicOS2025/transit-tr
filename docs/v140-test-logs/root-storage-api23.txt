@@ -1,0 +1,12 @@
+4	/data/app/org.transittr-1/lib
+3988	/data/app/org.transittr-1/oat/x86
+3992	/data/app/org.transittr-1/oat
+9364	/data/app/org.transittr-1
+108	/data/data/org.transittr/cache/osm-v1
+4	/data/data/org.transittr/cache/iett-route-json
+116	/data/data/org.transittr/cache
+4	/data/data/org.transittr/code_cache
+20	/data/data/org.transittr/shared_prefs
+4	/data/data/org.transittr/databases
+8	/data/data/org.transittr/files
+156	/data/data/org.transittr

@@ -27,7 +27,7 @@ public final class EgoSchedule {
  private static JSONObject read(InputStream in)throws IOException{try{ByteArrayOutputStream out=new ByteArrayOutputStream();byte[] b=new byte[4096];int n;while((n=in.read(b))!=-1){if(out.size()+n>262144)throw new IOException("Tarife önbellek sınırı");out.write(b,0,n);}return new JSONObject(new String(out.toByteArray(),"UTF-8"));}catch(JSONException e){throw new IOException("Tarife önbelleği okunamadı");}finally{in.close();}}
  public static JSONObject cached(Context context,String code)throws IOException{
   validate(code);try{InputStream in=ScheduleCache.open(context,code);if(in!=null)return read(in);}catch(IOException ignored){}
-  try{return read(context.getAssets().open("ego-times/"+code+".json"));}catch(IOException e){return null;}
+  try{return read(EgoScheduleAsset.open(context,code));}catch(IOException e){return null;}
  }
  public static JSONObject get(Context context,String code,boolean force)throws IOException{
   validate(code);JSONObject old=cached(context,code);long now=System.currentTimeMillis();if(!force&&old!=null&&now-old.optLong("synced_at",0)<86400000L)return old;
