@@ -5,6 +5,8 @@ public final class CityRegistry {
  public static City get(int id){for(City c:ALL)if(c.id==id)return c;return ALL[0];}
  public static boolean valid(int id){for(City c:ALL)if(c.id==id)return true;return false;}
  public static boolean asis(int id){return valid(id)&&get(id).provider.equals("asis");}
- public static String[] names(){String[] a=new String[ALL.length];for(int i=0;i<a.length;i++)a[i]=ALL[i].name;return a;}
- public static int[] ids(){int[] a=new int[ALL.length];for(int i=0;i<a.length;i++)a[i]=ALL[i].id;return a;}
+ // Keep old IDs readable for existing saved favorites, but omit unavailable cities from the picker.
+ private static boolean selectable(City c){switch(c.id){case 1203:case 1152:case 1154:case 1172:case 1173:case 1074:case 1188:case 1012:case 1192:case 1105:case 1113:case 1029:case 1129:case 1076:case 1070:case 1040:case 1140:case 1049:case 1191:case 1056:case 1143:case 1132:case 1153:case 1062:case 1110:case 1107:case 1133:case 1170:return false;default:return true;}}
+ public static String[] names(){java.util.ArrayList<String> a=new java.util.ArrayList<String>();for(City c:ALL)if(selectable(c))a.add(c.name);return a.toArray(new String[a.size()]);}
+ public static int[] ids(){int count=0;for(City c:ALL)if(selectable(c))count++;int[] a=new int[count];int i=0;for(City c:ALL)if(selectable(c))a[i++]=c.id;return a;}
 }

@@ -9,7 +9,7 @@ const jsonFile=n=>JSON.parse(readFileSync(path.join(DATA,n),'utf8'));
 export const cities=jsonFile('cities.json');
 const bursaKey=jsonFile('bursa-bootstrap.json').publicKey;
 const agent=new https.Agent({keepAlive:true,maxSockets:8,rejectUnauthorized:true});
-const hosts=new Set(['webservice.akillibiletim.com','bursakartcoreapi.abys-web.com','service.kentkart.com','egocptsrvand.ego.gov.tr','www.ego.gov.tr','appapi.eshot.gov.tr','atus-api.konya.bel.tr','otobusum.metkm.win','api.ibb.gov.tr']);
+const hosts=new Set(['webservice.akillibiletim.com','bursakartcoreapi.abys-web.com','service.kentkart.com','egocptsrvand.ego.gov.tr','www.ego.gov.tr','appapi.eshot.gov.tr','atus-api.konya.bel.tr','otobusum.metkm.win','api.ibb.gov.tr','openapi.izmir.bel.tr']);
 export function request(address,{body,headers={},raw=false}={}){return new Promise((resolve,reject)=>{
  const u=new URL(address);if(u.protocol!=='https:'||!hosts.has(u.hostname))return reject(Error('Geçersiz ulaşım servisi'));
  let payload=body;if(body!==undefined&&typeof body!=='string'){payload=JSON.stringify(body);headers={'Content-Type':'application/json',...headers};}

@@ -16,9 +16,10 @@ export const server=http.createServer(async(req,res)=>{try{
  if(p.startsWith('/api/')){
   if(!['GET','POST'].includes(req.method))return send(res,405,{message:'Yöntem desteklenmiyor'});
   if(p==='/api/v2/health')return send(res,200,{status:'ok',version:'1.4.0',cities:cities.length});
-  if(p==='/api/v2/cities')return send(res,200,cities.map(({key,error,...c})=>c));
+  if(p==='/api/v2/cities')return send(res,200,cities.filter(c=>c.status!=='unavailable').map(({key,error,...c})=>c));
   if(p==='/api/v2/sync'){if(req.method==='POST'){if(req.headers.origin&&new URL(req.headers.origin).host!==req.headers.host)return send(res,403,{message:'Kaynak eşleşmiyor'});if(q.get('cancel')==='1')syncJob.cancelled=true;else startSync();}return send(res,200,syncJob);}
   if(req.method!=='GET')return send(res,405,{message:'Bu sorgu GET gerektirir'});
+  if(p==='/api/v2/izban-times'){const from=q.get('from')||'',to=q.get('to')||'';if(!/^[1-9]\d{0,2}$/.test(from)||!/^[1-9]\d{0,2}$/.test(to)||from===to)return send(res,400,{message:'İstasyon seçimi geçersiz'});return send(res,200,await cached(p+':'+from+':'+to,300000,()=>request('https://openapi.izmir.bel.tr/api/izban/sefersaatleri/'+from+'/'+to)));}
   if(p==='/api/v2/statuses'){return send(res,200,await cached(p,60000,()=>request('https://api.ibb.gov.tr/MetroIstanbul/api/MetroMobile/V2/GetServiceStatuses')));}
   const city=Number(q.get('city')||0);if(!cities.some(c=>c.id===city))return send(res,400,{message:'Geçersiz şehir'});
   const line=q.get('line')||'',stop=q.get('stop')||'',direction=q.get('direction')||'G';
