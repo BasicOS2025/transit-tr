@@ -4,6 +4,16 @@ Android 6+ ve Android 2.2 için yerel toplu taşıma uygulaması; ayrıca bağı
 
 **Sürüm: 1.5.0 — test sürümü.** Android uygulaması ve yerel web servisi; Bursa, kullanılabilir ASİS kayıtları ve İzmir İZBAN ağı.
 
+## İstatistikler
+<p align="center">
+  <a href="https://github.com/BasicOS2025/transit-tr/stargazers">
+    <img src="https://img.shields.io/github/stars/BasicOS2025/transit-tr?style=for-the-badge&logo=github&color=gold" alt="Stars" />
+  </a>
+  <a href="https://github.com/BasicOS2025/REPO_ADIN/network/members">
+    <img src="https://img.shields.io/github/forks/BasicOS2025/REPO_ADIN?style=for-the-badge&logo=github&color=blue" alt="Forks" />
+  </a>
+</p>
+
 ## Ekran görüntüleri
 
 | Canlı otobüs takibi | Metro haritası |
