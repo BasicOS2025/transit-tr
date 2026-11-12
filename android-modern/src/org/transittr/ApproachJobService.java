@@ -1,0 +1,3 @@
+package org.transittr;
+import android.app.job.*;import android.os.Handler;import android.os.Looper;
+public final class ApproachJobService extends JobService {private Thread worker;private volatile boolean stopped;public boolean onStartJob(final JobParameters p){stopped=false;worker=new Thread(new Runnable(){public void run(){try{ApproachAlert.poll(ApproachJobService.this);}finally{new Handler(Looper.getMainLooper()).post(new Runnable(){public void run(){if(!stopped){jobFinished(p,false);ApproachAlert.schedule(ApproachJobService.this,false);}}});}}});worker.start();return true;}public boolean onStopJob(JobParameters p){stopped=true;if(worker!=null)worker.interrupt();return ApproachAlert.active(this).length()>0;}}

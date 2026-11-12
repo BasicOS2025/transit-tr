@@ -21,6 +21,7 @@ public final class RailEstimator {
  private static boolean night(long start){Calendar c=Calendar.getInstance(TimeZone.getTimeZone("GMT+03:00"));c.setTimeInMillis(start);int d=c.get(Calendar.DAY_OF_WEEK);return d==Calendar.FRIDAY||d==Calendar.SATURDAY;}
  private static JourneyData.RailLine find(ArrayList<JourneyData.RailLine> lines,String id){for(JourneyData.RailLine l:lines)if(id.equals(l.id))return l;return null;}
  private static JourneyData.RailLine corridor(ArrayList<JourneyData.RailLine> lines){JourneyData.RailLine r=new JourneyData.RailLine();r.id="M123";JourneyData.RailLine m2=find(lines,"M2"),m1=find(lines,"M1"),m3=find(lines,"M3");if(m2==null||m1==null||m3==null)return r;for(int i=m2.stations.size()-1;i>=0;i--)r.stations.add(m2.stations.get(i));for(int i=1;i<m1.stations.size();i++)r.stations.add(m1.stations.get(i));for(int i=1;i<m3.stations.size();i++)r.stations.add(m3.stations.get(i));return r;}
+ public static JourneyData.RailLine combinedAnkara(ArrayList<JourneyData.RailLine> lines){JourneyData.RailLine route=corridor(lines);route.city=0;route.name="Koru – OSB/Törekent";route.color="#e2231a";return route;}
  private static double distance(JourneyData.Station a,JourneyData.Station b){double x=(a.lon-b.lon)*Math.cos((a.lat+b.lat)*Math.PI/360),y=a.lat-b.lat;return Math.max(.00001,Math.sqrt(x*x+y*y));}
  /** Interpolate travel with a fixed intermediate dwell, normalized to the published total trip time. */
  public static JourneyData.Vehicle position(JourneyData.RailLine route,int direction,double elapsed,int duration,int dwell){
@@ -47,7 +48,7 @@ public final class RailEstimator {
    else{int first=profile.getInt("startSeconds"),last=profile.getInt("endSeconds"),headway=profile.getInt("headwaySeconds");for(int t=first;t<=last;t+=headway)departures.add(Integer.valueOf(t));if(profile.optBoolean("nightWeekend",false)&&night(start))for(int t=86400;t<108000;t+=1800)if(!departures.contains(Integer.valueOf(t)))departures.add(Integer.valueOf(t));}
    for(Integer time:departures){double elapsed=seconds-time.intValue();JourneyData.Vehicle v=position(route,direction,elapsed,duration,dwell);if(v==null)continue;
     if(id.equals("M123")&&!(allowed.contains(v.fromStation)&&allowed.contains(v.toStation)))continue;
-    v.id="estimate:"+city+":"+id+":"+start+":"+direction+":"+time;v.line=selected.id;v.estimateDetail+="\n\n"+out.explanation;out.trains.add(v);if(out.trains.size()>=128)return out;
+    v.id="estimate:"+city+":"+id+":"+start+":"+direction+":"+time;v.line=selected.id.equals("M123")?"M1-M2-M3":selected.id;v.estimateDetail+="\n\n"+out.explanation;out.trains.add(v);if(out.trains.size()>=128)return out;
    }
   }
  }catch(Exception e){out.explanation="Saat modeli okunamadı; yalnızca istasyon ağı gösteriliyor.";}return out;}

@@ -8,7 +8,7 @@ public final class TrackingClient {
  public static JourneyData.Snapshot query(int city,String stop,String line)throws IOException{return query(city,stop,line,"");}
  public static JourneyData.Snapshot query(int city,String stop,String line,String direction)throws IOException{
   if(!stop.matches("[0-9]{1,8}"))throw new IOException("Geçerli otobüs durak numarası gir");if(line.length()>16||!line.matches("[A-Za-z0-9ÇĞİÖŞÜçğıöşü-]*"))throw new IOException("Geçerli hat kodu gir");
-  if(city==0)return ankara(EgoMobile.fetch(stop,line),line);
+  if(city==0){JourneyData.Snapshot gps=null;IOException gpsError=null;try{gps=ankara(EgoMobile.fetch(stop,line),line);}catch(IOException e){gpsError=e;}try{return EgoRealtime.query(stop,line,gps);}catch(IOException e){if(gps!=null){gps.message="Yeni EGO tahmin servisi alınamadı; mevcut EGO mobil sonucu gösteriliyor.";return gps;}throw new IOException("EGO sorguları alınamadı: "+(gpsError==null?e.getMessage():gpsError.getMessage()));}}
   if(city==1)return IettClient.query(stop,line,direction);
   if(city==2){try{return EshotClient.query(stop,line);}catch(IOException e){JourneyData.Snapshot fallback=izmir(MapHttp.text("https://openapi.izmir.bel.tr/api/iztek/duragayaklasanotobusler/"+stop,null,""),line);fallback.message="ESHOT dakika servisi alınamadı; açık servis durak sayısı gösteriliyor.";return fallback;}}
   if(city==3||city==8)return KentClient.query(city,stop,line);

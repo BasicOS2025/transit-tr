@@ -2,7 +2,7 @@
 
 Android 6+ ve Android 2.2 için yerel toplu taşıma uygulaması; ayrıca bağımsız çalıştırılabilen web arayüzü ve web servisi.
 
-**Sürüm: 1.4.1 — test sürümü.** Android uygulaması ve yerel web servisi; Bursa, kullanılabilir ASİS kayıtları ve İzmir İZBAN ağı.
+**Sürüm: 1.5.0 — test sürümü.** Android uygulaması ve yerel web servisi; Bursa, kullanılabilir ASİS kayıtları ve İzmir İZBAN ağı.
 
 ## Ekran görüntüleri
 
@@ -23,13 +23,15 @@ Ekran görüntüleri örnek sorguları gösterir; canlı sonuçlar ve tema renkl
 - Hat numarasına dokununca aynı haritada renkli rota; katalogda ayrı rota ve sıralı durak ekranı.
 - Aşağı kaydırılabilen araç/varış listesi; filo GPS’i ve durak varışları ayrı tutulur.
 - Ankara ve İstanbul için metro haritası, istasyon seçimi ve saate dayalı tren konumu tahmini. İzmir’de İZBAN istasyon haritası ve iki istasyon arasında planlı sefer saatleri.
+- Ankara metro, Ankaray ve BaşkentRay istasyonlarında EGO Cepte servisinden alınan iki yönlü planlı geçiş saatleri ve kalan dakikalar. Saatler canlı tren konumu veya gecikme verisi değildir.
 - Hatlar, duraklar, yakın duraklar ve yıldızlı katalog kayıtları.
 - EGO otobüs, metro ve Ankaray saatleri; tek hat veya toplu eşitleme, hafta içi/cumartesi/pazar sütunları ve özel sefer notları.
 - En fazla 12 durak + hat sorgusu için ana ekran widget’ı. İlk kullanımda örnek hat eklenmez. Android 6+ üzerinde yeniden boyutlandırılır; Android 2.2’de küçük sabit görünüm kullanılır.
+- Son sekiz durak/hat sorgusu ve kayıtlı bir hat için 2, 5 veya 10 dakika kala yaklaşma bildirimi. Ayarlar ekranından bildirimler açılıp kapatılabilir; hat ve süre seçilebilir. Bildirimler sistemin arka plan zamanlaması nedeniyle gecikebilir.
 - Açık/koyu tema ve ikonlu Otobüs / Metro / Katalog / Ayarlar menüsü. Android 8+ uyarlanabilir ikon; Android 13+ ve destekleyen launcher’larda temalı simge.
 - WebView, AndroidX veya Google Play Services gerektirmeyen yerel Android arayüzü.
 
-**Metro konumları saat temelli tahmindir; GPS değildir.** Gecikme, iptal ve özel gün değişiklikleri modellenmez. Modeli olmayan raylı hatlarda yalnız istasyon ağı gösterilir. İstanbul’da 26 rota, Ankara’da M1–M4 ve Ankaray bulunur. İzmir’de İZBAN için 41 istasyon gösterilir; İZBAN konum modeli bulunmaz. Ayrıntılar uygulamadaki Model bölümündedir.
+**Metro konumları saat temelli tahmindir; GPS değildir.** Gecikme, iptal ve özel gün değişiklikleri modellenmez. Modeli olmayan raylı hatlarda yalnız istasyon ağı gösterilir. İstanbul’da 26 rota bulunur. Ankara’da M1–M2–M3 birleşik Koru–OSB/Törekent hattı, M4, Ankaray ve 24 istasyonlu BaşkentRay gösterilir. İzmir’de İZBAN için 41 istasyon gösterilir; İZBAN konum modeli bulunmaz. Ayrıntılar uygulamadaki Model bölümündedir.
 
 ## Şehirler ve kaynak desteği
 
@@ -37,7 +39,7 @@ Ekran görüntüleri örnek sorguları gösterir; canlı sonuçlar ve tema renkl
 
 | Şehir / kaynak | Canlı bilgi | Rota / katalog |
 |---|---|---|
-| Ankara / EGO | Kaynak GPS’i ve durak/hat dakikaları | EGO sıralı durakları, OSM koordinatlarıyla şematik bağlantı ve EGO saatleri |
+| Ankara / EGO | EGO Cepte durak varış tahminleri ve ayrı servisten kaynak GPS’i | EGO sıralı durakları, OSM koordinatlarıyla şematik bağlantı ve EGO saatleri |
 | İstanbul / İETT | Durak dakikaları ve ayrı hat filosu GPS’i | İETT / Otobüsüm Anlık geometrisi ve hat durakları |
 | İzmir / ESHOT ve İZBAN | ESHOT durak varışları ve GPS; İZBAN için planlı sefer saatleri | Otobüs rotaları ve İZBAN’ın 41 istasyonluk şematik ağı |
 | Konya / ATUS | Mobil varışlar ve gerçek araç konumu sorgusu | Mevcut GTFS geometrileri; bu statik verinin tarihi 2025’tir |
@@ -66,8 +68,8 @@ Android 6 emülatöründe APK, ART, veri ve önbellek dahil sistem ölçümü ya
 
 | Paket | Minimum sürüm | targetSdk |
 |---|---|---:|
-| `Transit-TR-v1.4.1-android6.apk` | Android 6.0 / API 23 | 28 |
-| `Transit-TR-v1.4.1-android22.apk` | Android 2.2 / API 8 | 8 |
+| `Transit-TR-v1.5.0-android6.apk` | Android 6.0 / API 23 | 28 |
+| `Transit-TR-v1.5.0-android22.apk` | Android 2.2 / API 8 | 8 |
 
 İki paket aynı `org.transittr` uygulamasını kullanır; aynı cihazda ayrı uygulamalar olarak kurulmaz. Test anahtarıyla imzalanırlar; özel imza anahtarı kaynak paketine dahil değildir. Play Store dağıtımı hazırlanmadı. 
 
@@ -131,7 +133,7 @@ $env:ANDROID_VARIANT='legacy'
 python tools/build_android.py
 ```
 
-Çıktılar `dist/transit-tr-v1.4.1-modern.apk` ve `dist/transit-tr-v1.4.1-legacy.apk` olur. Test APK’sında `ANDROID_TESTS=1` kullanılır; normal derlemede bu değişken kaldırılmalıdır. `backend` ve eski `web/app.js` / `core.js` dosyaları önceki Go/PWA prototipine aittir; güncel web servisini `web-service/server.mjs` çalıştırır.
+Çıktılar `dist/transit-tr-v1.5.0-modern.apk` ve `dist/transit-tr-v1.5.0-legacy.apk` olur. Test APK’sında `ANDROID_TESTS=1` kullanılır; normal derlemede bu değişken kaldırılmalıdır. `backend` ve eski `web/app.js` / `core.js` dosyaları önceki Go/PWA prototipine aittir; güncel web servisini `web-service/server.mjs` çalıştırır.
 
 ## Testler
 
