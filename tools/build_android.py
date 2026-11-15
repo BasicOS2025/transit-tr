@@ -20,7 +20,9 @@ if not os.environ.get('KS_PASS'):raise SystemExit('Set KS_PASS')
 java=os.environ.get('JAVA_EXE','java');root=Path(short(ROOT));(root/'build').mkdir(exist_ok=True)
 work=Path(tempfile.mkdtemp(prefix='android-',dir=str(root/'build')));classes=work/'classes';classes.mkdir();dex=work/'dex';dex.mkdir();dist=root/'dist';dist.mkdir(exist_ok=True)
 tests_mode=os.environ.get('ANDROID_TESTS')=='1'
-modern=not tests_mode and os.environ.get('ANDROID_VARIANT','legacy')=='modern'
+tv=not tests_mode and os.environ.get('ANDROID_VARIANT','legacy')=='tv'
+wear=not tests_mode and os.environ.get('ANDROID_VARIANT','legacy')=='wear'
+modern=not tests_mode and os.environ.get('ANDROID_VARIANT','legacy') in ('modern','tv','wear')
 modern_jar=None
 if modern:
  modern_jar=short(os.environ.get('ANDROID_MODERN_JAR',str(bt.parent.parent/'platforms/android-34/android.jar')))
@@ -28,6 +30,8 @@ if modern:
 source=root/('android-tests' if tests_mode else 'android-legacy');library=root/'android-legacy/libs/transit-tls.jar'
 run(java,'-jar',ecj,'-1.6','-encoding','UTF-8','-bootclasspath',jar,'-classpath',library,'-d',classes,*sorted((source/'src').rglob('*.java')))
 if modern:run(java,'-jar',ecj,'-1.6','-encoding','UTF-8','-bootclasspath',modern_jar,'-classpath',classes,'-d',classes,*sorted((root/'android-modern/src').rglob('*.java')))
+if tv:run(java,'-jar',ecj,'-1.6','-encoding','UTF-8','-bootclasspath',modern_jar,'-classpath',classes,'-d',classes,*sorted((root/'android-tv/src').rglob('*.java')))
+if wear:run(java,'-jar',ecj,'-1.6','-encoding','UTF-8','-bootclasspath',modern_jar,'-classpath',classes,'-d',classes,*sorted((root/'android-wear/src').rglob('*.java')))
 program=work/'program.jar'
 with zipfile.ZipFile(program,'w',zipfile.ZIP_DEFLATED) as z:
  for p in classes.rglob('*.class'):z.write(p,p.relative_to(classes))
@@ -36,7 +40,9 @@ if tests_mode:
  rules=work/'test-rules.pro';rules.write_text('-keep class org.transittr.tests.** { *; }\n-dontobfuscate\n',encoding='utf-8')
 run(java,'-cp',bt/'lib/d8.jar','com.android.tools.r8.R8','--release','--min-api','8','--lib',modern_jar if modern else jar,'--pg-conf',rules,'--output',dex,program,*([] if tests_mode else [library]))
 manifest=work/'AndroidManifest.xml';text=(source/'AndroidManifest.xml').read_text(encoding='utf-8')
-if modern:text=text.replace('android:icon="@drawable/icon"','android:icon="@drawable/icon" android:roundIcon="@drawable/icon"').replace('android:minSdkVersion="8"','android:minSdkVersion="23"').replace('android:targetSdkVersion="8"','android:targetSdkVersion="28"').replace('</application>','<service android:name=".WidgetJobService" android:permission="android.permission.BIND_JOB_SERVICE" android:exported="true"/><service android:name=".ApproachJobService" android:permission="android.permission.BIND_JOB_SERVICE" android:exported="true"/></application>')
+if wear:text=(root/'android-wear/AndroidManifest.xml').read_text(encoding='utf-8')
+elif tv:text=(root/'android-tv/AndroidManifest.xml').read_text(encoding='utf-8')
+elif modern:text=text.replace('android:icon="@drawable/icon"','android:icon="@drawable/icon" android:roundIcon="@drawable/icon"').replace('android:minSdkVersion="8"','android:minSdkVersion="23"').replace('android:targetSdkVersion="8"','android:targetSdkVersion="28"').replace('</application>','<service android:name=".WidgetJobService" android:permission="android.permission.BIND_JOB_SERVICE" android:exported="true"/><service android:name=".ApproachJobService" android:permission="android.permission.BIND_JOB_SERVICE" android:exported="true"/></application>')
 manifest.write_text(text,encoding='utf-8')
 exe='.exe' if os.name=='nt' else '';unsigned=work/'unsigned.apk'
 resources=[]
@@ -48,6 +54,7 @@ if (source/'res').exists():
  if modern:
   res=work/'res';shutil.copytree(source/'res',res)
   shutil.copytree(root/'android-modern/res',res,dirs_exist_ok=True)
+  if tv:shutil.copytree(root/'android-tv/res',res,dirs_exist_ok=True)
   widget=res/'xml/transit_widget.xml'
   widget.write_text(widget.read_text(encoding='utf-8').replace('/>','android:resizeMode="horizontal|vertical" android:minResizeWidth="180dp" android:minResizeHeight="50dp" />'),encoding='utf-8')
  resources+=['-S',res]
@@ -55,7 +62,7 @@ run(bt/('aapt'+exe),'package','-f','-0','dbz','-M',manifest,'-I',modern_jar if m
 with zipfile.ZipFile(unsigned,'a',zipfile.ZIP_DEFLATED) as z:z.write(dex/'classes.dex','classes.dex')
 aligned=work/'aligned.apk';run(bt/('zipalign'+exe),'-f','4',unsigned,aligned)
 version=re.search(r'android:versionName="([^"]+)"',(root/'android-legacy/AndroidManifest.xml').read_text(encoding='utf-8')).group(1)
-apk=dist/('transit-tr-v'+version+'-'+('tests' if tests_mode else 'modern' if modern else 'legacy')+'.apk');minimum='23' if modern else '8'
+apk=dist/('transit-tr-v'+version+'-'+('tests' if tests_mode else 'wear' if wear else 'tv' if tv else 'modern' if modern else 'legacy')+'.apk');minimum='23' if modern else '8'
 run(java,'-jar',bt/'lib/apksigner.jar','sign','--min-sdk-version',minimum,'--ks',key,'--ks-key-alias',os.environ.get('KEY_ALIAS','transittr'),'--ks-pass','env:KS_PASS','--key-pass','env:KS_PASS','--out',apk,aligned)
 run(java,'-jar',bt/'lib/apksigner.jar','verify','--verbose','--min-sdk-version',minimum,apk)
 print('APK:',apk)

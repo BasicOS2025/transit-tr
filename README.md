@@ -2,7 +2,7 @@
 
 Android 6+ ve Android 2.2 için yerel toplu taşıma uygulaması; ayrıca bağımsız çalıştırılabilen web arayüzü ve web servisi.
 
-**Sürüm: 1.5.0 — test sürümü.** Android uygulaması ve yerel web servisi; Bursa, kullanılabilir ASİS kayıtları ve İzmir İZBAN ağı.
+**Sürüm: 1.6.0 — test sürümü.** Android uygulaması ve yerel web servisi; Bursa, kullanılabilir ASİS kayıtları ve İzmir İZBAN ağı.
 
 ## Ekran görüntüleri
 
@@ -15,6 +15,16 @@ Android 6+ ve Android 2.2 için yerel toplu taşıma uygulaması; ayrıca bağı
 | ![Web arayüzünde Bursa haritası ve varışlar](docs/screenshots/v141/web-harita.png) | ![Lawnchair üzerinde tema rengine uyarlanmış Transit TR ikonu](docs/screenshots/v141/android-temali-ikon.png) |
 
 Ekran görüntüleri örnek sorguları gösterir; canlı sonuçlar ve tema renkleri değişebilir. Web görüntüsü 1.4.0 testinden, Android görüntüleri 1.4.1 testinden alınmıştır.
+
+## Geliştirme sürümü: mobil ve Android TV
+
+- Katalog → Yakınımda sonucunda “Haritada göster” ile koordinatlı duraklar haritada açılır; durak seçilip takibe alınabilir veya paylaşılabilir.
+- Otobüs ekranındaki Ev / İş kısayollarına kayıtlı durak ve hat atanabilir.
+- Ankara metro, Ankaray ve BaşkentRay istasyonlarında son planlı geçiş ve seçilen yaklaşan sefer için hatırlatıcı bulunur. Hatırlatıcı seçilen planlı saati kullanır; canlı gecikmeleri izlemez, Android zamanlaması nedeniyle gecikebilir ve cihaz yeniden başlatıldığında tekrar ayarlanmalıdır.
+- EGO raylı sistem saatleri başarılı sorgudan sonra cihazda saklanır; bağlantı kesilirse son kayıt güncelleme tarihiyle gösterilir. Tarife günü eşleşmediğinde eski saatler gösterilmez.
+- Ayrı Android TV APK’sında harita ile açılan kumandalı arayüz, ayarlardan yapılandırılan varış panosu ve Android ekran koruyucusu bulunur. Pano kayıtları sayfalar halinde gösterir. Cihazın ekran koruyucusu seçeneklerinden Transit TR seçilmelidir.
+
+- Ayrı Wear OS uygulaması, telefona gerek duymadan saate girilen durak + hat kayıtlarının varışlarını gösterir. Veriler saat açıkken yenilenir; uygulama arka planda sürekli sorgu yapmaz. Kayıtlar cihazlar arasında otomatik eşitlenmez.
 
 ## Özellikler
 
@@ -95,7 +105,7 @@ Android 6 emülatöründe APK, ART, veri ve önbellek dahil sistem ölçümü ya
 Kaynak sonuçları saate ve sefer durumuna göre değişir. Kaynak konum saati varsa ayrıca gösterilir; veri alınma saati GPS ölçüm saati yerine yazılmaz. Eski veya yenilenemeyen sonuçlar belirtilir. Android harita takibi arka planda durur; widget için sistemin izin verdiği kısa yenileme işleri çalışabilir.
 
 ## Ayrı web sürümü
-Link olarak: https://transit-tr.vercel.app/
+
 Web servisi Android araç zincirinden bağımsızdır. Node.js 22+ ile, `web-service` klasöründe:
 
 ```sh

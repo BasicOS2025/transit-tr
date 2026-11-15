@@ -1,0 +1,7 @@
+package org.transittr;
+import android.app.*;import android.content.*;import android.os.Build;
+/** One scheduled reminder for a planned rail departure. */
+public final class RailReminder extends BroadcastReceiver {
+ public static void schedule(Context c,long at,String label){Intent i=new Intent(c,RailReminder.class).putExtra("label",label);int flags=PendingIntent.FLAG_UPDATE_CURRENT|(Build.VERSION.SDK_INT>=23?0x04000000:0);PendingIntent p=PendingIntent.getBroadcast(c,17302,i,flags);((AlarmManager)c.getSystemService(Context.ALARM_SERVICE)).set(AlarmManager.RTC_WAKEUP,at,p);}
+ @SuppressWarnings("deprecation") public void onReceive(Context c,Intent intent){String label=intent.getStringExtra("label");if(label==null)return;Intent open=new Intent(c,TransitActivity.class);try{if(Build.VERSION.SDK_INT>=23){Class.forName("org.transittr.ModernApproach").getMethod("post",Context.class,String.class,String.class,Intent.class).invoke(null,c,"Planlı sefer yaklaşıyor",label,open);return;}}catch(Exception ignored){}Notification n=new Notification(android.R.drawable.ic_dialog_info,"Planlı sefer yaklaşıyor",System.currentTimeMillis());n.flags|=Notification.FLAG_AUTO_CANCEL;PendingIntent p=PendingIntent.getActivity(c,17302,open,PendingIntent.FLAG_UPDATE_CURRENT);n.setLatestEventInfo(c,"Planlı sefer yaklaşıyor",label,p);((NotificationManager)c.getSystemService(Context.NOTIFICATION_SERVICE)).notify(17302,n);}
+}
