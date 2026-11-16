@@ -2,7 +2,7 @@
 
 Android 6+ ve Android 2.2 için yerel toplu taşıma uygulaması; ayrıca bağımsız çalıştırılabilen web arayüzü ve web servisi.
 
-**Sürüm: 1.7.0 — test sürümü.** Android uygulaması ve yerel web servisi; Bursa, kullanılabilir ASİS kayıtları ve İzmir İZBAN ağı.
+**Sürüm: 1.7.0 — Stabil Release.** Android uygulaması ve web servisi.
 
 ## Ekran görüntüleri
 
@@ -114,7 +114,7 @@ Android 6 emülatöründe APK, ART, veri ve önbellek dahil sistem ölçümü ya
 Kaynak sonuçları saate ve sefer durumuna göre değişir. Kaynak konum saati varsa ayrıca gösterilir; veri alınma saati GPS ölçüm saati yerine yazılmaz. Eski veya yenilenemeyen sonuçlar belirtilir. Android harita takibi arka planda durur; widget için sistemin izin verdiği kısa yenileme işleri çalışabilir.
 
 ## Ayrı web sürümü
-
+Vercel: https://transit-tr.vercel.app
 Web servisi Android araç zincirinden bağımsızdır. Node.js 22+ ile, `web-service` klasöründe:
 
 ```sh
