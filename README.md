@@ -2,17 +2,7 @@
 
 Android 6+ ve Android 2.2 için yerel toplu taşıma uygulaması; ayrıca bağımsız çalıştırılabilen web arayüzü ve web servisi.
 
-**Sürüm: 1.6.0 — test sürümü.** Android uygulaması ve yerel web servisi; Bursa, kullanılabilir ASİS kayıtları ve İzmir İZBAN ağı.
-
-## İstatistikler
-<p align="center">
-  <a href="https://github.com/BasicOS2025/transit-tr/stargazers">
-    <img src="https://img.shields.io/github/stars/BasicOS2025/transit-tr?style=for-the-badge&logo=github&color=gold" alt="Stars" />
-  </a>
-  <a href="https://github.com/BasicOS2025/REPO_ADIN/network/members">
-    <img src="https://img.shields.io/github/forks/BasicOS2025/REPO_ADIN?style=for-the-badge&logo=github&color=blue" alt="Forks" />
-  </a>
-</p>
+**Sürüm: 1.7.0 — test sürümü.** Android uygulaması ve yerel web servisi; Bursa, kullanılabilir ASİS kayıtları ve İzmir İZBAN ağı.
 
 ## Ekran görüntüleri
 
@@ -35,6 +25,15 @@ Ekran görüntüleri örnek sorguları gösterir; canlı sonuçlar ve tema renkl
 - Ayrı Android TV APK’sında harita ile açılan kumandalı arayüz, ayarlardan yapılandırılan varış panosu ve Android ekran koruyucusu bulunur. Pano kayıtları sayfalar halinde gösterir. Cihazın ekran koruyucusu seçeneklerinden Transit TR seçilmelidir.
 
 - Ayrı Wear OS uygulaması, telefona gerek duymadan saate girilen durak + hat kayıtlarının varışlarını gösterir. Veriler saat açıkken yenilenir; uygulama arka planda sürekli sorgu yapmaz. Kayıtlar cihazlar arasında otomatik eşitlenmez.
+
+## 1.7.0 TV iyileştirmeleri
+
+- Mobilde geçerli durak/hat sorgusu metin veya PNG olarak paylaşılabilir; görsel PNG olarak kaydedilebilir. Son sorgular favorilerden bağımsız temizlenebilir.
+- Durak + hat favorileri, katalog yıldızları ve son sorgular JSON yedeğine aktarılıp başka bir cihazda birleştirilebilir; katalog yıldızlarında veri eşleşmesi doğrulanır. Android 2.2’de yedekler İndirilenler klasörüne kaydedilir ve aynı klasörden seçilir.
+- Mobil takipte otomatik veya daha düşük sıklıklı yenileme seçilebilir; kaynakların asgari aralığı korunur.
+- TV panosunda 30 saniye, 1, 2 veya 5 dakikalık yenileme aralığı seçilebilir.
+- Kumanda odağı düğmelerde ve alt menüde görünür. Haritada Seç ile taşıma moduna girilir; Seç veya Geri ile çıkılır.
+- TV ayarlarından pano açılabilir, kayıtlar düzenlenebilir ve sistem ayarlarına gidilebilir. Ekran koruyucusu seçiminin sunulması TV üreticisine ve sistem yazılımına bağlıdır.
 
 ## Özellikler
 
