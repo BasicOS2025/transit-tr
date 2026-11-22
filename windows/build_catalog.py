@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Export the shared Transit TR catalogue for the Windows desktop client."""
 import gzip
+from contextlib import closing
 import json
 import sqlite3
 import subprocess
@@ -44,6 +45,6 @@ if __name__ == "__main__":
     with tempfile.TemporaryDirectory() as temporary:
         database = Path(temporary) / "transit.sqlite"
         subprocess.run([sys.executable, ROOT / "ios/build_catalog.py", database], check=True)
-        with sqlite3.connect(database) as db:
+        with closing(sqlite3.connect(database)) as db:
             db.row_factory = sqlite3.Row
             export(db, folder)
