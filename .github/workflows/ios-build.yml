@@ -2,7 +2,7 @@ name: Transit TR iOS build
 
 on:
   push:
-    branches: [feature/ios-11]
+    branches: [main]
     paths: ["ios/**", ".github/workflows/ios-build.yml"]
   pull_request:
     paths: ["ios/**", ".github/workflows/ios-build.yml"]
