@@ -9,7 +9,7 @@ Android 6+ ve Android 2.2 için yerel toplu taşıma uygulaması; ayrıca bağı
     <img src="https://img.shields.io/github/stars/BasicOS2025/transit-tr?style=for-the-badge&logo=github&color=gold" alt="Stars" />
   </a>
   <a href="https://github.com/BasicOS2025/REPO_ADIN/network/members">
-    <img src="https://img.shields.io/github/forks/BasicOS2025/REPO_ADIN?style=for-the-badge&logo=github&color=blue" alt="Forks" />
+    <img src="https://img.shields.io/github/forks/BasicOS2025/transit-tr?style=for-the-badge&logo=github&color=blue" alt="Forks" />
   </a>
 </p>
 
