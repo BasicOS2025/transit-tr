@@ -1,0 +1,38 @@
+name: Transit TR Windows build
+
+on:
+  push:
+    branches: [main]
+    paths: ["windows/**", "ios/build_catalog.py", "android-legacy/assets/**", ".github/workflows/windows-build.yml"]
+  pull_request:
+    paths: ["windows/**", "ios/build_catalog.py", "android-legacy/assets/**", ".github/workflows/windows-build.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  desktop:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build .NET Framework desktop app
+        shell: pwsh
+        run: |
+          python windows/build_catalog.py windows/data
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          dotnet build windows/TransitTR.Windows.csproj -c Release
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Verify native package opens every catalogue
+        shell: pwsh
+        run: |
+          $product = "windows/bin/Release/net48"
+          $test = Start-Process "$product/TransitTR.exe" -ArgumentList "--verify-catalog" -PassThru -Wait
+          if ($test.ExitCode -ne 0) { exit $test.ExitCode }
+          Copy-Item LICENSE, THIRD-PARTY-NOTICES.md, windows/README.md $product
+          Compress-Archive -Path "$product/*" -DestinationPath "$env:RUNNER_TEMP/TransitTR-v1.0-windows.zip"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: transit-tr-windows
+          path: ${{ runner.temp }}/TransitTR-v1.0-windows.zip
+          if-no-files-found: error

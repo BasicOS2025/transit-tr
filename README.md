@@ -145,6 +145,8 @@ Web’de canlı otobüs GPS/dakika haritası, durak pini, renkli rota, katalog, 
 | `android-tests` | Emülatör, canlı sorgu, widget ve depolama testleri |
 | `web` | Güncel web arayüzü: `live-app.js`, `map.js`, `sw-v140.js` |
 | `web-service` | Bağımsız Node HTTP/API servisi ve paketlenmiş veri |
+| [`windows`](windows/README.md) | Windows 7 SP1 ve üstü için çevrimdışı katalog ve canlı varış uygulaması |
+| [`ios`](ios/README.md) | iOS uygulaması, planlı kalkış bildirimleri ve widget hedefleri |
 | `tools` | Derleme, veri dışa aktarımı ve test çalıştırıcıları |
 | `docs` | Kaynaklar, destek tablosu ve test günlükleri |
 
