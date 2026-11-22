@@ -447,7 +447,7 @@ private final class StreetTiles: MKTileOverlay {
         maximumZ = 19
     }
 
-    override func loadTile(at path: MKTileOverlay.Path, result: @escaping (Data?, Error?) -> Void) {
+    override func loadTile(at path: MKTileOverlayPath, result: @escaping (Data?, Error?) -> Void) {
         Self.session.dataTask(with: url(forTilePath: path)) { data, response, error in
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
                 result(nil, error ?? TransitError.response)
