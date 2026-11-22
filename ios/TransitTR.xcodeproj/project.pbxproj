@@ -1,0 +1,175 @@
+// !$*UTF8*$!
+{
+    archiveVersion = 1;
+    classes = {};
+    objectVersion = 56;
+    objects = {
+
+/* Begin PBXBuildFile section */
+        C0D000000000000000000101 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D000000000000000000201; };
+        C0D000000000000000000102 /* CatalogScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D000000000000000000202; };
+        C0D000000000000000000103 /* LiveScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D000000000000000000203; };
+        C0D000000000000000000104 /* MoreScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D000000000000000000204; };
+        C0D000000000000000000105 /* RailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D000000000000000000205; };
+        C0D000000000000000000106 /* TransitData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D000000000000000000206; };
+        C0D000000000000000000107 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0D000000000000000000207; };
+        C0D000000000000000000108 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0D000000000000000000208; };
+        C0D000000000000000000109 /* rail-networks.json in Resources */ = {isa = PBXBuildFile; fileRef = C0D000000000000000000209; };
+        C0D00000000000000000010A /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = C0D00000000000000000020A; };
+        C0D00000000000000000010B /* THIRD-PARTY-NOTICES.md in Resources */ = {isa = PBXBuildFile; fileRef = C0D00000000000000000020B; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+        C0D000000000000000000201 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+        C0D000000000000000000202 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogScreen.swift; sourceTree = "<group>"; };
+        C0D000000000000000000203 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveScreen.swift; sourceTree = "<group>"; };
+        C0D000000000000000000204 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreScreens.swift; sourceTree = "<group>"; };
+        C0D000000000000000000205 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailScreen.swift; sourceTree = "<group>"; };
+        C0D000000000000000000206 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitData.swift; sourceTree = "<group>"; };
+        C0D000000000000000000207 = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+        C0D000000000000000000208 = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+        C0D000000000000000000209 = {isa = PBXFileReference; lastKnownFileType = text.json; name = "rail-networks.json"; path = "../android-legacy/assets/rail-networks.json"; sourceTree = SOURCE_ROOT; };
+        C0D00000000000000000020A = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = SOURCE_ROOT; };
+        C0D00000000000000000020B = {isa = PBXFileReference; lastKnownFileType = text; name = "THIRD-PARTY-NOTICES.md"; path = "../THIRD-PARTY-NOTICES.md"; sourceTree = SOURCE_ROOT; };
+        C0D00000000000000000020C = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+        C0D00000000000000000020D = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransitTR.app; sourceTree = BUILT_PRODUCTS_DIR; };
+        C0D00000000000000000020E = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = build_catalog.py; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+        C0D000000000000000000301 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+        C0D000000000000000000400 = {
+            isa = PBXGroup;
+            children = (C0D000000000000000000401, C0D000000000000000000402, C0D00000000000000000020E, C0D00000000000000000020F, C0D000000000000000000403);
+            sourceTree = "<group>";
+        };
+        C0D000000000000000000401 = {
+            isa = PBXGroup;
+            children = (C0D000000000000000000201, C0D000000000000000000202, C0D000000000000000000203,
+                        C0D000000000000000000204, C0D000000000000000000205, C0D000000000000000000206,
+                        C0D000000000000000000207, C0D000000000000000000208, C0D00000000000000000020C);
+            path = TransitTR;
+            sourceTree = "<group>";
+        };
+        C0D000000000000000000402 = {
+            isa = PBXGroup;
+            children = (C0D000000000000000000209, C0D00000000000000000020A, C0D00000000000000000020B);
+            name = "Shared Data and Licenses";
+            sourceTree = "<group>";
+        };
+        C0D000000000000000000403 = {isa = PBXGroup; children = (C0D00000000000000000020D); name = Products; sourceTree = "<group>"; };
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+        C0D000000000000000000500 = {
+            isa = PBXNativeTarget;
+            buildConfigurationList = C0D000000000000000000702;
+            buildPhases = (C0D000000000000000000302, C0D000000000000000000301, C0D000000000000000000303, C0D000000000000000000304);
+            buildRules = ();
+            dependencies = ();
+            name = TransitTR;
+            productName = TransitTR;
+            productReference = C0D00000000000000000020D;
+            productType = "com.apple.product-type.application";
+        };
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+        C0D000000000000000000600 = {
+            isa = PBXProject;
+            attributes = {LastSwiftUpdateCheck = 1430; LastUpgradeCheck = 1430; TargetAttributes = {C0D000000000000000000500 = {CreatedOnToolsVersion = 14.3.1; }; }; };
+            buildConfigurationList = C0D000000000000000000701;
+            compatibilityVersion = "Xcode 14.0";
+            developmentRegion = tr;
+            hasScannedForEncodings = 0;
+            knownRegions = (tr, Base);
+            mainGroup = C0D000000000000000000400;
+            productRefGroup = C0D000000000000000000403;
+            projectDirPath = "";
+            projectRoot = "";
+            targets = (C0D000000000000000000500);
+        };
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+        C0D000000000000000000303 = {
+            isa = PBXResourcesBuildPhase;
+            buildActionMask = 2147483647;
+            files = (C0D000000000000000000107, C0D000000000000000000108, C0D000000000000000000109,
+                     C0D00000000000000000010A, C0D00000000000000000010B);
+            runOnlyForDeploymentPostprocessing = 0;
+        };
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+        C0D000000000000000000304 = {
+            isa = PBXShellScriptBuildPhase;
+            buildActionMask = 2147483647;
+            alwaysOutOfDate = 1;
+            files = ();
+            name = "Build shared SQLite catalogue";
+            outputPaths = ("$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/TransitCatalog.sqlite");
+            runOnlyForDeploymentPostprocessing = 0;
+            shellPath = /bin/sh;
+            shellScript = "set -eu\n/usr/bin/env python3 \"$SRCROOT/build_catalog.py\" \"$SCRIPT_OUTPUT_FILE_0\"\n";
+        };
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+        C0D000000000000000000302 = {
+            isa = PBXSourcesBuildPhase;
+            buildActionMask = 2147483647;
+            files = (C0D000000000000000000101, C0D000000000000000000102, C0D000000000000000000103,
+                     C0D000000000000000000104, C0D000000000000000000105, C0D000000000000000000106);
+            runOnlyForDeploymentPostprocessing = 0;
+        };
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+        C0D000000000000000000711 = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+                SDKROOT = iphoneos;
+                SWIFT_VERSION = 5.0;
+                SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+            };
+            name = Debug;
+        };
+        C0D000000000000000000712 = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+                SDKROOT = iphoneos;
+                SWIFT_VERSION = 5.0;
+                SWIFT_COMPILATION_MODE = wholemodule;
+                SWIFT_OPTIMIZATION_LEVEL = "-Osize";
+            };
+            name = Release;
+        };
+        C0D000000000000000000713 = {
+            isa = XCBuildConfiguration;
+            baseConfigurationReference = C0D00000000000000000020F;
+            buildSettings = {};
+            name = Debug;
+        };
+        C0D000000000000000000714 = {
+            isa = XCBuildConfiguration;
+            baseConfigurationReference = C0D00000000000000000020F;
+            buildSettings = {};
+            name = Release;
+        };
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+        C0D000000000000000000701 = {isa = XCConfigurationList; buildConfigurations = (C0D000000000000000000711, C0D000000000000000000712); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+        C0D000000000000000000702 = {isa = XCConfigurationList; buildConfigurations = (C0D000000000000000000713, C0D000000000000000000714); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+/* End XCConfigurationList section */
+
+        C0D00000000000000000020F = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = TransitTR.xcconfig; sourceTree = "<group>"; };
+    };
+    rootObject = C0D000000000000000000600;
+}
