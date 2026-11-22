@@ -4,6 +4,7 @@ import gzip
 from contextlib import closing
 import json
 import sqlite3
+import struct
 import subprocess
 import sys
 import tempfile
@@ -35,6 +36,9 @@ def export(db, folder):
         schedules = {code: json.loads(value) for code, value in db.execute(
             "SELECT code,json FROM ego_schedules")} if key == 0 else {}
         write(folder / f"{key}.json.gz", dict(routes=routes, stops=stops, links=links, schedules=schedules))
+    for route, shape in db.execute("SELECT route,points FROM ios_shapes ORDER BY route"):
+        write(folder / f"shape-{route}.json.gz",
+              [{"lat": lat / 10**6, "lon": lon / 10**6} for lat, lon in struct.iter_unpack(">ii", shape)])
 
 
 if __name__ == "__main__":

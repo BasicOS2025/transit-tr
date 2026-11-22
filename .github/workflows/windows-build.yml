@@ -31,8 +31,32 @@ jobs:
           if ($test.ExitCode -ne 0) { exit $test.ExitCode }
           Copy-Item LICENSE, THIRD-PARTY-NOTICES.md, windows/README.md $product
           Compress-Archive -Path "$product/*" -DestinationPath "$env:RUNNER_TEMP/TransitTR-v1.0-windows.zip"
+      - name: Build and verify setup
+        shell: pwsh
+        run: |
+          $nsis = "${env:ProgramFiles(x86)}\NSIS\makensis.exe"
+          if (!(Test-Path $nsis)) {
+            choco install nsis --version=3.11 -y --no-progress
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+          $product = (Resolve-Path 'windows/bin/Release/net48').Path
+          $setup = Join-Path $env:RUNNER_TEMP 'setup.exe'
+          & $nsis "/DPRODUCT_DIR=$product" "/DOUTPUT_FILE=$setup" 'windows/setup.nsi'
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $install = Join-Path $env:RUNNER_TEMP 'Transit TR Setup Test'
+          $process = Start-Process $setup -ArgumentList "/S /D=$install" -PassThru -Wait
+          if ($process.ExitCode -ne 0) { exit $process.ExitCode }
+          $test = Start-Process (Join-Path $install 'TransitTR.exe') -ArgumentList '--verify-catalog' -PassThru -Wait
+          if ($test.ExitCode -ne 0) { exit $test.ExitCode }
+          $ui = Start-Process (Join-Path $install 'TransitTR.exe') -ArgumentList '--verify-window' -PassThru -Wait
+          if ($ui.ExitCode -ne 0) { exit $ui.ExitCode }
+          $uninstall = Start-Process (Join-Path $install 'Uninstall.exe') -ArgumentList "/S _?=$install" -PassThru -Wait
+          if ($uninstall.ExitCode -ne 0) { exit $uninstall.ExitCode }
+          if (Test-Path (Join-Path $install 'TransitTR.exe')) { throw 'Application still exists after uninstall' }
       - uses: actions/upload-artifact@v4
         with:
           name: transit-tr-windows
-          path: ${{ runner.temp }}/TransitTR-v1.0-windows.zip
+          path: |
+            ${{ runner.temp }}/setup.exe
+            ${{ runner.temp }}/TransitTR-v1.0-windows.zip
           if-no-files-found: error

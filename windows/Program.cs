@@ -23,11 +23,24 @@ namespace TransitTR.Windows
         private static int Main(string[] args)
         {
             if (args.SequenceEqual(new[] { "--verify-catalog" })) return VerifyCatalogue();
+            bool testWindow = args.SequenceEqual(new[] { "--verify-window" });
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             if (Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor == 1)
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            try { Application.Run(new TransitForm()); return 0; }
+            try
+            {
+                using (var form = new TransitForm())
+                {
+                    if (testWindow)
+                    {
+                        form.CreateControl();
+                        form.DrawToBitmapForTest();
+                    }
+                    else Application.Run(form);
+                }
+                return 0;
+            }
             catch (IOException ex)
             {
                 MessageBox.Show(ex.Message, "Transit TR", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -60,14 +73,12 @@ namespace TransitTR.Windows
         public override string ToString() { return name; }
     }
 
-    public sealed class Entry
+    public sealed class Entry : MapPoint
     {
         public long id { get; set; }
         public string code { get; set; }
         public string name { get; set; }
         public string type { get; set; }
-        public double? lat { get; set; }
-        public double? lon { get; set; }
         public override string ToString() { return code + "  ·  " + name; }
     }
 
@@ -89,6 +100,8 @@ namespace TransitTR.Windows
         public string line { get; set; }
         public string name { get; set; }
         public string eta { get; set; }
+        public int etaSeconds { get; set; } = -1;
+        public bool passed { get; set; }
     }
 
     public sealed class ArrivalResult
@@ -97,6 +110,8 @@ namespace TransitTR.Windows
         public long receivedAt { get; set; }
         public string message { get; set; }
         public List<Arrival> rows { get; set; }
+        public List<VehiclePoint> mapRows { get; set; }
+        public MapPoint stop { get; set; }
     }
 
     internal static class TransitData
@@ -136,7 +151,7 @@ namespace TransitTR.Windows
         private readonly TextBox detail = new TextBox { Dock = DockStyle.Fill, Multiline = true, ReadOnly = true, ScrollBars = ScrollBars.Vertical };
         private readonly Button next = new Button { Text = "Daha fazla", AutoSize = true };
         private readonly Button track = new Button { Text = "Varışları sorgula", AutoSize = true };
-        private readonly Button maps = new Button { Text = "OpenStreetMap’te aç", AutoSize = true };
+        private readonly Button maps = new Button { Text = "Haritada göster", AutoSize = true };
         private readonly Button goLive = new Button { Text = "Durak varışlarına git", AutoSize = true };
         private readonly Label summary = new Label { AutoSize = true };
         private readonly Label liveStatus = new Label { AutoSize = true, MaximumSize = new Size(740, 0) };
@@ -144,6 +159,20 @@ namespace TransitTR.Windows
         private readonly TextBox lineCode = new TextBox { Width = 130, AccessibleName = "Hat kodu", MaxLength = 80 };
         private readonly ListView arrivals = new ListView { Dock = DockStyle.Fill, View = View.Details, FullRowSelect = true };
         private readonly System.Windows.Forms.Timer searchDelay = new System.Windows.Forms.Timer { Interval = 180 };
+        private static readonly Color Ink = Color.FromArgb(18, 42, 67);
+        private static readonly Color Accent = Color.FromArgb(0, 101, 173);
+        private static readonly Color Surface = Color.FromArgb(245, 248, 251);
+        private readonly TransitMap map = new TransitMap();
+        private readonly TabPage mapPage = new TabPage("Harita");
+        private readonly Label mapCaption = new Label { AutoSize = true };
+        private readonly Button liveMap = new Button { Text = "Araçları haritada göster", AutoSize = true, Enabled = false };
+        private readonly CheckBox alerts = new CheckBox { Text = "5 dk kala bildir", AutoSize = true };
+        private readonly NotifyIcon tray = new NotifyIcon { Icon = SystemIcons.Information, Text = "Transit TR" };
+        private readonly System.Windows.Forms.Timer liveTimer = new System.Windows.Forms.Timer();
+        private bool notified;
+        private long lastSnapshot;
+        private string trackedQuery;
+        private ArrivalResult latest;
         private Catalogue data;
         private List<Entry> matches = new List<Entry>();
         private CancellationTokenSource pending;
@@ -157,21 +186,58 @@ namespace TransitTR.Windows
             StartPosition = FormStartPosition.CenterScreen;
             Font = new Font("Segoe UI", 10);
             AutoScaleMode = AutoScaleMode.Dpi;
+            BackColor = Surface;
+            ForeColor = Ink;
+            entries.BorderStyle = BorderStyle.None;
+            entries.DrawMode = DrawMode.OwnerDrawFixed;
+            entries.ItemHeight = 32;
+            entries.DrawItem += DrawEntry;
+            detail.BorderStyle = BorderStyle.None;
+            detail.BackColor = Color.White;
+            arrivals.BorderStyle = BorderStyle.None;
+            tray.BalloonTipClicked += (sender, args) => { Show(); WindowState = FormWindowState.Normal; Activate(); };
+            liveTimer.Tick += async (sender, args) => { liveTimer.Stop(); await QueryAsync(false); };
+            alerts.CheckedChanged += (sender, args) =>
+            {
+                tray.Visible = alerts.Checked;
+                if (!alerts.Checked) liveTimer.Stop();
+                else if (latest != null && trackedQuery != null)
+                {
+                    MaybeNotify(latest);
+                    ScheduleRefresh();
+                }
+            };
+            stopCode.TextChanged += (sender, args) => ResetTracking();
+            lineCode.TextChanged += (sender, args) => ResetTracking();
 
             var title = new Label { Text = "Transit TR", AutoSize = true, Font = new Font(Font.FontFamily, 20, FontStyle.Bold) };
             var header = Bar(title, new Label { Text = "Şehir", AutoSize = true, Margin = new Padding(22, 10, 6, 0) }, city);
-            header.BackColor = Color.FromArgb(229, 239, 252);
+            header.BackColor = Surface;
             Controls.Add(tabs);
             Controls.Add(header);
             MakeCatalogueTab();
             MakeLiveTab();
+            MakeMapTab();
+            StyleAction(track, true);
+            StyleAction(maps);
+            StyleAction(goLive);
+            StyleAction(next);
+            StyleAction(liveMap);
 
             city.DataSource = TransitData.Read<List<City>>("cities.json.gz");
             city.SelectedIndexChanged += async (sender, args) => await ChangeCityAsync();
             search.TextChanged += (sender, args) => { searchDelay.Stop(); searchDelay.Start(); };
             searchDelay.Tick += (sender, args) => { searchDelay.Stop(); Filter(); };
             Shown += async (sender, args) => await ChangeCityAsync();
-            FormClosed += (sender, args) => { pending?.Cancel(); searchDelay.Dispose(); };
+            FormClosed += (sender, args) => { pending?.Cancel(); searchDelay.Dispose(); liveTimer.Dispose(); tray.Dispose(); };
+        }
+
+        internal void DrawToBitmapForTest()
+        {
+            using (var bitmap = new Bitmap(Width, Height))
+            {
+                DrawToBitmap(bitmap, new Rectangle(Point.Empty, Size));
+            }
         }
 
         private static FlowLayoutPanel Bar(params Control[] controls)
@@ -195,15 +261,7 @@ namespace TransitTR.Windows
             kind.SelectedIndexChanged += (sender, args) => Filter();
             entries.SelectedIndexChanged += (sender, args) => ShowDetails();
             next.Click += (sender, args) => AppendPage();
-            maps.Click += (sender, args) =>
-            {
-                var item = entries.SelectedItem as Entry;
-                if (item == null || !item.lat.HasValue || !item.lon.HasValue) return;
-                string link = string.Format(CultureInfo.InvariantCulture,
-                    "https://www.openstreetmap.org/?mlat={0}&mlon={1}#map=17/{0}/{1}", item.lat.Value, item.lon.Value);
-                try { Process.Start(new ProcessStartInfo(link) { UseShellExecute = true }); }
-                catch (System.ComponentModel.Win32Exception ex) { MessageBox.Show(ex.Message, "Harita"); }
-            };
+            maps.Click += (sender, args) => ShowEntryMap();
             goLive.Click += async (sender, args) =>
             {
                 var item = entries.SelectedItem as Entry;
@@ -222,21 +280,26 @@ namespace TransitTR.Windows
         {
             var page = new TabPage("Canlı varış") { BackColor = SystemColors.Window };
             arrivals.Columns.Add("Hat", 100);
-            arrivals.Columns.Add("Varış", 120);
+            arrivals.Columns.Add("Varış", 120, HorizontalAlignment.Right);
             arrivals.Columns.Add("Güzergâh", 490);
             var statusBar = Bar(liveStatus);
             statusBar.Dock = DockStyle.Bottom;
             track.Click += async (sender, args) => await QueryAsync();
+            liveMap.Click += (sender, args) =>
+            {
+                if (latest != null) OpenMap(latest.stop, latest.mapRows, null, "Durak ve kaynak GPS kayıtları");
+            };
             page.Controls.Add(arrivals);
             page.Controls.Add(statusBar);
             page.Controls.Add(Bar(new Label { Text = "Durak kodu", AutoSize = true }, stopCode,
-                new Label { Text = "Hat (isteğe bağlı)", AutoSize = true }, lineCode, track));
+                new Label { Text = "Hat (isteğe bağlı)", AutoSize = true }, lineCode, track, alerts, liveMap));
             tabs.TabPages.Add(page);
         }
 
         private async Task ChangeCityAsync()
         {
-            pending?.Cancel();
+            ResetTracking();
+            map.ClearData();
             arrivals.Items.Clear();
             liveStatus.Text = "";
             var current = city.SelectedItem as City;
@@ -284,7 +347,9 @@ namespace TransitTR.Windows
             var selected = entries.SelectedItem as Entry;
             var current = city.SelectedItem as City;
             bool isStop = kind.SelectedIndex == 1;
-            maps.Enabled = isStop && selected?.lat != null && selected?.lon != null;
+            maps.Enabled = selected != null && (isStop ? selected.Valid :
+                data != null && (data.links.ContainsKey(selected.id.ToString(CultureInfo.InvariantCulture)) ||
+                File.Exists(ShapeFile(selected.id))));
             goLive.Enabled = isStop && current != null && current.provider != "static" && selected != null &&
                 Regex.IsMatch(selected.code, "^[0-9]{1,8}$");
             if (selected == null || data == null) { detail.Clear(); return; }
@@ -311,7 +376,123 @@ namespace TransitTR.Windows
             detail.Text = text.ToString();
         }
 
-        private async Task QueryAsync()
+        private static void StyleAction(Button button, bool primary = false)
+        {
+            button.FlatStyle = FlatStyle.Flat;
+            button.Padding = new Padding(9, 3, 9, 3);
+            button.FlatAppearance.BorderColor = primary ? Ink : Color.FromArgb(203, 216, 229);
+            button.BackColor = primary ? Ink : Color.White;
+            button.ForeColor = primary ? Color.White : Ink;
+        }
+
+        private void DrawEntry(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0 || e.Index >= entries.Items.Count) return;
+            e.DrawBackground();
+            var item = (Entry)entries.Items[e.Index];
+            bool selected = (e.State & DrawItemState.Selected) != 0;
+            var flags = TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis | TextFormatFlags.SingleLine;
+            var code = new Rectangle(e.Bounds.X + 8, e.Bounds.Y, 84, e.Bounds.Height);
+            var label = new Rectangle(code.Right + 5, e.Bounds.Y, Math.Max(0, e.Bounds.Width - 105), e.Bounds.Height);
+            TextRenderer.DrawText(e.Graphics, item.code, e.Font, code, selected ? SystemColors.HighlightText : Accent, flags);
+            TextRenderer.DrawText(e.Graphics, item.name, e.Font, label, selected ? SystemColors.HighlightText : Ink, flags);
+            e.DrawFocusRectangle();
+        }
+
+        private void MakeMapTab()
+        {
+            var plus = new Button { Text = "+", AccessibleName = "Yakınlaştır", AutoSize = true };
+            var minus = new Button { Text = "−", AccessibleName = "Uzaklaştır", AutoSize = true };
+            var credit = new LinkLabel { Text = "© OpenStreetMap contributors", AutoSize = true };
+            plus.Click += (sender, args) => map.ChangeZoom(1);
+            minus.Click += (sender, args) => map.ChangeZoom(-1);
+            credit.LinkClicked += (sender, args) =>
+            {
+                try { Process.Start(new ProcessStartInfo("https://www.openstreetmap.org/copyright") { UseShellExecute = true }); }
+                catch (System.ComponentModel.Win32Exception ex) { MessageBox.Show(ex.Message, "Harita"); }
+            };
+            var attribution = Bar(credit);
+            attribution.Dock = DockStyle.Bottom;
+            mapPage.Controls.Add(map);
+            mapPage.Controls.Add(attribution);
+            mapPage.Controls.Add(Bar(plus, minus, mapCaption));
+            tabs.TabPages.Add(mapPage);
+        }
+
+        private static string ShapeFile(long id)
+        {
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data",
+                "shape-" + id.ToString(CultureInfo.InvariantCulture) + ".json.gz");
+        }
+
+        private void ShowEntryMap()
+        {
+            var item = entries.SelectedItem as Entry;
+            if (item == null || data == null) return;
+            if (kind.SelectedIndex == 1)
+            {
+                if (item.Valid) OpenMap(item, null, null, item.ToString());
+                return;
+            }
+            var file = ShapeFile(item.id);
+            if (File.Exists(file))
+            {
+                try
+                {
+                    var shape = TransitData.Read<List<MapPoint>>(Path.GetFileName(file));
+                    if (shape.Count >= 2) { OpenMap(null, null, shape, item.code + " · Kaynak güzergâhı"); return; }
+                }
+                catch (IOException) { }
+            }
+            if (data.links.TryGetValue(item.id.ToString(CultureInfo.InvariantCulture), out List<long> links))
+            {
+                var lookup = data.stops.ToDictionary(row => row.id);
+                var route = links.Where(lookup.ContainsKey).Select(id => lookup[id]).Where(row => row.Valid).ToList();
+                if (route.Count >= 2) { OpenMap(null, null, route, item.code + " · Durakların şematik bağlantısı"); return; }
+            }
+            MessageBox.Show("Bu hat için harita çizmeye yetecek koordinat bulunmuyor.", "Harita");
+        }
+
+        private void OpenMap(MapPoint stop, IEnumerable<VehiclePoint> vehicles, IEnumerable<MapPoint> shape, string caption)
+        {
+            mapCaption.Text = caption;
+            tabs.SelectedTab = mapPage;
+            map.ShowData(stop, vehicles, shape);
+        }
+
+        private void ResetTracking()
+        {
+            pending?.Cancel();
+            liveTimer.Stop();
+            trackedQuery = null;
+            latest = null;
+            notified = false;
+            lastSnapshot = 0;
+            liveMap.Enabled = false;
+            arrivals.Items.Clear();
+            liveStatus.Text = "";
+        }
+
+        private void ScheduleRefresh()
+        {
+            if (!alerts.Checked || trackedQuery == null) return;
+            liveTimer.Interval = (city.SelectedItem as City)?.id == 1 ? 60000 : 30000;
+            liveTimer.Start();
+        }
+
+        private void MaybeNotify(ArrivalResult result)
+        {
+            if (!alerts.Checked || notified || result.receivedAt == lastSnapshot) return;
+            lastSnapshot = result.receivedAt;
+            var age = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - result.receivedAt;
+            if (age < -30000 || age > 120000) return;
+            var near = result.rows.FirstOrDefault(row => !row.passed && row.etaSeconds >= 0 && row.etaSeconds <= 300);
+            if (near == null) return;
+            notified = true;
+            tray.ShowBalloonTip(6000, "Transit TR · Durak " + stopCode.Text.Trim(), near.line + " · " + near.eta, ToolTipIcon.Info);
+        }
+
+        private async Task QueryAsync(bool manual = true)
         {
             var current = city.SelectedItem as City;
             if (current == null || current.provider == "static") return;
@@ -323,11 +504,20 @@ namespace TransitTR.Windows
                     : "Geçerli bir durak numarası ve hat kodu gir.";
                 return;
             }
+            string queryKey = current.id + ":" + stop + ":" + line.ToUpperInvariant();
+            liveTimer.Stop();
+            if (trackedQuery != queryKey) { notified = false; lastSnapshot = 0; }
+            trackedQuery = queryKey;
             pending?.Cancel();
             var request = new CancellationTokenSource();
             pending = request;
-            arrivals.Items.Clear();
-            liveStatus.Text = "Varışlar alınıyor…";
+            if (manual)
+            {
+                arrivals.Items.Clear();
+                liveStatus.Text = "Varışlar alınıyor…";
+                latest = null;
+                liveMap.Enabled = false;
+            }
             string url = "https://transit-tr.vercel.app/api/v2/live?city=" + current.id +
                 "&stop=" + stop + "&line=" + Uri.EscapeDataString(line);
             try
@@ -342,9 +532,18 @@ namespace TransitTR.Windows
                         return;
                     }
                     var result = TransitData.Parse<ArrivalResult>(body);
+                    if (result?.rows == null)
+                    {
+                        liveStatus.Text = "Canlı kaynak geçersiz yanıt verdi.";
+                        return;
+                    }
                     var timestamp = DateTimeOffset.FromUnixTimeMilliseconds(result.receivedAt).ToOffset(TimeSpan.FromHours(3));
                     liveStatus.Text = result.source + " · " + timestamp.ToString("dd.MM.yyyy HH:mm") + " TSİ";
                     if (!string.IsNullOrWhiteSpace(result.message)) liveStatus.Text += " · " + result.message;
+                    latest = result;
+                    liveMap.Enabled = result.stop?.Valid == true || (result.mapRows?.Any(row => row.Valid) ?? false);
+                    MaybeNotify(result);
+                    arrivals.Items.Clear();
                     if (result.rows.Count == 0) liveStatus.Text += " · Kaynak yaklaşan araç göstermedi.";
                     foreach (var row in result.rows)
                         arrivals.Items.Add(new ListViewItem(new[] { row.line, row.eta, row.name }));
@@ -361,7 +560,11 @@ namespace TransitTR.Windows
             }
             finally
             {
-                if (ReferenceEquals(pending, request)) pending = null;
+                if (ReferenceEquals(pending, request))
+                {
+                    pending = null;
+                    if (!request.IsCancellationRequested && !IsDisposed) ScheduleRefresh();
+                }
                 request.Dispose();
             }
         }
