@@ -38,6 +38,28 @@ jobs:
           xcodebuild -project ios/TransitTR.xcodeproj -scheme TransitTR -configuration Release \
             -destination 'generic/platform=iOS' -derivedDataPath "$RUNNER_TEMP/transit-ios" \
             IPHONEOS_DEPLOYMENT_TARGET="$IOS_TARGET" CODE_SIGNING_ALLOWED=NO build | tee "$RUNNER_TEMP/xcodebuild.log"
+      - name: Package legacy device build for inspection
+        if: matrix.target == '11.0'
+        run: |
+          app="$RUNNER_TEMP/transit-ios/Build/Products/Release-iphoneos/TransitTR.app"
+          /usr/libexec/PlistBuddy -c 'Print :MinimumOSVersion' "$app/Info.plist"
+          xcrun vtool -show-build "$app/TransitTR"
+          xcrun otool -L "$app/TransitTR"
+          echo "Embedded Swift libraries:"
+          ls -l "$app/Frameworks/" || true
+          test "$(/usr/libexec/PlistBuddy -c 'Print :MinimumOSVersion' "$app/Info.plist")" = "11.0"
+          test -s "$app/TransitCatalog.sqlite"
+          test -s "$app/Frameworks/libswiftCore.dylib"
+          mkdir -p "$RUNNER_TEMP/Payload"
+          cp -R "$app" "$RUNNER_TEMP/Payload/"
+          cd "$RUNNER_TEMP"
+          zip -qry TransitTR-v1.0-ios-unsigned.ipa Payload
+      - uses: actions/upload-artifact@v4
+        if: matrix.target == '11.0'
+        with:
+          name: transit-ios-unsigned
+          path: ${{ runner.temp }}/TransitTR-v1.0-ios-unsigned.ipa
+          if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: always()
         with:
