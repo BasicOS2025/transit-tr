@@ -1,9 +1,12 @@
 import UIKit
+import WidgetKit
 
 final class LiveController: TransitScreen, UITextFieldDelegate {
     private let stop = UITextField()
     private let line = UITextField()
     private var selectedStop: Entry?
+    private var pendingWidget: WidgetSnapshot?
+    private var pin: UIButton?
     private var result: LiveResult?
     private var status = ""
     private var task: URLSessionDataTask?
@@ -17,7 +20,10 @@ final class LiveController: TransitScreen, UITextFieldDelegate {
         title = "Otobüs"
         configure(stop, hint: "Durak numarası", keyboard: .numberPad)
         configure(line, hint: "Hat kodu (isteğe bağlı)", keyboard: .asciiCapable)
-        header([stop, line, button("Varışları sorgula", action: #selector(search))])
+        let pin = button("Widget’a sabitle", action: #selector(pinWidget))
+        pin.isEnabled = false
+        self.pin = pin
+        header([stop, line, button("Varışları sorgula", action: #selector(search)), pin])
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Bilgi", style: .plain, target: self,
                                                             action: #selector(about))
         let notifications = NotificationCenter.default
@@ -31,7 +37,7 @@ final class LiveController: TransitScreen, UITextFieldDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         showing = true
-        resume()
+        if let item = pendingWidget { selectWidget(item) } else { resume() }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -43,6 +49,10 @@ final class LiveController: TransitScreen, UITextFieldDelegate {
     override func cityChanged() {
         super.cityChanged()
         clear()
+        if let item = pendingWidget, item.city == city.id, showing {
+            selectWidget(item)
+            return
+        }
         stop.text = nil
         line.text = nil
         selectedStop = nil
@@ -58,6 +68,42 @@ final class LiveController: TransitScreen, UITextFieldDelegate {
         stop.text = entry.code
         line.text = nil
         search()
+    }
+
+    func selectWidget() {
+        if let item = WidgetSnapshot.read() { selectWidget(item) }
+    }
+
+    private func selectWidget(_ item: WidgetSnapshot) {
+        loadViewIfNeeded()
+        pendingWidget = item
+        guard showing, let target = state.cities.first(where: { $0.id == item.city }) else { return }
+        pendingWidget = nil
+        if city.id != item.city { state.setCity(target) }
+        selectedStop = nil
+        stop.text = item.stop
+        line.text = item.line
+        search()
+    }
+
+    @objc private func pinWidget() {
+        guard let result = result else { return }
+        if updateWidget(result, code: stop.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "",
+                        line: line.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "") {
+            message("Widget", "Durak sabitlendi. Transit TR widget’ını ekleyerek son sorguyu görebilirsin.")
+        } else {
+            message("Widget", "Uygulama ve widget aynı App Group ile imzalanmalı.")
+        }
+    }
+
+    @discardableResult private func updateWidget(_ value: LiveResult, code: String, line: String) -> Bool {
+        let stamp = Date(timeIntervalSince1970: value.receivedAt / 1000)
+        let snapshot = WidgetSnapshot(city: city.id, stop: code, name: value.stop?.name ?? selectedStop?.name ?? "Durak",
+                                      line: line, arrivals: value.rows.prefix(2).map { $0.line + " · " + $0.eta },
+                                      updated: stamp)
+        guard snapshot.save() else { return false }
+        if #available(iOS 14.0, *) { WidgetCenter.shared.reloadTimelines(ofKind: "TransitTR.Arrivals") }
+        return true
     }
 
     private func configure(_ field: UITextField, hint: String, keyboard: UIKeyboardType) {
@@ -125,6 +171,7 @@ final class LiveController: TransitScreen, UITextFieldDelegate {
         let token = revision
         if manual {
             result = nil
+            pin?.isEnabled = false
             status = "Varış bilgisi alınıyor…"
             tableView.reloadData()
         }
@@ -138,6 +185,9 @@ final class LiveController: TransitScreen, UITextFieldDelegate {
             case .success(let value):
                 self.result = value
                 self.status = value.message
+                if let saved = WidgetSnapshot.read(), saved.city == city.id && saved.stop == code && saved.line == line {
+                    self.updateWidget(value, code: code, line: line)
+                }
                 if value.refreshMillis.isFinite {
                     refresh = max(refresh, value.refreshMillis / 1000)
                 }
@@ -145,6 +195,7 @@ final class LiveController: TransitScreen, UITextFieldDelegate {
                 self.result = nil
                 self.status = "Canlı varış alınamadı. \(error.localizedDescription)"
             }
+            self.pin?.isEnabled = self.result != nil
             self.tableView.reloadData()
             guard self.showing, self.tracking, UIApplication.shared.applicationState == .active else { return }
             self.timer = Timer.scheduledTimer(withTimeInterval: refresh, repeats: false) { [weak self] _ in
@@ -170,6 +221,7 @@ final class LiveController: TransitScreen, UITextFieldDelegate {
         pause()
         tracking = false
         result = nil
+        pin?.isEnabled = false
     }
 
     private var pins: [MapPin] {

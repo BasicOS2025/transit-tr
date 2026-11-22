@@ -29,6 +29,9 @@
         <string>UIInterfaceOrientationLandscapeLeft</string>
         <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
+    <key>CFBundleURLTypes</key>
+    <array><dict><key>CFBundleURLSchemes</key><array><string>transittr</string></array></dict></array>
+    <key>TransitAppGroup</key><string>$(TRANSIT_APP_GROUP)</string>
     <key>TransitAPIBaseURL</key><string>$(TRANSIT_API_URL)</string>
 </dict>
 </plist>

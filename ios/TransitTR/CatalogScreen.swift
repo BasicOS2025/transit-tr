@@ -303,13 +303,30 @@ final class EntryController: TransitScreen {
             case .success(let departures):
                 let rows = departures.isEmpty ? [Row("Önümüzdeki 24 saat için geçerli yerel tarife yok.")] :
                     departures.map {
-                        Row(Self.date($0.instant, includeDay: false) + " · " + $0.line, $0.name)
+                        let departure = $0
+                        return Row(Self.date(departure.instant, includeDay: false) + " · " + departure.line,
+                                   departure.name) { [weak self] in self?.offerReminder(departure) }
                     }
                 self.sections = [("Planlı kalkışlar · canlı varış değildir", rows)]
                 self.tableView.reloadData()
             case .failure(let error): self.renderError(error)
             }
         }
+    }
+
+    private func offerReminder(_ departure: Departure) {
+        let alert = UIAlertController(title: "Kalkış hatırlatıcısı", message: departure.line + " · " +
+            Self.date(departure.instant, includeDay: true) + " TSİ", preferredStyle: .alert)
+        for minutes in [2, 5, 10] where departure.instant.timeIntervalSinceNow >= Double(minutes * 60 + 1) {
+            alert.addAction(UIAlertAction(title: "\(minutes) dakika önce", style: .default) { [weak self] _ in
+                guard let self = self else { return }
+                TransitReminders.schedule(departure, stop: self.entry, minutes: minutes) { [weak self] error in
+                    self?.message("Hatırlatıcı", error?.localizedDescription ?? "Planlı kalkış için bildirim kuruldu.")
+                }
+            })
+        }
+        alert.addAction(UIAlertAction(title: "Kapat", style: .cancel))
+        present(alert, animated: true)
     }
 
     private func renderRoute(_ data: RouteDetails) {
@@ -321,7 +338,16 @@ final class EntryController: TransitScreen {
             for (index, title) in ["Hafta içi", "Cumartesi", "Pazar"].enumerated()
                 where schedule.days.indices.contains(index) {
                 let times = schedule.days[index]
-                sections.append((title, [Row(times.isEmpty ? "Kalkış kaydı yok." : times.joined(separator: "\n"))]))
+                let rows = times.map { time -> Row in
+                    let departure = TransitReminders.nextWeeklyDeparture(time, dayType: index)
+                    guard departure != nil else { return Row(time) }
+                    return Row(time) { [weak self] in
+                        guard let self = self,
+                              let date = TransitReminders.nextWeeklyDeparture(time, dayType: index) else { return }
+                        self.offerReminder(Departure(line: self.entry.code, name: self.entry.name, instant: date))
+                    }
+                }
+                sections.append((title, rows.isEmpty ? [Row("Kalkış kaydı yok.")] : rows))
             }
         }
         if !data.stops.isEmpty { sections.append(("Sıralı duraklar", stopRows(data.stops))) }

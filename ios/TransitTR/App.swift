@@ -1,12 +1,15 @@
 import UIKit
 import MapKit
+import UserNotifications
 
 @UIApplicationMain
-final class AppDelegate: UIResponder, UIApplicationDelegate {
+final class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     var window: UIWindow?
+    private var openWidget: (() -> Void)?
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions options: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        TransitReminders.center.delegate = self
         let state = AppState()
         let live = LiveController(state)
         let catalog = CatalogController(state)
@@ -24,11 +27,28 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             live?.navigationController?.popToRootViewController(animated: false)
             live?.selectStop(entry)
         }
+        openWidget = { [weak tabs, weak live] in
+            tabs?.selectedIndex = 0
+            live?.navigationController?.popToRootViewController(animated: false)
+            live?.selectWidget()
+        }
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.tintColor = UIColor(red: 0.08, green: 0.36, blue: 0.75, alpha: 1)
         window?.rootViewController = tabs
         window?.makeKeyAndVisible()
         return true
+    }
+
+    func application(_ app: UIApplication, open url: URL,
+                     options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+        guard url.scheme == "transittr", url.host == "widget" else { return false }
+        openWidget?()
+        return true
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .sound])
     }
 
     private func tab(_ controller: UIViewController, _ title: String, _ icon: String) -> UINavigationController {

@@ -38,3 +38,10 @@ Apple’ın Eylül 2026’dan beri uyguladığı App Store Connect alt hedefi iO
 Ankara `10940`, İstanbul `205471`, Kocaeli `80163` ve Konya `27` için Otobüs ekranını aç. Ardından uçak modunda şehir değiştir, katalogda ara, favori ekle ve tarife aç. Konumu reddetme ve izin verme akışlarını, küçük bir iPhone’da Türkçe etiketleri ve iPad’de yatay görünümü kontrol et. Kaynak servisin anlık sonuçları saat, bölge ve bağlantıya bağlı olarak değişir.
 
 Veri atıfları, kaynak tarihleri ve üçüncü taraf bildirimleri deponun [THIRD-PARTY-NOTICES.md](../THIRD-PARTY-NOTICES.md) dosyasındadır.
+
+## Bildirimler ve widget
+
+- Durak ayrıntısındaki **Planlı kalkışlar** veya Ankara EGO hat çizelgesindeki saatlerden birini seç. Kalkıştan 2, 5 veya 10 dakika önce yerel bildirim kurulabilir. Bildirim cihazdan planlanır ve canlı gecikme verisine göre yeniden zamanlanmaz.
+- Canlı sorgudan sonra **Widget’a sabitle** seçeneğiyle durak ve isteğe bağlı hattı seç. Widget, uygulamanın son sorgusunu gösterir ve iki dakikadan eski süreleri gizler. Widget’a dokununca uygulama sabitlenmiş sorguyu yeniler.
+- iOS 11–13 için Bugün görünümü ve iOS 14+ için WidgetKit hedefi bulunur. iOS 14–17’de eski Bugün bileşeni de sistem tarafından sunulabilir.
+- Uygulama ve iki widget hedefi geliştirici hesabında aynı App Group ile imzalanmalı. Varsayılan grup `group.org.transittr.ios` değeridir. Kendi geliştirici hesabında farklı kimlik gerekiyorsa `TransitTR.xcconfig` dosyasında `TRANSIT_BUNDLE_ID` ve `TRANSIT_APP_GROUP` değerlerini birlikte güncelle. Her hedef için uygun provisioning profili gerekir.
