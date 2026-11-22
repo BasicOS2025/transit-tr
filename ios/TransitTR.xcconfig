@@ -10,6 +10,7 @@ TARGETED_DEVICE_FAMILY = 1,2
 SUPPORTED_PLATFORMS = iphoneos iphonesimulator
 LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks
 OTHER_LDFLAGS = $(inherited) -lsqlite3
+ALWAYS_SEARCH_USER_PATHS = NO
 ENABLE_USER_SCRIPT_SANDBOXING = NO
 TRANSIT_API_URL = https:/$()/transit-tr.vercel.app
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES

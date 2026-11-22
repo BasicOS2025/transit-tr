@@ -13,22 +13,34 @@ permissions:
 
 jobs:
   hosted-ios:
+    name: Build check (iOS ${{ matrix.target }})
+    strategy:
+      fail-fast: false
+      matrix:
+        target: ["11.0", "15.0"]
     runs-on: macos-15
     timeout-minutes: 18
     env:
       DEVELOPER_DIR: /Applications/Xcode_16.4.app/Contents/Developer
     steps:
       - uses: actions/checkout@v4
+      - name: Test SQLite data layer
+        run: |
+          python3 ios/build_catalog.py "$RUNNER_TEMP/TransitCatalog.sqlite"
+          swiftc ios/TransitTR/TransitData.swift ios/tests/main.swift -lsqlite3 -o "$RUNNER_TEMP/test-catalog"
+          "$RUNNER_TEMP/test-catalog" "$RUNNER_TEMP/TransitCatalog.sqlite"
       - name: Validate catalogue and build with Apple SDK
+        env:
+          IOS_TARGET: ${{ matrix.target }}
         run: |
           set -o pipefail
           xcodebuild -version
           xcodebuild -project ios/TransitTR.xcodeproj -scheme TransitTR -configuration Release \
             -destination 'generic/platform=iOS' -derivedDataPath "$RUNNER_TEMP/transit-ios" \
-            IPHONEOS_DEPLOYMENT_TARGET=15.0 CODE_SIGNING_ALLOWED=NO build | tee "$RUNNER_TEMP/xcodebuild.log"
+            IPHONEOS_DEPLOYMENT_TARGET="$IOS_TARGET" CODE_SIGNING_ALLOWED=NO build | tee "$RUNNER_TEMP/xcodebuild.log"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: transit-ios-build-log
+          name: transit-ios-build-log-${{ matrix.target }}
           path: ${{ runner.temp }}/xcodebuild.log
           if-no-files-found: ignore
