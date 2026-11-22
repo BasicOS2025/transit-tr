@@ -2,7 +2,7 @@
 
 Android 6+ ve Android 2.2 için yerel toplu taşıma uygulaması; ayrıca bağımsız çalıştırılabilen web arayüzü ve web servisi.
 
-**Sürüm: 1.7.0 — Stabil Release.** Android uygulaması, iOS uygulaması(tam çalışmıyor, beta v1.0) ve web servisi.
+**Sürüm: 1.7.0 — Stabil Release.** Android uygulaması, iOS uygulaması(tam çalışmıyor, beta v1.0), Windows uygulaması(demo, v1.0) ve web servisi.
 
 <p align="center">
   <a href="https://github.com/BasicOS2025/transit-tr/stargazers">
